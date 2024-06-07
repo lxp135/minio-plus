@@ -251,25 +251,34 @@ CREATE TABLE `file_metadata_info` (
   KEY `INDEX_MD5` (`file_md5`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='文件元数据信息表';
 ```
+# 5 开发计划 | Plan
 
-# 5 使用 | Getting Started
+简单画了一个要实现内容的看板
 
-# 6 代码托管 | Managed Code
+![开发计划](doc/image/开发计划.png)
+
+
+# 6 使用 | Getting Started
+
+# 7 代码托管 | Managed Code
 
 * [https://github.com/lxp135/minio-plus](https://github.com/lxp135/minio-plus/)
 * [https://gitee.com/lxp135/minio-plus](https://gitee.com/lxp135/minio-plus/)
 
 以上仓库中代码完全一致，各位同学可根据网络状况自行选择。
 
-# 7 版权 | License
+# 8 版权 | License
 
 [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)
 
-# 8 参与贡献 | Credits
+# 9 参与贡献 | Credits
 
 * 刘小平 contact@liuxp.me
 
-# 9 参考资料 | Reference
+# 10 参考资料 | Reference
 
 * [MinIO S3 APIs](doc/minio-s3-api.md)
+
+
+
 
