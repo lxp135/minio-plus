@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>minio-plus-spring-boot-starter</artifactId>
-        <groupId>org.liuxp</groupId>
+        <groupId>me.liuxp</groupId>
         <version>${revision}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -14,11 +14,11 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.liuxp</groupId>
+            <groupId>me.liuxp</groupId>
             <artifactId>minio-plus-extension</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.liuxp</groupId>
+            <groupId>me.liuxp</groupId>
             <artifactId>minio-s3-api-official</artifactId>
         </dependency>
     </dependencies>

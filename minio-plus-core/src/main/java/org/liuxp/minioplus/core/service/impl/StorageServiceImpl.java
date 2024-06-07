@@ -20,7 +20,7 @@ import org.liuxp.minioplus.common.enums.MinioPlusErrorCode;
 import org.liuxp.minioplus.common.enums.StorageBucketEnums;
 import org.liuxp.minioplus.common.exception.MinioPlusException;
 import org.liuxp.minioplus.core.common.utils.ContentTypeUtil;
-import org.liuxp.minioplus.core.common.utils.MinioPlusCommonUtil;
+import org.liuxp.minioplus.core.common.utils.CommonUtil;
 import org.liuxp.minioplus.api.model.vo.FileMetadataInfoVo;
 import org.liuxp.minioplus.core.engine.StorageEngineService;
 import org.liuxp.minioplus.core.repository.MetadataRepository;
@@ -198,7 +198,7 @@ public class StorageServiceImpl implements StorageService {
         String storageBucket = StorageBucketEnums.getBucketByFileSuffix(suffix);
 
         // 取得存储路径
-        String storagePath = MinioPlusCommonUtil.getPathByDate();
+        String storagePath = CommonUtil.getPathByDate();
 
         // 是否存在缩略图
         Boolean isPreview = properties.getThumbnail().isEnable() && StorageBucketEnums.IMAGE.getCode().equals(storageBucket);

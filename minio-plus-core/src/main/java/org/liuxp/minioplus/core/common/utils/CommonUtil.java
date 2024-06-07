@@ -12,7 +12,7 @@ import java.io.InputStream;
  * @author contact@liuxp.me
  * @since  2024/05/23
  */
-public class MinioPlusCommonUtil {
+public class CommonUtil {
 
     /**
      * 取得对象名称
@@ -20,7 +20,7 @@ public class MinioPlusCommonUtil {
      * @return 对象名称
      */
     public static String getObjectName(String md5){
-        return MinioPlusCommonUtil.getPathByDate() + "/" + md5;
+        return CommonUtil.getPathByDate() + "/" + md5;
     }
 
     /**

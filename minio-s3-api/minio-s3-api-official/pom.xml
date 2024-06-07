@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>minio-s3-api</artifactId>
-        <groupId>org.liuxp</groupId>
+        <groupId>me.liuxp</groupId>
         <version>${revision}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -30,11 +30,11 @@
             <version>4.11.0</version>
         </dependency>
         <dependency>
-            <groupId>org.liuxp</groupId>
+            <groupId>me.liuxp</groupId>
             <artifactId>minio-s3-api-definition</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.liuxp</groupId>
+            <groupId>me.liuxp</groupId>
             <artifactId>minio-plus-common</artifactId>
         </dependency>
     </dependencies>

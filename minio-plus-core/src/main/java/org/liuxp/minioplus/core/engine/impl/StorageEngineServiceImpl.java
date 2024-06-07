@@ -10,7 +10,7 @@ import org.liuxp.minioplus.common.config.MinioPlusProperties;
 import org.liuxp.minioplus.common.enums.MinioPlusErrorCode;
 import org.liuxp.minioplus.common.enums.StorageBucketEnums;
 import org.liuxp.minioplus.common.exception.MinioPlusException;
-import org.liuxp.minioplus.core.common.utils.MinioPlusCommonUtil;
+import org.liuxp.minioplus.core.common.utils.CommonUtil;
 import org.liuxp.minioplus.core.engine.StorageEngineService;
 import org.liuxp.minioplus.core.repository.MetadataRepository;
 import org.liuxp.minioplus.api.model.bo.CreateUploadUrlReqBO;
@@ -423,15 +423,15 @@ public class StorageEngineServiceImpl implements StorageEngineService {
     public Boolean createFile(FileMetadataInfoSaveDTO saveDTO, byte[] fileBytes) {
 
         // 写入文件
-        minioS3Client.putObject(saveDTO.getStorageBucket(), MinioPlusCommonUtil.getObjectName(saveDTO.getFileMd5()), new ByteArrayInputStream(fileBytes), saveDTO.getFileSize(), saveDTO.getFileMimeType());
+        minioS3Client.putObject(saveDTO.getStorageBucket(), CommonUtil.getObjectName(saveDTO.getFileMd5()), new ByteArrayInputStream(fileBytes), saveDTO.getFileSize(), saveDTO.getFileMimeType());
 
         // 判断是否生成缩略图
         if(Boolean.TRUE.equals(saveDTO.getIsPreview())){
 
             try{
-                ByteArrayOutputStream largeImage = MinioPlusCommonUtil.resizeImage(new ByteArrayInputStream(fileBytes), properties.getThumbnail().getSize());
+                ByteArrayOutputStream largeImage = CommonUtil.resizeImage(new ByteArrayInputStream(fileBytes), properties.getThumbnail().getSize());
                 byte[] largeImageBytes = largeImage.toByteArray();
-                minioS3Client.putObject(StorageBucketEnums.IMAGE_PREVIEW.getCode(), MinioPlusCommonUtil.getObjectName(saveDTO.getFileMd5()), new ByteArrayInputStream(largeImageBytes), largeImageBytes.length, saveDTO.getFileMimeType());
+                minioS3Client.putObject(StorageBucketEnums.IMAGE_PREVIEW.getCode(), CommonUtil.getObjectName(saveDTO.getFileMd5()), new ByteArrayInputStream(largeImageBytes), largeImageBytes.length, saveDTO.getFileMimeType());
             }catch(Exception e){
                 log.error(MinioPlusErrorCode.FILE_PREVIEW_WRITE_FAILED.getMessage(),e);
                 throw new MinioPlusException(MinioPlusErrorCode.FILE_PREVIEW_WRITE_FAILED);
@@ -733,7 +733,7 @@ public class StorageEngineServiceImpl implements StorageEngineService {
      * @return {@link ListParts}    分片任务信息
      */
     private ListParts buildResultPart(FileMetadataInfoVo metadataInfo){
-        String objectName = MinioPlusCommonUtil.getObjectName(metadataInfo.getFileMd5());
+        String objectName = CommonUtil.getObjectName(metadataInfo.getFileMd5());
         // 获取所有的分片信息
         return minioS3Client.listParts(metadataInfo.getStorageBucket(), objectName, metadataInfo.getPartNumber(), metadataInfo.getUploadTaskId());
     }
@@ -757,7 +757,7 @@ public class StorageEngineServiceImpl implements StorageEngineService {
             // 存储桶
             bucketName = bo.getStorageBucket();
             // 存储路径
-            storagePath = MinioPlusCommonUtil.getObjectName(bo.getFileMd5());
+            storagePath = CommonUtil.getObjectName(bo.getFileMd5());
             // 文件key
             fileKey = bo.getFileKey();
             uploadId = bo.getUploadId();
@@ -778,7 +778,7 @@ public class StorageEngineServiceImpl implements StorageEngineService {
             // 文件key
             fileKey = IdUtil.fastSimpleUUID();
             // 存储路径
-            storagePath = MinioPlusCommonUtil.getPathByDate();
+            storagePath = CommonUtil.getPathByDate();
 
             // 存储桶
             bucketName = StorageBucketEnums.getBucketByFileSuffix(suffix);
@@ -798,10 +798,10 @@ public class StorageEngineServiceImpl implements StorageEngineService {
                 uploadId = fileKey;
             } else {
                 // 创建分片请求,获取uploadId
-                uploadId = minioS3Client.createMultipartUpload(bucketName,MinioPlusCommonUtil.getObjectName(bo.getFileMd5()));
+                uploadId = minioS3Client.createMultipartUpload(bucketName, CommonUtil.getObjectName(bo.getFileMd5()));
                 long start = 0;
                 for (Integer partNumber = 1; partNumber <= chunkNum; partNumber++) {
-                    FileCheckResultVo.Part part = this.buildResultPart(bucketName,MinioPlusCommonUtil.getObjectName(bo.getFileMd5()), uploadId, bo.getFileSize(), start, partNumber);
+                    FileCheckResultVo.Part part = this.buildResultPart(bucketName, CommonUtil.getObjectName(bo.getFileMd5()), uploadId, bo.getFileSize(), start, partNumber);
                     // 更改下一次的开始位置
                     start = start + properties.getPart().getSize();
                     partList.add(part);

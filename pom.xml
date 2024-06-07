@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.liuxp</groupId>
+    <groupId>me.liuxp</groupId>
     <artifactId>minio-plus-parent</artifactId>
     <version>${revision}</version>
     <packaging>pom</packaging>
@@ -137,42 +137,42 @@
                 <version>${thumbnailator.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.liuxp</groupId>
+                <groupId>me.liuxp</groupId>
                 <artifactId>minio-plus-common</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>org.liuxp</groupId>
+                <groupId>me.liuxp</groupId>
                 <artifactId>minio-plus-core</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>org.liuxp</groupId>
+                <groupId>me.liuxp</groupId>
                 <artifactId>minio-plus-extension</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>org.liuxp</groupId>
+                <groupId>me.liuxp</groupId>
                 <artifactId>minio-plus-api</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>org.liuxp</groupId>
+                <groupId>me.liuxp</groupId>
                 <artifactId>minio-plus-all-spring-boot-starter</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>org.liuxp</groupId>
+                <groupId>me.liuxp</groupId>
                 <artifactId>minio-s3-api-definition</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>org.liuxp</groupId>
+                <groupId>me.liuxp</groupId>
                 <artifactId>minio-s3-api-custom</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>org.liuxp</groupId>
+                <groupId>me.liuxp</groupId>
                 <artifactId>minio-s3-api-official</artifactId>
                 <version>${revision}</version>
             </dependency>
