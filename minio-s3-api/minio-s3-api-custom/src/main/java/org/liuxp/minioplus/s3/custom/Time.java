@@ -1,4 +1,4 @@
-/*
+package org.liuxp.minioplus.s3.custom;/*
  * MinIO Java SDK for Amazon S3 Compatible Cloud Storage,
  * (C) 2020 MinIO, Inc.
  *

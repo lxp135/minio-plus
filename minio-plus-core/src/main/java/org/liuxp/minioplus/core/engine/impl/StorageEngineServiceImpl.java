@@ -603,8 +603,8 @@ public class StorageEngineServiceImpl implements StorageEngineService {
 
     /**
      * 断点续传-创建断点的URL
-     *
-     * @return {@link CreateUploadUrlRespBO}
+     * @param fileMetadataVo 文件元数据信息
+     * @return CreateUploadUrlRespBO 分片结果
      */
     public CreateUploadUrlRespBO breakResume(FileMetadataInfoVo fileMetadataVo) {
 
@@ -665,6 +665,9 @@ public class StorageEngineServiceImpl implements StorageEngineService {
 
     /**
      * 合并分片
+     * @param metadataInfo 文件元数据信息
+     * @param partMd5List 分片集合
+     * @return 合并结果
      */
     public CompleteResultVo completeMultipartUpload(FileMetadataInfoVo metadataInfo, List<String> partMd5List) {
 

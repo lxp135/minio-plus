@@ -63,6 +63,7 @@ public class StorageController {
     /**
      * 文件上传完成
      * @param fileKey 文件KEY
+     * @param fileCompleteDTO 文件完成入参DTO
      * @return 是否成功
      */
     @ApiOperation(value = "上传完成")

@@ -1,5 +1,7 @@
 package org.liuxp.minioplus.s3.custom;
 
+import cn.hutool.http.HttpResponse;
+import cn.hutool.http.Method;
 import lombok.extern.slf4j.Slf4j;
 import org.liuxp.minioplus.common.config.MinioPlusProperties;
 import org.liuxp.minioplus.s3.def.ListParts;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
 import java.io.InputStream;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @Slf4j
@@ -19,7 +22,16 @@ public class MinioS3ClientImpl implements MinioS3Client {
 
     @Override
     public Boolean bucketExists(String bucketName) {
-        return null;
+
+        // 取得当前时间
+        ZonedDateTime date = ZonedDateTime.now();
+
+        // HTTP请求
+        HttpResponse httpResponse = S3Request.request(properties.getKey(),properties.getSecret(),properties.getBackend()
+                ,properties.getBackend()+"/"+bucketName,"","/"+bucketName, Method.HEAD.name(),date,0);
+
+        return httpResponse.isOk();
+
     }
 
     @Override

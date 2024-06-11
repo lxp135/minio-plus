@@ -2,7 +2,6 @@ package org.liuxp.minioplus.api;
 
 import cn.hutool.core.lang.Pair;
 import org.liuxp.minioplus.api.model.dto.FileMetadataInfoDTO;
-import org.liuxp.minioplus.api.model.dto.FileSaveDTO;
 import org.liuxp.minioplus.api.model.vo.CompleteResultVo;
 import org.liuxp.minioplus.api.model.vo.FileCheckResultVo;
 import org.liuxp.minioplus.api.model.vo.FileMetadataInfoVo;
@@ -90,29 +89,35 @@ public interface StorageService {
     /**
      * 创建文件
      * 尽量不要用本方法处理大文件，大文件建议使用前端直传
-     * @param fileSaveDTO 文件保存入参
+     * @param fullFileName 文件名（含扩展名）
+     * @param isPrivate 是否私有 false:否 true:是
+     * @param userId  用户编号
      * @param fileBytes 文件字节流
      * @return 文件元数据信息
      */
-    FileMetadataInfoVo createFile(FileSaveDTO fileSaveDTO, byte[] fileBytes);
+    FileMetadataInfoVo createFile(String fullFileName, Boolean isPrivate, String userId, byte[] fileBytes);
 
     /**
      * 创建文件
      * 尽量不要用本方法处理大文件，大文件建议使用前端直传
-     * @param fileSaveDTO 文件保存入参
+     * @param fullFileName 文件名（含扩展名）
+     * @param isPrivate 是否私有 false:否 true:是
+     * @param userId  用户编号
      * @param inputStream 文件输入字节流
      * @return 文件元数据信息
      */
-    FileMetadataInfoVo createFile(FileSaveDTO fileSaveDTO, InputStream inputStream);
+    FileMetadataInfoVo createFile(String fullFileName, Boolean isPrivate, String userId, InputStream inputStream);
 
     /**
      * 创建文件
      * 尽量不要用本方法处理大文件，大文件建议使用前端直传
-     * @param fileSaveDTO 文件保存入参
+     * @param fullFileName 文件名（含扩展名）
+     * @param isPrivate 是否私有 false:否 true:是
+     * @param userId  用户编号
      * @param url 文件地址
      * @return 文件元数据信息
      */
-    FileMetadataInfoVo createFile(FileSaveDTO fileSaveDTO, String url);
+    FileMetadataInfoVo createFile(String fullFileName, Boolean isPrivate, String userId, String url);
 
     /**
      * 根据文件key读取文件字节流

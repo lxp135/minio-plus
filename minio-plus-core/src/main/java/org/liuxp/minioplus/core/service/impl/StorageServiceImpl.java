@@ -12,7 +12,6 @@ import cn.hutool.http.HttpUtil;
 import org.liuxp.minioplus.api.StorageService;
 import org.liuxp.minioplus.api.model.dto.FileMetadataInfoDTO;
 import org.liuxp.minioplus.api.model.dto.FileMetadataInfoSaveDTO;
-import org.liuxp.minioplus.api.model.dto.FileSaveDTO;
 import org.liuxp.minioplus.api.model.vo.CompleteResultVo;
 import org.liuxp.minioplus.api.model.vo.FileCheckResultVo;
 import org.liuxp.minioplus.api.model.vo.FileMetadataInfoVo;
@@ -122,15 +121,15 @@ public class StorageServiceImpl implements StorageService {
     }
 
     @Override
-    public FileMetadataInfoVo createFile(FileSaveDTO fileSaveDTO, byte[] fileBytes) {
+    public FileMetadataInfoVo createFile(String fullFileName, Boolean isPrivate, String userId, byte[] fileBytes) {
 
         // 组装文件保存入参
-        FileMetadataInfoSaveDTO saveDTO = buildSaveDto(fileSaveDTO,fileBytes);
+        FileMetadataInfoSaveDTO saveDTO = buildSaveDto(fullFileName, isPrivate, userId,fileBytes);
 
         // 查询MinIO中是否存在相同MD5值的文件
         FileMetadataInfoDTO fileMetadataInfo = new FileMetadataInfoDTO();
         fileMetadataInfo.setFileMd5(saveDTO.getFileMd5());
-        List<FileMetadataInfoVo> alreadyFileList = this.list(fileMetadataInfo);
+        List<FileMetadataInfoVo> alreadyFileList = fileMetadataRepository.list(fileMetadataInfo);
 
         boolean sameMd5 = false;
 
@@ -161,18 +160,18 @@ public class StorageServiceImpl implements StorageService {
     }
 
     @Override
-    public FileMetadataInfoVo createFile(FileSaveDTO fileSaveDTO, InputStream inputStream) {
-        return createFile(fileSaveDTO,IoUtil.readBytes(inputStream));
+    public FileMetadataInfoVo createFile(String fullFileName, Boolean isPrivate, String userId, InputStream inputStream) {
+        return createFile(fullFileName, isPrivate, userId,IoUtil.readBytes(inputStream));
     }
 
     @Override
-    public FileMetadataInfoVo createFile(FileSaveDTO fileSaveDTO, String url) {
+    public FileMetadataInfoVo createFile(String fullFileName, Boolean isPrivate, String userId, String url) {
         // 请求文件
         HttpResponse httpResponse = HttpUtil.createGet(url).execute();
         // 获得输入流
         InputStream inputStream = httpResponse.bodyStream();
         // 调用处理函数
-        return createFile(fileSaveDTO,inputStream);
+        return createFile(fullFileName, isPrivate, userId,inputStream);
     }
 
     @Override
@@ -185,7 +184,7 @@ public class StorageServiceImpl implements StorageService {
         return storageEngineService.remove(fileKey);
     }
 
-    FileMetadataInfoSaveDTO buildSaveDto(FileSaveDTO fileSaveDTO, byte[] fileBytes){
+    FileMetadataInfoSaveDTO buildSaveDto(String fullFileName, Boolean isPrivate, String userId, byte[] fileBytes){
 
         if(null==fileBytes){
             throw new MinioPlusException(MinioPlusErrorCode.FILE_BYTES_FAILED);
@@ -194,7 +193,7 @@ public class StorageServiceImpl implements StorageService {
         String md5 = SecureUtil.md5().digestHex(fileBytes);
         // 生成UUID作为文件KEY
         String key = IdUtil.fastSimpleUUID();
-        String suffix = FileUtil.getSuffix(fileSaveDTO.getFullFileName());
+        String suffix = FileUtil.getSuffix(fullFileName);
         String fileMimeType = ContentTypeUtil.getContentType(suffix);
 
         // 根据文件后缀取得桶
@@ -210,7 +209,7 @@ public class StorageServiceImpl implements StorageService {
         FileMetadataInfoSaveDTO fileMetadataInfoSaveDTO = new FileMetadataInfoSaveDTO();
         fileMetadataInfoSaveDTO.setFileKey(key);
         fileMetadataInfoSaveDTO.setFileMd5(md5);
-        fileMetadataInfoSaveDTO.setFileName(fileSaveDTO.getFullFileName());
+        fileMetadataInfoSaveDTO.setFileName(fullFileName);
         fileMetadataInfoSaveDTO.setFileMimeType(fileMimeType);
         fileMetadataInfoSaveDTO.setFileSuffix(suffix);
         fileMetadataInfoSaveDTO.setFileSize((long) fileBytes.length);
@@ -221,9 +220,9 @@ public class StorageServiceImpl implements StorageService {
         fileMetadataInfoSaveDTO.setIsPart(false);
         fileMetadataInfoSaveDTO.setPartNumber(0);
         fileMetadataInfoSaveDTO.setIsPreview(isPreview);
-        fileMetadataInfoSaveDTO.setIsPrivate(fileSaveDTO.getIsPrivate());
-        fileMetadataInfoSaveDTO.setCreateUser(fileSaveDTO.getCreateUser());
-        fileMetadataInfoSaveDTO.setUpdateUser(fileSaveDTO.getCreateUser());
+        fileMetadataInfoSaveDTO.setIsPrivate(isPrivate);
+        fileMetadataInfoSaveDTO.setCreateUser(userId);
+        fileMetadataInfoSaveDTO.setUpdateUser(userId);
 
         return fileMetadataInfoSaveDTO;
     }

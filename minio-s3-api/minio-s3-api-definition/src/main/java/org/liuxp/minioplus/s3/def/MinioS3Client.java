@@ -38,7 +38,7 @@ public interface MinioS3Client {
      * @param bucketName 桶名称
      * @param objectName 对象名称（含路径）
      * @param uploadId 上传任务编号
-     * @param parts 分片信息 partNumber & etag
+     * @param parts 分片信息 partNumber 和 etag
      * @return 是否成功
      */
     Boolean completeMultipartUpload(String bucketName, String objectName, String uploadId, List<ListParts.Part> parts);
@@ -54,7 +54,7 @@ public interface MinioS3Client {
     ListParts listParts(String bucketName,String objectName,Integer maxParts,String uploadId);
 
     /**
-     * 获得对象&分片上传链接
+     * 获得对象和分片上传链接
      * @param bucketName  桶名称
      * @param objectName  对象名称（含路径）
      * @param uploadId  上传任务编号

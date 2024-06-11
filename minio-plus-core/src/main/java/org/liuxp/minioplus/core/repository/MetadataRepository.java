@@ -17,9 +17,8 @@ public interface MetadataRepository {
 
     /**
      * 根据条件列表查询
-     *
      * @param searchDTO 查询条件
-     * @return List<FileMetadataInfoEntity> 列表结果集
+     * @return 列表结果集
      */
     List<FileMetadataInfoVo> list(FileMetadataInfoDTO searchDTO);
 
@@ -27,7 +26,7 @@ public interface MetadataRepository {
      * 根据条件单条查询
      *
      * @param searchDTO 查询条件
-     * @return FileMetadataInfoEntity 单条结果
+     * @return 单条结果
      */
     FileMetadataInfoVo one(FileMetadataInfoDTO searchDTO);
 

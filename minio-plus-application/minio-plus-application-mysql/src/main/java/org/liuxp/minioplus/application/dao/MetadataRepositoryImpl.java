@@ -108,12 +108,10 @@ public class MetadataRepositoryImpl extends ServiceImpl<FileMetadataInfoMapper, 
     private QueryWrapper<FileMetadataInfoEntity> buildParams(FileMetadataInfoDTO searchDTO){
         // 组装查询参数
         QueryWrapper<FileMetadataInfoEntity> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq(null!=searchDTO.getId(),"id",searchDTO.getId());
         queryWrapper.eq(CharSequenceUtil.isNotBlank(searchDTO.getFileKey()),"file_key",searchDTO.getFileKey());
         queryWrapper.eq(CharSequenceUtil.isNotBlank(searchDTO.getFileMd5()),"file_md5",searchDTO.getFileMd5());
-        queryWrapper.eq(CharSequenceUtil.isNotBlank(searchDTO.getStorageBucket()),"bucket",searchDTO.getStorageBucket());
+        queryWrapper.eq(CharSequenceUtil.isNotBlank(searchDTO.getBucket()),"bucket",searchDTO.getBucket());
         queryWrapper.eq(null!=searchDTO.getIsPrivate(),"is_private",searchDTO.getIsPrivate());
-        queryWrapper.eq(null!=searchDTO.getIsPart(),"is_part",searchDTO.getIsPart());
         queryWrapper.eq(CharSequenceUtil.isNotBlank(searchDTO.getCreateUser()),"create_user",searchDTO.getCreateUser());
 
         return queryWrapper;

@@ -47,7 +47,6 @@ public class FileMetadataInfoSaveDTO {
      */
     @ApiModelProperty("文件长度")
     private Long fileSize;
-
     /**
      * 存储桶
      */
