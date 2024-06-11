@@ -49,7 +49,7 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven-source-plugin.version>3.0.1</maven-source-plugin.version>
-        <revision>0.1.0</revision>
+        <revision>0.1.1</revision>
         <spring-boot.version>2.6.11</spring-boot.version>
         <spring-cloud.version>2021.0.5</spring-cloud.version>
         <spring-cloud-alibaba.version>2021.0.4.0</spring-cloud-alibaba.version>

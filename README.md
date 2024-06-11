@@ -1,8 +1,30 @@
+<h1 align="center">MinIO Plus</h1>
+<h3 align="center">我们的愿景是成为 MinIO 最好的搭档</h3>
+
+<p align="center">
+  <a target="_blank" href="https://central.sonatype.com/search?q=me.liuxp.minio-plus-all-spring-boot-starter">
+      <img src="https://img.shields.io/maven-central/v/me.liuxp/minio-plus-core.svg?label=Maven%20Central" />
+  </a>
+  <a target="_blank" href="https://www.apache.org/licenses/LICENSE-2.0">
+      <img src="https://img.shields.io/badge/license-Apache%202-green.svg" alt="开源协议" />
+  </a>
+  <a target="_blank" href="https://www.oracle.com/technetwork/java/javase/downloads/index.html">
+      <img src="https://img.shields.io/badge/JDK-8+-red.svg" alt='JDK版本'/>
+  </a>
+  <a href='https://gitee.com/lxp135/minio-plus'>
+      <img src='https://gitee.com/lxp135/minio-plus/badge/star.svg?theme=dark' alt='star' />
+  </a>
+  <a href="https://gitee.com/lxp135/minio-plus">
+    <img src="https://gitee.com/lxp135/minio-plus/badge/fork.svg?theme=dark" alt="Gitee fork">
+  </a>
+  <br />
+</p>
+
+---
+
 # 0 简介 | Intro
 
-[MinIO-Plus](https://github.com/lxp135/minio-plus/) 是一个 [MinIO](https://github.com/minio/minio) 的二次封装与增强工具，在 MinIO 的基础上只做增强，不侵入 MinIO 代码，只为简化开发、提高效率而生。成为 MinIO 在项目中落地的润滑剂。
-
-> 我们的愿景是成为 MinIO 最好的搭档。
+[MinIO-Plus](https://gitee.com/lxp135/minio-plus/) 是一个 [MinIO](https://github.com/minio/minio) 的二次封装与增强工具，在 MinIO 的基础上只做增强，不侵入 MinIO 代码，只为简化开发、提高效率而生。成为 MinIO 在项目中落地的润滑剂。
 
 /TODO 演示地址
 
@@ -266,18 +288,31 @@ CREATE TABLE `file_metadata_info` (
 
 # 7 代码托管 | Managed Code
 
-* [https://github.com/lxp135/minio-plus](https://github.com/lxp135/minio-plus/)
 * [https://gitee.com/lxp135/minio-plus](https://gitee.com/lxp135/minio-plus/)
+* [https://github.com/lxp135/minio-plus](https://github.com/lxp135/minio-plus/)
 
 以上仓库中代码完全一致，各位同学可根据网络状况自行选择。
 
 # 8 版权 | License
 
-[Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)
+本项目基于 Apache License Version 2.0 开源协议，可用于商业项目。
+
+协议内容：[Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)
 
 # 9 参与贡献 | Credits
 
-* 刘小平 contact@liuxp.me
+## 9.1 编写代码
+
+* 在 Gitee Fork 项目到自己的仓库
+* 把 fork 过去的项目也就是你的项目 pull 到你的本地
+* 修改代码
+* commit 代码，push 到自己的库
+* 登录 Gitee 在你首页可以看到一个 pull request 按钮，点击它，填写一些说明信息，然后提交
+* 等待维护者合并或者关闭
+
+## 9.2 反馈问题
+
+欢迎提交[ISSUE](https://gitee.com/lxp135/minio-plus/issues) ，请写清楚问题的具体原因，重现步骤和环境。
 
 # 10 参考资料 | Reference
 
