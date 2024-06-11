@@ -1,7 +1,6 @@
 package org.liuxp.minioplus.core.engine;
 
 import cn.hutool.core.lang.Pair;
-import org.liuxp.minioplus.api.model.dto.FileCheckDTO;
 import org.liuxp.minioplus.api.model.dto.FileMetadataInfoSaveDTO;
 import org.liuxp.minioplus.api.model.vo.CompleteResultVo;
 import org.liuxp.minioplus.api.model.vo.FileCheckResultVo;
@@ -19,12 +18,14 @@ public interface StorageEngineService {
 
     /**
      * 上传任务初始化
-     *
-     * @param dto dto
+     * @param fileMd5 文件md5
+     * @param fullFileName 文件名（含扩展名）
+     * @param fileSize 文件长度
+     * @param isPrivate 是否私有 false:否 true:是
      * @param userId  用户编号
      * @return {@link FileCheckResultVo}
      */
-    FileCheckResultVo init(FileCheckDTO dto,String userId);
+    FileCheckResultVo init(String fileMd5, String fullFileName, long fileSize, Boolean isPrivate,String userId);
 
 
     /**

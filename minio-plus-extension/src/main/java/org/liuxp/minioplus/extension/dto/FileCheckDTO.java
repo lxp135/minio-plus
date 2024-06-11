@@ -1,4 +1,4 @@
-package org.liuxp.minioplus.api.model.dto;
+package org.liuxp.minioplus.extension.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

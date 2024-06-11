@@ -1,7 +1,6 @@
 package org.liuxp.minioplus.api;
 
 import cn.hutool.core.lang.Pair;
-import org.liuxp.minioplus.api.model.dto.FileCheckDTO;
 import org.liuxp.minioplus.api.model.dto.FileMetadataInfoDTO;
 import org.liuxp.minioplus.api.model.dto.FileSaveDTO;
 import org.liuxp.minioplus.api.model.vo.CompleteResultVo;
@@ -20,21 +19,21 @@ public interface StorageService {
 
     /**
      * 上传任务初始化
-     *
-     * @param dto dto
+     * @param fileMd5 文件md5
+     * @param fullFileName 文件名（含扩展名）
+     * @param fileSize 文件长度
+     * @param isPrivate 是否私有 false:否 true:是
      * @param userId  用户编号
      * @return {@link FileCheckResultVo}
      */
-    FileCheckResultVo init(FileCheckDTO dto, String userId);
+    FileCheckResultVo init(String fileMd5, String fullFileName, long fileSize, Boolean isPrivate, String userId);
 
 
     /**
      * 合并已分块的文件
-     *
      * @param fileKey 文件关键
      * @param partMd5List 文件分块md5列表
      * @param userId  用户编号
-     *
      * @return {@link CompleteResultVo}
      */
     CompleteResultVo complete(String fileKey, List<String> partMd5List,String userId);
@@ -52,7 +51,7 @@ public interface StorageService {
      *
      * @param fileKey 文件KEY
      * @param userId  用户编号
-     * @return 地址
+     * @return 文件下载地址
      */
     String download(String fileKey, String userId);
 
@@ -61,7 +60,7 @@ public interface StorageService {
      *
      * @param fileKey 文件KEY
      * @param userId  用户编号
-     * @return 地址
+     * @return 原图地址
      */
     String image(String fileKey, String userId);
 
@@ -70,7 +69,7 @@ public interface StorageService {
      *
      * @param fileKey 文件KEY
      * @param userId  用户编号
-     * @return 地址
+     * @return 缩略图地址
      */
     String preview(String fileKey, String userId);
 

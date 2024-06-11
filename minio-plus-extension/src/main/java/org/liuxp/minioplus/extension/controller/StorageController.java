@@ -5,8 +5,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.liuxp.minioplus.api.StorageService;
-import org.liuxp.minioplus.api.model.dto.FileCheckDTO;
-import org.liuxp.minioplus.api.model.dto.FileCompleteDTO;
+import org.liuxp.minioplus.extension.dto.FileCheckDTO;
+import org.liuxp.minioplus.extension.dto.FileCompleteDTO;
 import org.liuxp.minioplus.api.model.vo.CompleteResultVo;
 import org.liuxp.minioplus.api.model.vo.FileCheckResultVo;
 import org.liuxp.minioplus.extension.context.Response;
@@ -55,7 +55,7 @@ public class StorageController {
         // 取得当前登录用户信息
         String userId = "mockUser";
 
-        FileCheckResultVo resultVo = storageService.init(fileCheckDTO,userId);
+        FileCheckResultVo resultVo = storageService.init(fileCheckDTO.getFileMd5(),fileCheckDTO.getFullFileName(),fileCheckDTO.getFileSize(),fileCheckDTO.getIsPrivate(),userId);
 
         return Response.success(resultVo);
     }

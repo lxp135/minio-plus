@@ -9,22 +9,21 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.http.HttpUtil;
-import org.liuxp.minioplus.api.model.dto.FileCheckDTO;
-import org.liuxp.minioplus.api.model.vo.CompleteResultVo;
-import org.liuxp.minioplus.api.model.vo.FileCheckResultVo;
-import org.liuxp.minioplus.common.config.MinioPlusProperties;
+import org.liuxp.minioplus.api.StorageService;
 import org.liuxp.minioplus.api.model.dto.FileMetadataInfoDTO;
 import org.liuxp.minioplus.api.model.dto.FileMetadataInfoSaveDTO;
 import org.liuxp.minioplus.api.model.dto.FileSaveDTO;
+import org.liuxp.minioplus.api.model.vo.CompleteResultVo;
+import org.liuxp.minioplus.api.model.vo.FileCheckResultVo;
+import org.liuxp.minioplus.api.model.vo.FileMetadataInfoVo;
+import org.liuxp.minioplus.common.config.MinioPlusProperties;
 import org.liuxp.minioplus.common.enums.MinioPlusErrorCode;
 import org.liuxp.minioplus.common.enums.StorageBucketEnums;
 import org.liuxp.minioplus.common.exception.MinioPlusException;
-import org.liuxp.minioplus.core.common.utils.ContentTypeUtil;
 import org.liuxp.minioplus.core.common.utils.CommonUtil;
-import org.liuxp.minioplus.api.model.vo.FileMetadataInfoVo;
+import org.liuxp.minioplus.core.common.utils.ContentTypeUtil;
 import org.liuxp.minioplus.core.engine.StorageEngineService;
 import org.liuxp.minioplus.core.repository.MetadataRepository;
-import org.liuxp.minioplus.api.StorageService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -58,8 +57,12 @@ public class StorageServiceImpl implements StorageService {
     MinioPlusProperties properties;
 
     @Override
-    public FileCheckResultVo init(FileCheckDTO dto, String userId) {
-        FileCheckResultVo resultVo =  storageEngineService.init(dto,userId);
+    public FileCheckResultVo init(String fileMd5, String fullFileName, long fileSize, Boolean isPrivate, String userId) {
+
+        // isPrivate 为空时，设置为 false
+        isPrivate = isPrivate!=null && isPrivate ;
+
+        FileCheckResultVo resultVo =  storageEngineService.init(fileMd5,fullFileName,fileSize,isPrivate,userId);
 
         if(resultVo!=null){
             for (FileCheckResultVo.Part part : resultVo.getPartList()) {

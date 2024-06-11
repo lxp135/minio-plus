@@ -6,6 +6,14 @@ import cn.hutool.core.lang.Pair;
 import cn.hutool.core.text.CharSequenceUtil;
 import cn.hutool.core.util.IdUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.liuxp.minioplus.api.model.bo.CreateUploadUrlReqBO;
+import org.liuxp.minioplus.api.model.bo.CreateUploadUrlRespBO;
+import org.liuxp.minioplus.api.model.dto.FileMetadataInfoDTO;
+import org.liuxp.minioplus.api.model.dto.FileMetadataInfoSaveDTO;
+import org.liuxp.minioplus.api.model.dto.FileMetadataInfoUpdateDTO;
+import org.liuxp.minioplus.api.model.vo.CompleteResultVo;
+import org.liuxp.minioplus.api.model.vo.FileCheckResultVo;
+import org.liuxp.minioplus.api.model.vo.FileMetadataInfoVo;
 import org.liuxp.minioplus.common.config.MinioPlusProperties;
 import org.liuxp.minioplus.common.enums.MinioPlusErrorCode;
 import org.liuxp.minioplus.common.enums.StorageBucketEnums;
@@ -13,15 +21,6 @@ import org.liuxp.minioplus.common.exception.MinioPlusException;
 import org.liuxp.minioplus.core.common.utils.CommonUtil;
 import org.liuxp.minioplus.core.engine.StorageEngineService;
 import org.liuxp.minioplus.core.repository.MetadataRepository;
-import org.liuxp.minioplus.api.model.bo.CreateUploadUrlReqBO;
-import org.liuxp.minioplus.api.model.bo.CreateUploadUrlRespBO;
-import org.liuxp.minioplus.api.model.dto.FileCheckDTO;
-import org.liuxp.minioplus.api.model.dto.FileMetadataInfoDTO;
-import org.liuxp.minioplus.api.model.dto.FileMetadataInfoSaveDTO;
-import org.liuxp.minioplus.api.model.dto.FileMetadataInfoUpdateDTO;
-import org.liuxp.minioplus.api.model.vo.CompleteResultVo;
-import org.liuxp.minioplus.api.model.vo.FileCheckResultVo;
-import org.liuxp.minioplus.api.model.vo.FileMetadataInfoVo;
 import org.liuxp.minioplus.s3.def.ListParts;
 import org.liuxp.minioplus.s3.def.MinioS3Client;
 import org.springframework.beans.BeanUtils;
@@ -61,15 +60,19 @@ public class StorageEngineServiceImpl implements StorageEngineService {
      * 3.其他用户上传过，未完成，断点续传，新增文件元数据
      * 4.从未上传过，下发上传链接，新增文件元数据
      *
-     * @param dto 文件预检查入参DTO
+     * @param fileMd5 文件md5
+     * @param fullFileName 文件名（含扩展名）
+     * @param fileSize 文件长度
+     * @param isPrivate 是否私有 false:否 true:是
+     *
      * @return {@link FileCheckResultVo}
      */
     @Override
-    public FileCheckResultVo init(FileCheckDTO dto,String userId) {
+    public FileCheckResultVo init(String fileMd5, String fullFileName, long fileSize, Boolean isPrivate,String userId) {
 
         // 根据MD5查询文件是否已上传过
         FileMetadataInfoDTO searchDTO = new FileMetadataInfoDTO();
-        searchDTO.setFileMd5(dto.getFileMd5());
+        searchDTO.setFileMd5(fileMd5);
         List<FileMetadataInfoVo> list = metadataRepository.list(searchDTO);
 
         FileMetadataInfoSaveDTO saveDTO = new FileMetadataInfoSaveDTO();
@@ -81,8 +84,8 @@ public class StorageEngineServiceImpl implements StorageEngineService {
                 if(fileMetadataInfoVo.getIsFinished()){
                     // 秒传
                     saveDTO.setFileKey(IdUtil.fastSimpleUUID()); // 文件KEY
-                    saveDTO.setFileMd5(dto.getFileMd5()); // 文件md5
-                    saveDTO.setFileName(dto.getFullFileName()); // 文件名
+                    saveDTO.setFileMd5(fileMd5); // 文件md5
+                    saveDTO.setFileName(fullFileName); // 文件名
                     saveDTO.setFileMimeType(fileMetadataInfoVo.getFileMimeType()); // MIME类型
                     saveDTO.setFileSuffix(fileMetadataInfoVo.getFileSuffix()); // 文件后缀
                     saveDTO.setFileSize(fileMetadataInfoVo.getFileSize()); // 文件长度
@@ -90,7 +93,7 @@ public class StorageEngineServiceImpl implements StorageEngineService {
                     saveDTO.setStoragePath(fileMetadataInfoVo.getStoragePath()); // 存储桶路径
                     saveDTO.setIsFinished(fileMetadataInfoVo.getIsFinished()); // 状态 0:未完成 1:已完成
                     saveDTO.setIsPreview(fileMetadataInfoVo.getIsPreview()); // 预览图 0:无 1:有
-                    saveDTO.setIsPrivate(dto.getIsPrivate()); // 是否私有 0:否 1:是
+                    saveDTO.setIsPrivate(isPrivate); // 是否私有 0:否 1:是
                     saveDTO.setCreateUser(userId); // 创建人
                     saveDTO.setUpdateUser(userId); // 修改人
 
@@ -124,9 +127,9 @@ public class StorageEngineServiceImpl implements StorageEngineService {
                 // 3.其他用户上传过，未完成，断点续传，新增文件元数据
                 // 插入自己的元数据
                 BeanUtils.copyProperties(uploadingMetadata, saveDTO);
-                saveDTO.setFileName(dto.getFullFileName());
+                saveDTO.setFileName(fullFileName);
                 saveDTO.setCreateUser(userId);
-                saveDTO.setIsPrivate(dto.getIsPrivate());
+                saveDTO.setIsPrivate(isPrivate);
                 saveDTO.setUploadTaskId(respBO.getUploadTaskId());
                 FileMetadataInfoVo metadataInfoVo = metadataRepository.save(saveDTO);
 
@@ -147,10 +150,14 @@ public class StorageEngineServiceImpl implements StorageEngineService {
             }
         }else{
             // 4.从未上传过，下发上传链接，新增文件元数据
-            BeanUtils.copyProperties(dto, bo);
+
+            bo.setFileMd5(fileMd5);
+            bo.setFileSize(fileSize);
+            bo.setFullFileName(fullFileName);
+
             CreateUploadUrlRespBO createUploadUrlRespBO = this.createUploadUrl(bo);
 
-            FileMetadataInfoVo metadataInfo = saveMetadataInfo(saveDTO, createUploadUrlRespBO, dto, userId);
+            FileMetadataInfoVo metadataInfo = saveMetadataInfo(saveDTO, createUploadUrlRespBO,  fileMd5,  fullFileName,  fileSize,  isPrivate, userId);
 
             return this.buildResult(metadataInfo, createUploadUrlRespBO.getParts(), createUploadUrlRespBO.getPartCount(), Boolean.FALSE);
         }
@@ -197,28 +204,31 @@ public class StorageEngineServiceImpl implements StorageEngineService {
     /**
      * 保存文件源信息
      *
-     * @param saveDTO  元数据保存实体类
-     * @param createUploadUrlRespBO   上传链接参数
-     * @param dto    文件检测参数
-     * @param userId       用户
+     * @param saveDTO                   元数据保存实体类
+     * @param createUploadUrlRespBO     上传链接参数
+     * @param fileMd5                   文件md5
+     * @param fullFileName              文件名（含扩展名）
+     * @param fileSize                  文件长度
+     * @param isPrivate                 是否私有 false:否 true:是
+     * @param userId                    用户编号
      * @return {@link FileMetadataInfoVo}
      */
     private FileMetadataInfoVo saveMetadataInfo(FileMetadataInfoSaveDTO saveDTO, CreateUploadUrlRespBO createUploadUrlRespBO,
-                                                FileCheckDTO dto, String userId) {
+                                                String fileMd5, String fullFileName, long fileSize, boolean isPrivate, String userId) {
         // 保存文件元数据
-        String suffix = FileUtil.getSuffix(dto.getFullFileName());
+        String suffix = FileUtil.getSuffix(fullFileName);
         // 文件KEY
         saveDTO.setFileKey(createUploadUrlRespBO.getFileKey());
         // 文件md5
-        saveDTO.setFileMd5(dto.getFileMd5());
+        saveDTO.setFileMd5(fileMd5);
         // 文件名
-        saveDTO.setFileName(dto.getFullFileName());
+        saveDTO.setFileName(fullFileName);
         // MIME类型
-        saveDTO.setFileMimeType(FileUtil.getMimeType(dto.getFullFileName()));
+        saveDTO.setFileMimeType(FileUtil.getMimeType(fullFileName));
         // 文件后缀
         saveDTO.setFileSuffix(suffix);
         // 文件长度
-        saveDTO.setFileSize(dto.getFileSize());
+        saveDTO.setFileSize(fileSize);
         // 存储桶
         saveDTO.setStorageBucket(createUploadUrlRespBO.getBucketName());
         // 存储路径
@@ -234,7 +244,7 @@ public class StorageEngineServiceImpl implements StorageEngineService {
         // 预览图 0:无 1:有
         saveDTO.setIsPreview(saveDTO.getStorageBucket().equals(StorageBucketEnums.IMAGE.getCode()) && properties.getThumbnail().isEnable());
         // 是否私有 0:否 1:是
-        saveDTO.setIsPrivate(dto.getIsPrivate());
+        saveDTO.setIsPrivate(isPrivate);
         // 创建人
         saveDTO.setCreateUser(userId);
         // 修改人
