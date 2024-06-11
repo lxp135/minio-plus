@@ -9,6 +9,10 @@
 <script src="js/upload.js"></script>
 <body>
 <div id="app">
+    <div>
+        <label for="loginUser">登录用户：</label><input type="text" v-model="loginUser" id="loginUser">
+    </div>
+    <br>
     <input type="file" @click="clearState" id="upload">
     <button @click="checkFile">检查</button>
     <button @click="uploadFile(false)" :disabled="partList.length === 0">正常上传</button>
@@ -49,6 +53,7 @@
                 partSize: null,
                 fileSize: null,
                 previewUrl: null,
+                loginUser:'mockUser01'
             })
             /**
              * 文件检查
@@ -68,7 +73,8 @@
                 fetch("/storage/upload/init", {
                     method: "POST",
                     headers: {
-                        "Content-Type": "application/json"
+                        "Content-Type": "application/json",
+                        "Authorization":state.loginUser
                     },
                     body: JSON.stringify({
                         fileMd5: fileMd5,
@@ -154,7 +160,8 @@
                 fetch(`/storage/upload/complete/${state.uploadId}`, {
                     method: "POST",
                     headers: {
-                        "Content-Type": "application/json"
+                        "Content-Type": "application/json",
+                        "Authorization":state.loginUser
                     },
                     body: JSON.stringify({
                         partMd5List: partMd5List
@@ -182,11 +189,38 @@
              * 下载文件
              */
             const download = () => {
-                window.location.href = `/storage/download/${state.uploadId}`;
+
+                fetch(`/storage/download/${state.uploadId}`, {
+                    method: "GET",
+                    headers: {
+                        "Authorization":state.loginUser
+                    },
+                    redirect:'follow'
+                }).then(data => {
+                    console.log(data);
+                    window.location.href = data.url;
+                }).catch(err => {
+                    console.log(err);
+                });
+
+
             }
-            // 文件预览
+            // 图片预览
             const preview = () => {
-                state.previewUrl = `/storage/preview/original/${state.uploadId}`;
+
+                fetch(`/storage/preview/${state.uploadId}`, {
+                    method: "GET",
+                    headers: {
+                        "Authorization":state.loginUser
+                    },
+                    redirect:'follow'
+                }).then(data => {
+                    console.log(data);
+                    state.previewUrl = data.url;
+                }).catch(err => {
+                    console.log(err);
+                });
+
             }
             // 删除文件
             const remove = () => {

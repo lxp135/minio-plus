@@ -5,6 +5,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.liuxp.minioplus.api.StorageService;
+import org.liuxp.minioplus.extension.context.UserHolder;
 import org.liuxp.minioplus.extension.dto.FileCheckDTO;
 import org.liuxp.minioplus.extension.dto.FileCompleteDTO;
 import org.liuxp.minioplus.api.model.vo.CompleteResultVo;
@@ -53,7 +54,7 @@ public class StorageController {
     public Response<FileCheckResultVo> init(@RequestBody @Validated FileCheckDTO fileCheckDTO) {
 
         // 取得当前登录用户信息
-        String userId = "mockUser";
+        String userId = UserHolder.get();
 
         FileCheckResultVo resultVo = storageService.init(fileCheckDTO.getFileMd5(),fileCheckDTO.getFullFileName(),fileCheckDTO.getFileSize(),fileCheckDTO.getIsPrivate(),userId);
 
@@ -72,7 +73,7 @@ public class StorageController {
     public Response<Object> complete(@PathVariable("fileKey") String fileKey, @RequestBody FileCompleteDTO fileCompleteDTO) {
 
         // 取得当前登录用户信息
-        String userId = "mockUser";
+        String userId = UserHolder.get();
 
         // 打印调试日志
         log.debug("合并文件开始fileKey="+fileKey+",partMd5List="+fileCompleteDTO.getPartMd5List());
@@ -115,7 +116,8 @@ public class StorageController {
     public String download(@PathVariable String fileKey)  {
 
         // 取得当前登录用户信息
-        String userId = "mockUser";
+        String userId = UserHolder.get();
+
         // 取得文件读取路径
         return REDIRECT_PREFIX + storageService.download(fileKey, userId);
     }
@@ -126,11 +128,12 @@ public class StorageController {
      * @return 原图地址
      */
     @ApiOperation(value = "图片预览 - 原图")
-    @GetMapping("/preview/original/{fileKey}")
+    @GetMapping("/image/{fileKey}")
     public String previewOriginal(@PathVariable String fileKey) {
 
         // 取得当前登录用户信息
-        String userId = "mockUser";
+        String userId = UserHolder.get();
+
         // 取得文件读取路径
         return REDIRECT_PREFIX + storageService.image(fileKey, userId);
     }
@@ -141,11 +144,12 @@ public class StorageController {
      * @return 缩略图地址
      */
     @ApiOperation(value = "图片预览 - 缩略图")
-    @GetMapping("/preview/medium/{fileKey}")
+    @GetMapping("/preview/{fileKey}")
     public String previewMedium(@PathVariable String fileKey) {
 
         // 取得当前登录用户信息
-        String userId = "mockUser";
+        String userId = UserHolder.get();
+
         // 取得文件读取路径
         return REDIRECT_PREFIX + storageService.preview(fileKey, userId);
     }

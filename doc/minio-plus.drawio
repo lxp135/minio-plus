@@ -1,6 +1,6 @@
-<mxfile host="Electron" modified="2024-06-07T07:27:04.557Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.7.5 Chrome/114.0.5735.289 Electron/25.8.1 Safari/537.36" etag="D3NqR_juW6TF88F4hGhN" version="21.7.5" type="device" pages="7">
+<mxfile host="Electron" modified="2024-06-11T08:09:53.078Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.7.5 Chrome/114.0.5735.289 Electron/25.8.1 Safari/537.36" etag="vK7_c2ukX2-1xsmpvHLO" version="21.7.5" type="device" pages="7">
   <diagram name="文件/图片下载时序图" id="IS7WuVfpSdjpWJYDzwDI">
-    <mxGraphModel dx="1372" dy="841" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1100" dy="842" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -109,7 +109,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="xhg19-cS3vChz7J91BQU" name="文件上传时序图">
-    <mxGraphModel dx="1372" dy="841" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1100" dy="842" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -262,15 +262,15 @@
             <mxPoint x="485" y="608" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="-wSVdkolJl0VM9dSvFRS-1" value="" style="html=1;points=[[0,0,0,0,5],[0,1,0,0,-5],[1,0,0,0,5],[1,1,0,0,-5]];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};" vertex="1" parent="1">
+        <mxCell id="-wSVdkolJl0VM9dSvFRS-1" value="" style="html=1;points=[[0,0,0,0,5],[0,1,0,0,-5],[1,0,0,0,5],[1,1,0,0,-5]];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};" parent="1" vertex="1">
           <mxGeometry x="555" y="639" width="10" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="-wSVdkolJl0VM9dSvFRS-2" value="合并文件" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;entryX=0;entryY=0;entryDx=0;entryDy=5;" edge="1" parent="1" target="-wSVdkolJl0VM9dSvFRS-1">
+        <mxCell id="-wSVdkolJl0VM9dSvFRS-2" value="合并文件" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;entryX=0;entryY=0;entryDx=0;entryDy=5;" parent="1" target="-wSVdkolJl0VM9dSvFRS-1" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="365" y="644" as="sourcePoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="-wSVdkolJl0VM9dSvFRS-3" value="合并文件结果" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;curved=0;rounded=0;exitX=0;exitY=1;exitDx=0;exitDy=-5;" edge="1" parent="1" source="-wSVdkolJl0VM9dSvFRS-1">
+        <mxCell id="-wSVdkolJl0VM9dSvFRS-3" value="合并文件结果" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;curved=0;rounded=0;exitX=0;exitY=1;exitDx=0;exitDy=-5;" parent="1" source="-wSVdkolJl0VM9dSvFRS-1" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="365" y="664" as="targetPoint" />
           </mxGeometry>
@@ -279,7 +279,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="O2Dvrrli3WKo_xqLgD6Y" name="图片上传时序图">
-    <mxGraphModel dx="1372" dy="841" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1100" dy="842" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -358,14 +358,14 @@
     </mxGraphModel>
   </diagram>
   <diagram id="C3TxWB7rWC2Go-Cd--VL" name="文件上传活动图">
-    <mxGraphModel dx="1372" dy="841" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1100" dy="842" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="C4ZSU_w1gQOmh6ewiK0h-1" value="" style="ellipse;html=1;shape=startState;fillColor=#000000;strokeColor=#ff0000;" parent="1" vertex="1">
           <mxGeometry x="144" y="40" width="30" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="C4ZSU_w1gQOmh6ewiK0h-2" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;" parent="1" source="C4ZSU_w1gQOmh6ewiK0h-1" edge="1" target="eImii3Ch162-0qwuOzGB-1">
+        <mxCell id="C4ZSU_w1gQOmh6ewiK0h-2" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;" parent="1" source="C4ZSU_w1gQOmh6ewiK0h-1" target="eImii3Ch162-0qwuOzGB-1" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="159" y="130" as="targetPoint" />
           </mxGeometry>
@@ -373,10 +373,10 @@
         <mxCell id="C4ZSU_w1gQOmh6ewiK0h-3" value="" style="ellipse;html=1;shape=endState;fillColor=#000000;strokeColor=#ff0000;" parent="1" vertex="1">
           <mxGeometry x="200" y="770" width="30" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="eImii3Ch162-0qwuOzGB-1" value="Activity" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;fontColor=#000000;fillColor=#ffffc0;strokeColor=#ff0000;" vertex="1" parent="1">
+        <mxCell id="eImii3Ch162-0qwuOzGB-1" value="Activity" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;fontColor=#000000;fillColor=#ffffc0;strokeColor=#ff0000;" parent="1" vertex="1">
           <mxGeometry x="99" y="130" width="120" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="eImii3Ch162-0qwuOzGB-2" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;" edge="1" source="eImii3Ch162-0qwuOzGB-1" parent="1">
+        <mxCell id="eImii3Ch162-0qwuOzGB-2" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;" parent="1" source="eImii3Ch162-0qwuOzGB-1" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="159" y="230" as="targetPoint" />
           </mxGeometry>
@@ -489,72 +489,72 @@
     </mxGraphModel>
   </diagram>
   <diagram id="4VlLv3Fkj26ipgTOubD9" name="开发计划">
-    <mxGraphModel dx="1372" dy="841" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1100" dy="842" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="SrG1LAP0XBL15DKdnUUl-2" value="minio-s3-api-official &lt;br&gt;自动化测试用例" style="shape=note2;boundedLbl=1;whiteSpace=wrap;html=1;size=25;verticalAlign=top;align=center;" parent="1" vertex="1">
-          <mxGeometry x="200" y="40" width="160" height="60" as="geometry" />
+          <mxGeometry x="200" y="40" width="160" height="80" as="geometry" />
         </mxCell>
         <mxCell id="SrG1LAP0XBL15DKdnUUl-3" value="单元测试" style="resizeWidth=1;part=1;strokeColor=none;fillColor=none;align=left;spacingLeft=5;" parent="SrG1LAP0XBL15DKdnUUl-2" vertex="1">
           <mxGeometry width="160" height="25" relative="1" as="geometry" />
         </mxCell>
         <mxCell id="SrG1LAP0XBL15DKdnUUl-4" value="项目文档部署" style="shape=note2;boundedLbl=1;whiteSpace=wrap;html=1;size=25;verticalAlign=top;align=center;" parent="1" vertex="1">
-          <mxGeometry x="770" y="40" width="160" height="60" as="geometry" />
+          <mxGeometry x="770" y="40" width="160" height="80" as="geometry" />
         </mxCell>
         <mxCell id="SrG1LAP0XBL15DKdnUUl-5" value="项目官网" style="resizeWidth=1;part=1;strokeColor=none;fillColor=none;align=left;spacingLeft=5;" parent="SrG1LAP0XBL15DKdnUUl-4" vertex="1">
           <mxGeometry width="160" height="25" relative="1" as="geometry" />
         </mxCell>
         <mxCell id="SrG1LAP0XBL15DKdnUUl-6" value="演示程序部署" style="shape=note2;boundedLbl=1;whiteSpace=wrap;html=1;size=25;verticalAlign=top;align=center;" parent="1" vertex="1">
-          <mxGeometry x="770" y="130" width="160" height="60" as="geometry" />
+          <mxGeometry x="770" y="150" width="160" height="80" as="geometry" />
         </mxCell>
         <mxCell id="SrG1LAP0XBL15DKdnUUl-7" value="项目官网" style="resizeWidth=1;part=1;strokeColor=none;fillColor=none;align=left;spacingLeft=5;" parent="SrG1LAP0XBL15DKdnUUl-6" vertex="1">
           <mxGeometry width="160" height="25" relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="SrG1LAP0XBL15DKdnUUl-8" value="Maven Repository&lt;br&gt;提交中央仓库" style="shape=note2;boundedLbl=1;whiteSpace=wrap;html=1;size=25;verticalAlign=top;align=center;" parent="1" vertex="1">
-          <mxGeometry x="580" y="40" width="160" height="60" as="geometry" />
+        <mxCell id="SrG1LAP0XBL15DKdnUUl-8" value="Maven Repository&lt;br&gt;发布中央仓库流程跑通" style="shape=note2;boundedLbl=1;whiteSpace=wrap;html=1;size=25;verticalAlign=top;align=center;fillColor=#cdeb8b;strokeColor=#36393d;" parent="1" vertex="1">
+          <mxGeometry x="580" y="40" width="160" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="SrG1LAP0XBL15DKdnUUl-9" value="发布" style="resizeWidth=1;part=1;strokeColor=none;fillColor=none;align=left;spacingLeft=5;" parent="SrG1LAP0XBL15DKdnUUl-8" vertex="1">
+        <mxCell id="SrG1LAP0XBL15DKdnUUl-9" value="发布（已完成）" style="resizeWidth=1;part=1;strokeColor=none;fillColor=none;align=left;spacingLeft=5;" parent="SrG1LAP0XBL15DKdnUUl-8" vertex="1">
           <mxGeometry width="160" height="25" relative="1" as="geometry" />
         </mxCell>
         <mxCell id="SrG1LAP0XBL15DKdnUUl-13" value="minio-s3-api-custom&lt;br&gt;模块开发" style="shape=note2;boundedLbl=1;whiteSpace=wrap;html=1;size=25;verticalAlign=top;align=center;" parent="1" vertex="1">
-          <mxGeometry x="10" y="40" width="160" height="60" as="geometry" />
+          <mxGeometry x="10" y="40" width="160" height="80" as="geometry" />
         </mxCell>
         <mxCell id="SrG1LAP0XBL15DKdnUUl-14" value="功能开发" style="resizeWidth=1;part=1;strokeColor=none;fillColor=none;align=left;spacingLeft=5;" parent="SrG1LAP0XBL15DKdnUUl-13" vertex="1">
           <mxGeometry width="160" height="25" relative="1" as="geometry" />
         </mxCell>
         <mxCell id="SrG1LAP0XBL15DKdnUUl-16" value="minio-s3-api-custom&lt;br&gt;自动化测试用例" style="shape=note2;boundedLbl=1;whiteSpace=wrap;html=1;size=25;verticalAlign=top;align=center;" parent="1" vertex="1">
-          <mxGeometry x="200" y="130" width="160" height="60" as="geometry" />
+          <mxGeometry x="200" y="150" width="160" height="80" as="geometry" />
         </mxCell>
         <mxCell id="SrG1LAP0XBL15DKdnUUl-17" value="单元测试" style="resizeWidth=1;part=1;strokeColor=none;fillColor=none;align=left;spacingLeft=5;" parent="SrG1LAP0XBL15DKdnUUl-16" vertex="1">
           <mxGeometry width="160" height="25" relative="1" as="geometry" />
         </mxCell>
         <mxCell id="SrG1LAP0XBL15DKdnUUl-18" value="minio-plus-core&lt;br&gt;自动化测试用例" style="shape=note2;boundedLbl=1;whiteSpace=wrap;html=1;size=25;verticalAlign=top;align=center;" parent="1" vertex="1">
-          <mxGeometry x="200" y="220" width="160" height="60" as="geometry" />
+          <mxGeometry x="200" y="260" width="160" height="80" as="geometry" />
         </mxCell>
         <mxCell id="SrG1LAP0XBL15DKdnUUl-19" value="单元测试" style="resizeWidth=1;part=1;strokeColor=none;fillColor=none;align=left;spacingLeft=5;" parent="SrG1LAP0XBL15DKdnUUl-18" vertex="1">
           <mxGeometry width="160" height="25" relative="1" as="geometry" />
         </mxCell>
         <mxCell id="SrG1LAP0XBL15DKdnUUl-20" value="使用手册" style="shape=note2;boundedLbl=1;whiteSpace=wrap;html=1;size=25;verticalAlign=top;align=center;" parent="1" vertex="1">
-          <mxGeometry x="390" y="40" width="160" height="60" as="geometry" />
+          <mxGeometry x="390" y="40" width="160" height="80" as="geometry" />
         </mxCell>
         <mxCell id="SrG1LAP0XBL15DKdnUUl-21" value="文档" style="resizeWidth=1;part=1;strokeColor=none;fillColor=none;align=left;spacingLeft=5;" parent="SrG1LAP0XBL15DKdnUUl-20" vertex="1">
           <mxGeometry width="160" height="25" relative="1" as="geometry" />
         </mxCell>
         <mxCell id="SrG1LAP0XBL15DKdnUUl-22" value="开发手册" style="shape=note2;boundedLbl=1;whiteSpace=wrap;html=1;size=25;verticalAlign=top;align=center;" parent="1" vertex="1">
-          <mxGeometry x="390" y="130" width="160" height="60" as="geometry" />
+          <mxGeometry x="390" y="150" width="160" height="80" as="geometry" />
         </mxCell>
         <mxCell id="SrG1LAP0XBL15DKdnUUl-23" value="文档" style="resizeWidth=1;part=1;strokeColor=none;fillColor=none;align=left;spacingLeft=5;" parent="SrG1LAP0XBL15DKdnUUl-22" vertex="1">
           <mxGeometry width="160" height="25" relative="1" as="geometry" />
         </mxCell>
         <mxCell id="SrG1LAP0XBL15DKdnUUl-24" value="新闻、介绍文章" style="shape=note2;boundedLbl=1;whiteSpace=wrap;html=1;size=25;verticalAlign=top;align=center;" parent="1" vertex="1">
-          <mxGeometry x="390" y="220" width="160" height="60" as="geometry" />
+          <mxGeometry x="390" y="260" width="160" height="80" as="geometry" />
         </mxCell>
         <mxCell id="SrG1LAP0XBL15DKdnUUl-25" value="文档" style="resizeWidth=1;part=1;strokeColor=none;fillColor=none;align=left;spacingLeft=5;" parent="SrG1LAP0XBL15DKdnUUl-24" vertex="1">
           <mxGeometry width="160" height="25" relative="1" as="geometry" />
         </mxCell>
         <mxCell id="0HtNRO_DIxhBXSRWM3wU-1" value="漂亮的前端演示页面制作" style="shape=note2;boundedLbl=1;whiteSpace=wrap;html=1;size=25;verticalAlign=top;align=center;" parent="1" vertex="1">
-          <mxGeometry x="10" y="130" width="160" height="60" as="geometry" />
+          <mxGeometry x="10" y="150" width="160" height="80" as="geometry" />
         </mxCell>
         <mxCell id="0HtNRO_DIxhBXSRWM3wU-2" value="功能开发" style="resizeWidth=1;part=1;strokeColor=none;fillColor=none;align=left;spacingLeft=5;" parent="0HtNRO_DIxhBXSRWM3wU-1" vertex="1">
           <mxGeometry width="160" height="25" relative="1" as="geometry" />

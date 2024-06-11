@@ -286,6 +286,10 @@ CREATE TABLE `file_metadata_info` (
 
 # 6 使用 | Getting Started
 
+## 6.1 使用 minio-plus-all-spring-boot-starter
+
+## 6.2 使用 minio-plus-core-spring-boot-starter
+
 # 7 代码托管 | Managed Code
 
 * [https://gitee.com/lxp135/minio-plus](https://gitee.com/lxp135/minio-plus/)
