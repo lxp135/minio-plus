@@ -51,33 +51,17 @@
         <maven-source-plugin.version>3.0.1</maven-source-plugin.version>
         <revision>0.1.1</revision>
         <spring-boot.version>2.6.11</spring-boot.version>
-        <spring-cloud.version>2021.0.5</spring-cloud.version>
-        <spring-cloud-alibaba.version>2021.0.4.0</spring-cloud-alibaba.version>
-        <mybatisplus.version>3.5.3.1</mybatisplus.version>
-        <lombok.version>1.18.24</lombok.version>
+        <mybatisplus.version>3.5.7</mybatisplus.version>
+        <lombok.version>1.18.32</lombok.version>
         <hutool.version>5.8.28</hutool.version>
         <knife4j.version>2.0.2</knife4j.version>
         <swagger.version>1.5.22</swagger.version>
         <minio.version>8.3.3</minio.version>
-        <thumbnailator.version>0.4.8</thumbnailator.version>
+        <thumbnailator.version>0.4.20</thumbnailator.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring-cloud.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>com.alibaba.cloud</groupId>
-                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
-                <version>${spring-cloud-alibaba.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
             <!-- spring-boot-dependencies -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -131,12 +115,13 @@
                 <artifactId>minio</artifactId>
                 <version>${minio.version}</version>
             </dependency>
-            <!-- google图片压缩 -->
+            <!-- https://mvnrepository.com/artifact/net.coobird/thumbnailator -->
             <dependency>
                 <groupId>net.coobird</groupId>
                 <artifactId>thumbnailator</artifactId>
                 <version>${thumbnailator.version}</version>
             </dependency>
+            <!-- MinIO Plus 相关 -->
             <dependency>
                 <groupId>me.liuxp</groupId>
                 <artifactId>minio-plus-common</artifactId>
@@ -179,9 +164,6 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
-
-
 
     <build>
         <pluginManagement>
@@ -232,6 +214,10 @@
                 <configuration>
                     <publishingServerId>minioplus</publishingServerId>
                     <tokenAuth>true</tokenAuth>
+                    <excludeArtifacts>
+                        <artifact>minio-plus-application</artifact>
+                        <artifact>minio-plus-application-mysql</artifact>
+                    </excludeArtifacts>
                 </configuration>
             </plugin>
             <!--   source源码插件 -->
