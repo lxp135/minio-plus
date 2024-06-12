@@ -55,7 +55,7 @@
         <spring-cloud-alibaba.version>2021.0.4.0</spring-cloud-alibaba.version>
         <mybatisplus.version>3.5.3.1</mybatisplus.version>
         <lombok.version>1.18.24</lombok.version>
-        <hutool.version>5.8.15</hutool.version>
+        <hutool.version>5.8.28</hutool.version>
         <knife4j.version>2.0.2</knife4j.version>
         <swagger.version>1.5.22</swagger.version>
         <minio.version>8.3.3</minio.version>
