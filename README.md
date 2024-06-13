@@ -316,7 +316,16 @@ CREATE TABLE `file_metadata_info` (
 
 ## 9.2 反馈问题
 
-欢迎提交[ISSUE](https://gitee.com/lxp135/minio-plus/issues) ，请写清楚问题的具体原因，重现步骤和环境。
+欢迎提交**ISSUE**，请写清楚问题的具体原因，重现步骤和环境。
+
+* Gitee Issue 地址 [https://gitee.com/lxp135/minio-plus/issues](https://gitee.com/lxp135/minio-plus/issues)
+* GitHub Issue 地址 [https://github.com/lxp135/minio-plus/issues](https://github.com/lxp135/minio-plus/issues)
+
+## 9.3 微信群
+
+![开发计划](doc/image/wechat_group.jpg)
+
+如果二维码失效，可以加我的微信*movedisk_1*，我会手动拉您入群。
 
 # 10 参考资料 | Reference
 
