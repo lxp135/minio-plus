@@ -1,7 +1,7 @@
 package org.liuxp.minioplus.extension.dto;
 
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -17,7 +17,7 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-@ApiModel("文件完成入参DTO")
+@Schema(description = "文件完成入参DTO")
 public class FileCompleteDTO {
 
     @ApiModelProperty(value = "文件md5", required = true)

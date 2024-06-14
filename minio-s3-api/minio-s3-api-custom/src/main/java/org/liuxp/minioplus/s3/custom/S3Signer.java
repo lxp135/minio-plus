@@ -5,8 +5,8 @@ import cn.hutool.core.util.HexUtil;
 import cn.hutool.core.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
+import jakarta.crypto.Mac;
+import jakarta.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;

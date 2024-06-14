@@ -9,11 +9,11 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>minio-plus-spring-boot-starter</artifactId>
+    <artifactId>minio-plus-spring-boot3-starter</artifactId>
     <packaging>pom</packaging>
 
     <modules>
-        <module>minio-plus-all-spring-boot-starter</module>
+        <module>minio-plus-all-spring-boot3-starter</module>
     </modules>
 
 </project>

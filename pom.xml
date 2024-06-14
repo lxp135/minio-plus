@@ -40,22 +40,22 @@
         <module>minio-plus-common</module>
         <module>minio-plus-core</module>
         <module>minio-plus-extension</module>
-        <module>minio-plus-spring-boot-starter</module>
+        <module>minio-plus-spring-boot3-starter</module>
         <module>minio-s3-api</module>
     </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
         <maven-source-plugin.version>3.0.1</maven-source-plugin.version>
         <revision>0.1.1</revision>
-        <spring-boot.version>2.6.11</spring-boot.version>
+        <spring-boot.version>3.3.0</spring-boot.version>
         <mybatisplus.version>3.5.7</mybatisplus.version>
         <lombok.version>1.18.32</lombok.version>
         <hutool.version>5.8.28</hutool.version>
-        <knife4j.version>2.0.2</knife4j.version>
-        <swagger.version>1.5.22</swagger.version>
+        <knife4j.version>4.5.0</knife4j.version>
+        <knife4j.annotations.version>3.0.3</knife4j.annotations.version>
         <minio.version>8.3.3</minio.version>
         <thumbnailator.version>0.4.20</thumbnailator.version>
     </properties>
@@ -72,7 +72,7 @@
             </dependency>
             <dependency>
                 <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
                 <version>${mybatisplus.version}</version>
             </dependency>
             <dependency>
@@ -88,19 +88,14 @@
             <!--Swagger工具包 knife4j -->
             <dependency>
                 <groupId>com.github.xiaoymin</groupId>
-                <artifactId>knife4j-spring-boot-starter</artifactId>
-                <version>${knife4j.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.github.xiaoymin</groupId>
-                <artifactId>knife4j-annotations</artifactId>
+                <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
                 <version>${knife4j.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/io.swagger/swagger-annotations -->
             <dependency>
-                <groupId>io.swagger</groupId>
-                <artifactId>swagger-annotations</artifactId>
-                <version>${swagger.version}</version>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-annotations</artifactId>
+                <version>${knife4j.annotations.version}</version>
             </dependency>
             <!--  mybatis -->
             <dependency>
@@ -144,7 +139,7 @@
             </dependency>
             <dependency>
                 <groupId>me.liuxp</groupId>
-                <artifactId>minio-plus-all-spring-boot-starter</artifactId>
+                <artifactId>minio-plus-all-spring-boot3-starter</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>

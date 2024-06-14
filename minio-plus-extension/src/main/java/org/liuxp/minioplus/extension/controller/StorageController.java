@@ -3,6 +3,8 @@ package org.liuxp.minioplus.extension.controller;
 import cn.hutool.core.io.IoUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.liuxp.minioplus.api.StorageService;
 import org.liuxp.minioplus.extension.context.UserHolder;
@@ -15,8 +17,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -27,7 +29,7 @@ import java.io.InputStream;
  */
 @Controller
 @RequestMapping("/storage")
-@Api(tags = "TOS对象存储")
+@Tag(name = "TOS对象存储")
 @Slf4j
 public class StorageController {
 
@@ -48,7 +50,7 @@ public class StorageController {
      * @param fileCheckDTO 文件预检查入参
      * @return 检查结果
      */
-    @ApiOperation(value = "上传任务初始化")
+    @Operation(summary = "上传任务初始化")
     @PostMapping("/upload/init")
     @ResponseBody
     public Response<FileCheckResultVo> init(@RequestBody @Validated FileCheckDTO fileCheckDTO) {
@@ -67,7 +69,7 @@ public class StorageController {
      * @param fileCompleteDTO 文件完成入参DTO
      * @return 是否成功
      */
-    @ApiOperation(value = "上传完成")
+    @Operation(summary = "上传完成")
     @PostMapping("/upload/complete/{fileKey}")
     @ResponseBody
     public Response<Object> complete(@PathVariable("fileKey") String fileKey, @RequestBody FileCompleteDTO fileCompleteDTO) {
@@ -88,7 +90,7 @@ public class StorageController {
      * @param request 文件流
      * @return 是否成功
      */
-    @ApiOperation(value = "图片上传")
+    @Operation(summary = "图片上传")
     @PutMapping("/upload/image/{fileKey}")
     @ResponseBody
     public Response<Boolean> uploadImage(@PathVariable String fileKey, HttpServletRequest request) {
@@ -111,7 +113,7 @@ public class StorageController {
      * @param fileKey 文件KEY
      * @return 文件下载地址
      */
-    @ApiOperation(value = "文件下载")
+    @Operation(summary = "文件下载")
     @GetMapping("/download/{fileKey}")
     public String download(@PathVariable String fileKey)  {
 
@@ -127,7 +129,7 @@ public class StorageController {
      * @param fileKey 文件KEY
      * @return 原图地址
      */
-    @ApiOperation(value = "图片预览 - 原图")
+    @Operation(summary = "图片预览 - 原图")
     @GetMapping("/image/{fileKey}")
     public String previewOriginal(@PathVariable String fileKey) {
 
@@ -143,7 +145,7 @@ public class StorageController {
      * @param fileKey 文件KEY
      * @return 缩略图地址
      */
-    @ApiOperation(value = "图片预览 - 缩略图")
+    @Operation(summary = "图片预览 - 缩略图")
     @GetMapping("/preview/{fileKey}")
     public String previewMedium(@PathVariable String fileKey) {
 

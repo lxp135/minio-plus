@@ -5,6 +5,7 @@ import com.google.common.collect.Maps;
 import io.minio.*;
 import io.minio.http.Method;
 import io.minio.messages.Part;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.liuxp.minioplus.common.enums.MinioPlusErrorCode;
 import org.liuxp.minioplus.common.exception.MinioPlusException;
@@ -13,7 +14,6 @@ import org.liuxp.minioplus.s3.def.ListParts;
 import org.liuxp.minioplus.s3.def.MinioS3Client;
 import org.springframework.stereotype.Repository;
 
-import javax.annotation.Resource;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;

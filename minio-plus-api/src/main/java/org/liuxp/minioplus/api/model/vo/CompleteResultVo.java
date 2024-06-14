@@ -1,7 +1,6 @@
 package org.liuxp.minioplus.api.model.vo;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,16 +15,16 @@ import java.util.List;
  **/
 @Getter
 @Setter
-@ApiModel("文件完整性校验结果")
+@Schema(description = "文件完整性校验结果")
 public class CompleteResultVo {
 
-    @ApiModelProperty("是否完成")
+    @Schema(description = "是否完成")
     private Boolean isComplete;
 
-    @ApiModelProperty("上传任务编号")
+    @Schema(description = "上传任务编号")
     private String uploadTaskId;
 
-    @ApiModelProperty("补传的分块信息")
+    @Schema(description = "补传的分块信息")
     private List<FileCheckResultVo.Part> partList = new ArrayList<>();
 
 }

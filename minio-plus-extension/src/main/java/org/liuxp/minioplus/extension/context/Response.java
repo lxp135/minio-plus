@@ -2,6 +2,7 @@ package org.liuxp.minioplus.extension.context;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.ToString;
 
@@ -11,7 +12,7 @@ import lombok.ToString;
  * @since  2024/05/22
  */
 @Data
-@ApiModel(value = "Response")
+@Schema(description = "Response")
 @ToString
 public class Response<T> {
 

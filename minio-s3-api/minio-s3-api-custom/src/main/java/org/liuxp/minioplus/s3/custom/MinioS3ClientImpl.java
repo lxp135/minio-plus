@@ -8,7 +8,7 @@ import org.liuxp.minioplus.s3.def.ListParts;
 import org.liuxp.minioplus.s3.def.MinioS3Client;
 import org.springframework.stereotype.Repository;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import java.io.InputStream;
 import java.time.ZonedDateTime;
 import java.util.List;
