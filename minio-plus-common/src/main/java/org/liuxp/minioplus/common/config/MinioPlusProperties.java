@@ -8,8 +8,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * MinioPlus配置类
+ *
  * @author contact@liuxp.me
- * @since  2024/05/22
+ * @since 2024/05/22
  */
 @Getter
 @Setter
@@ -89,7 +90,11 @@ public class MinioPlusProperties {
 
         /**
          * 是否开启缩略图。默认为true
+         *
+         * @since 2024-06-14 15:47:46
+         * feature 缩略图懒生成
          */
+        @Deprecated
         private boolean enable = true;
 
         /**
