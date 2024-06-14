@@ -40,14 +40,6 @@ public interface StorageEngineService {
     CompleteResultVo complete(String fileKey, List<String> partMd5List,String userId);
 
     /**
-     * 上传图片
-     * @param fileKey 文件KEY
-     * @param file 文件
-     * @return 是否成功
-     */
-    Boolean uploadImage(String fileKey, byte[] file);
-
-    /**
      * 取得文件下载地址
      *
      * @param fileKey 文件KEY

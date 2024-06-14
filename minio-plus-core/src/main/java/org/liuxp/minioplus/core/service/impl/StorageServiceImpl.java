@@ -86,11 +86,6 @@ public class StorageServiceImpl implements StorageService {
     }
 
     @Override
-    public Boolean uploadImage(String fileKey, byte[] file) {
-        return storageEngineService.uploadImage(fileKey,file);
-    }
-
-    @Override
     public String download(String fileKey, String userId) {
         return storageEngineService.download(fileKey,userId);
     }

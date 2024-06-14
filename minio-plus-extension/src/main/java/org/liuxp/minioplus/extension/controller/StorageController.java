@@ -83,30 +83,6 @@ public class StorageController {
     }
 
     /**
-     * 图片上传
-     * @param fileKey 文件KEY
-     * @param request 文件流
-     * @return 是否成功
-     */
-    @ApiOperation(value = "图片上传")
-    @PutMapping("/upload/image/{fileKey}")
-    @ResponseBody
-    public Response<Boolean> uploadImage(@PathVariable String fileKey, HttpServletRequest request) {
-        Boolean isUpload = false;
-        InputStream inputStream = null;
-        try {
-            inputStream = request.getInputStream();
-            isUpload =  storageService.uploadImage(fileKey, IoUtil.readBytes(inputStream));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }finally {
-            IoUtil.close(inputStream);
-        }
-
-        return Response.success(isUpload);
-    }
-
-    /**
      * 文件下载
      * @param fileKey 文件KEY
      * @return 文件下载地址
