@@ -365,9 +365,9 @@ public class StorageEngineServiceImpl implements StorageEngineService {
             // 文件权限校验，元数据为空或者当前登录用户不是文件所有者时抛出异常
             this.authentication(metadata, fileKey, userId);
             // 生成缩略图
-            String bucketName = generatePreviewImage(metadata);
+            generatePreviewImage(metadata);
             // 创建图片预览地址
-            return minioS3Client.getPreviewUrl(metadata.getFileMimeType(), bucketName, metadata.getStoragePath() + "/" + metadata.getFileMd5());
+            return minioS3Client.getPreviewUrl(metadata.getFileMimeType(), StorageBucketEnums.IMAGE_PREVIEW.getCode(), metadata.getStoragePath() + "/" + metadata.getFileMd5());
         } catch (Exception e) {
             // 打印日志
             log.error(e.getMessage(), e);
@@ -380,11 +380,10 @@ public class StorageEngineServiceImpl implements StorageEngineService {
      * 文件元数据
      *
      * @param metadata 文件元数据
-     * @return 缩略图桶路径
      * @author <a href="mailto:tianxiang.deng@foxmail.com">BaldHead</a>
      * @since 2024-06-14 14:44:52
      */
-    private String generatePreviewImage(FileMetadataInfoVo metadata) {
+    private void generatePreviewImage(FileMetadataInfoVo metadata) {
         try {
             if (Boolean.FALSE.equals(metadata.getIsPreview())) {
                 // 获取原图的bytes
@@ -396,7 +395,6 @@ public class StorageEngineServiceImpl implements StorageEngineService {
                 metadata.setIsPreview(Boolean.TRUE);
                 FileMetadataInfoUpdateDTO fileMetadataInfoUpdateDTO = BeanUtil.copyProperties(metadata, FileMetadataInfoUpdateDTO.class);
                 metadataRepository.update(fileMetadataInfoUpdateDTO);
-                return StorageBucketEnums.IMAGE_PREVIEW.getCode();
             }
         } catch (Exception e) {
             // 打印日志
@@ -404,7 +402,6 @@ public class StorageEngineServiceImpl implements StorageEngineService {
             // 缩略图生成失败
             throw new MinioPlusException(MinioPlusErrorCode.FILE_PREVIEW_WRITE_FAILED);
         }
-        return null;
     }
 
     @Override
