@@ -1,5 +1,6 @@
 package org.liuxp.minioplus.core.engine.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.lang.Pair;
@@ -54,21 +55,20 @@ public class StorageEngineServiceImpl implements StorageEngineService {
 
     /**
      * 上传任务初始化
-     *
+     * <p>
      * 1.当前用户或其他用户上传过，且已完成，秒传，新增文件元数据
      * 2.当前用户上传过，未完成，断点续传
      * 3.其他用户上传过，未完成，断点续传，新增文件元数据
      * 4.从未上传过，下发上传链接，新增文件元数据
      *
-     * @param fileMd5 文件md5
+     * @param fileMd5      文件md5
      * @param fullFileName 文件名（含扩展名）
-     * @param fileSize 文件长度
-     * @param isPrivate 是否私有 false:否 true:是
-     *
+     * @param fileSize     文件长度
+     * @param isPrivate    是否私有 false:否 true:是
      * @return {@link FileCheckResultVo}
      */
     @Override
-    public FileCheckResultVo init(String fileMd5, String fullFileName, long fileSize, Boolean isPrivate,String userId) {
+    public FileCheckResultVo init(String fileMd5, String fullFileName, long fileSize, Boolean isPrivate, String userId) {
 
         // 根据MD5查询文件是否已上传过
         FileMetadataInfoDTO searchDTO = new FileMetadataInfoDTO();
@@ -78,10 +78,10 @@ public class StorageEngineServiceImpl implements StorageEngineService {
         FileMetadataInfoSaveDTO saveDTO = new FileMetadataInfoSaveDTO();
         CreateUploadUrlReqBO bo = new CreateUploadUrlReqBO();
 
-        if(CollUtil.isNotEmpty(list)){
+        if (CollUtil.isNotEmpty(list)) {
             //  1.当前用户或其他用户上传过，且已完成，秒传，新增文件元数据
             for (FileMetadataInfoVo fileMetadataInfoVo : list) {
-                if(fileMetadataInfoVo.getIsFinished()){
+                if (fileMetadataInfoVo.getIsFinished()) {
                     // 秒传
                     saveDTO.setFileKey(IdUtil.fastSimpleUUID()); // 文件KEY
                     saveDTO.setFileMd5(fileMd5); // 文件md5
@@ -109,13 +109,13 @@ public class StorageEngineServiceImpl implements StorageEngineService {
 
             boolean isSelf = userUploaded.isPresent();
 
-            if(!isSelf){
+            if (!isSelf) {
                 uploadingMetadata = list.stream()
                         .filter(FileMetadataInfoVo::getIsFinished)
                         .findAny()
                         .orElseGet(() -> list.stream()
                                 .filter(item -> !item.getIsFinished()).findFirst().get());
-            }else{
+            } else {
                 uploadingMetadata = userUploaded.get();
             }
 
@@ -123,7 +123,7 @@ public class StorageEngineServiceImpl implements StorageEngineService {
             bo.setIsSequel(Boolean.TRUE);
             CreateUploadUrlRespBO respBO = this.breakResume(uploadingMetadata);
 
-            if(!isSelf){
+            if (!isSelf) {
                 // 3.其他用户上传过，未完成，断点续传，新增文件元数据
                 // 插入自己的元数据
                 BeanUtils.copyProperties(uploadingMetadata, saveDTO);
@@ -134,9 +134,9 @@ public class StorageEngineServiceImpl implements StorageEngineService {
                 FileMetadataInfoVo metadataInfoVo = metadataRepository.save(saveDTO);
 
                 return this.buildResult(metadataInfoVo, respBO.getParts(), respBO.getPartCount(), Boolean.FALSE);
-            }else{
+            } else {
                 // 2.当前用户上传过，未完成，断点续传
-                if(CollUtil.isNotEmpty(respBO.getParts()) && !respBO.getUploadTaskId().equals(uploadingMetadata.getUploadTaskId())){
+                if (CollUtil.isNotEmpty(respBO.getParts()) && !respBO.getUploadTaskId().equals(uploadingMetadata.getUploadTaskId())) {
                     // 原uploadTaskId失效时，同时更新原记录
                     uploadingMetadata.setUploadTaskId(respBO.getUploadTaskId());
                     FileMetadataInfoUpdateDTO updateDTO = new FileMetadataInfoUpdateDTO();
@@ -148,7 +148,7 @@ public class StorageEngineServiceImpl implements StorageEngineService {
 
                 return this.buildResult(uploadingMetadata, respBO.getParts(), respBO.getPartCount(), Boolean.FALSE);
             }
-        }else{
+        } else {
             // 4.从未上传过，下发上传链接，新增文件元数据
 
             bo.setFileMd5(fileMd5);
@@ -157,7 +157,7 @@ public class StorageEngineServiceImpl implements StorageEngineService {
 
             CreateUploadUrlRespBO createUploadUrlRespBO = this.createUploadUrl(bo);
 
-            FileMetadataInfoVo metadataInfo = saveMetadataInfo(saveDTO, createUploadUrlRespBO,  fileMd5,  fullFileName,  fileSize,  isPrivate, userId);
+            FileMetadataInfoVo metadataInfo = saveMetadataInfo(saveDTO, createUploadUrlRespBO, fileMd5, fullFileName, fileSize, isPrivate, userId);
 
             return this.buildResult(metadataInfo, createUploadUrlRespBO.getParts(), createUploadUrlRespBO.getPartCount(), Boolean.FALSE);
         }
@@ -204,13 +204,13 @@ public class StorageEngineServiceImpl implements StorageEngineService {
     /**
      * 保存文件源信息
      *
-     * @param saveDTO                   元数据保存实体类
-     * @param createUploadUrlRespBO     上传链接参数
-     * @param fileMd5                   文件md5
-     * @param fullFileName              文件名（含扩展名）
-     * @param fileSize                  文件长度
-     * @param isPrivate                 是否私有 false:否 true:是
-     * @param userId                    用户编号
+     * @param saveDTO               元数据保存实体类
+     * @param createUploadUrlRespBO 上传链接参数
+     * @param fileMd5               文件md5
+     * @param fullFileName          文件名（含扩展名）
+     * @param fileSize              文件长度
+     * @param isPrivate             是否私有 false:否 true:是
+     * @param userId                用户编号
      * @return {@link FileMetadataInfoVo}
      */
     private FileMetadataInfoVo saveMetadataInfo(FileMetadataInfoSaveDTO saveDTO, CreateUploadUrlRespBO createUploadUrlRespBO,
@@ -242,7 +242,7 @@ public class StorageEngineServiceImpl implements StorageEngineService {
         // 分片数量
         saveDTO.setPartNumber(createUploadUrlRespBO.getPartCount());
         // 预览图 0:无 1:有
-        saveDTO.setIsPreview(saveDTO.getStorageBucket().equals(StorageBucketEnums.IMAGE.getCode()) && properties.getThumbnail().isEnable());
+        saveDTO.setIsPreview(Boolean.FALSE);
         // 是否私有 0:否 1:是
         saveDTO.setIsPrivate(isPrivate);
         // 创建人
@@ -259,7 +259,7 @@ public class StorageEngineServiceImpl implements StorageEngineService {
      * @return {@link Boolean}
      */
     @Override
-    public CompleteResultVo complete(String fileKey, List<String> partMd5List,String userId) {
+    public CompleteResultVo complete(String fileKey, List<String> partMd5List, String userId) {
 
         CompleteResultVo completeResultVo = new CompleteResultVo();
 
@@ -271,24 +271,24 @@ public class StorageEngineServiceImpl implements StorageEngineService {
 
         FileMetadataInfoVo metadata = metadataRepository.one(searchDto);
 
-        if(metadata == null){
-            log.error(fileKey+MinioPlusErrorCode.FILE_EXIST_FAILED.getMessage());
-            throw new MinioPlusException(MinioPlusErrorCode.FILE_EXIST_FAILED.getCode(),fileKey+MinioPlusErrorCode.FILE_EXIST_FAILED.getMessage());
+        if (metadata == null) {
+            log.error(fileKey + MinioPlusErrorCode.FILE_EXIST_FAILED.getMessage());
+            throw new MinioPlusException(MinioPlusErrorCode.FILE_EXIST_FAILED.getCode(), fileKey + MinioPlusErrorCode.FILE_EXIST_FAILED.getMessage());
         }
 
-        if(Boolean.TRUE.equals(metadata.getIsFinished())){
+        if (Boolean.TRUE.equals(metadata.getIsFinished())) {
             // 如果文件已上传完成，直接返回true，不进行合并
             completeResultVo.setIsComplete(true);
             return completeResultVo;
         }
 
-        if(metadata.getStorageBucket().equals(StorageBucketEnums.IMAGE.getCode())){
+        if (metadata.getStorageBucket().equals(StorageBucketEnums.IMAGE.getCode())) {
             // 图片时，生成图片的上传链接
             List<FileCheckResultVo.Part> partList = new ArrayList<>();
 
             FileCheckResultVo.Part part = new FileCheckResultVo.Part();
             part.setUploadId(metadata.getFileKey());
-            part.setUrl("/storage/upload/image/"+metadata.getFileKey());
+            part.setUrl("/storage/upload/image/" + metadata.getFileKey());
             part.setStartPosition(0L);
             part.setEndPosition(metadata.getFileSize());
             partList.add(part);
@@ -316,7 +316,7 @@ public class StorageEngineServiceImpl implements StorageEngineService {
             searchDto.setFileMd5(metadata.getFileMd5());
             searchDto.setIsFinished(false);
             List<FileMetadataInfoVo> others = metadataRepository.list(searchDto);
-            if(CollUtil.isNotEmpty(others)){
+            if (CollUtil.isNotEmpty(others)) {
                 for (FileMetadataInfoVo other : others) {
                     updateDTO = new FileMetadataInfoUpdateDTO();
                     updateDTO.setId(other.getId());
@@ -325,8 +325,8 @@ public class StorageEngineServiceImpl implements StorageEngineService {
                     metadataRepository.update(updateDTO);
                 }
             }
-        }else{
-            if(!metadata.getUploadTaskId().equals(completeResultVo.getUploadTaskId())){
+        } else {
+            if (!metadata.getUploadTaskId().equals(completeResultVo.getUploadTaskId())) {
                 FileMetadataInfoUpdateDTO updateDTO = new FileMetadataInfoUpdateDTO();
                 updateDTO.setId(metadata.getId());
                 updateDTO.setUploadTaskId(completeResultVo.getUploadTaskId());
@@ -354,7 +354,7 @@ public class StorageEngineServiceImpl implements StorageEngineService {
             saveDto.setFileMimeType(metadata.getFileMimeType());
             saveDto.setIsPreview(metadata.getIsPreview());
 
-            Boolean isCreateFile = createFile(saveDto,file);
+            Boolean isCreateFile = createFile(saveDto, file);
 
             FileMetadataInfoUpdateDTO updateDTO = new FileMetadataInfoUpdateDTO();
             updateDTO.setId(metadata.getId());
@@ -364,8 +364,8 @@ public class StorageEngineServiceImpl implements StorageEngineService {
 
             return isCreateFile;
 
-        }catch(Exception e){
-            log.error(MinioPlusErrorCode.FILE_UPLOAD_FAILED.getMessage(),e);
+        } catch (Exception e) {
+            log.error(MinioPlusErrorCode.FILE_UPLOAD_FAILED.getMessage(), e);
             throw new MinioPlusException(MinioPlusErrorCode.FILE_UPLOAD_FAILED);
         }
 
@@ -376,14 +376,14 @@ public class StorageEngineServiceImpl implements StorageEngineService {
 
         FileMetadataInfoVo metadata = getFileMetadataInfo(fileKey, userId);
 
-        try{
+        try {
             // 文件权限校验，元数据为空或者当前登录用户不是文件所有者时抛出异常
             this.authentication(metadata, fileKey, userId);
 
-            return minioS3Client.getDownloadUrl(metadata.getFileName(),metadata.getFileMimeType(),metadata.getStorageBucket(),metadata.getStoragePath() + "/"+ metadata.getFileMd5());
-        }catch(Exception e){
+            return minioS3Client.getDownloadUrl(metadata.getFileName(), metadata.getFileMimeType(), metadata.getStorageBucket(), metadata.getStoragePath() + "/" + metadata.getFileMd5());
+        } catch (Exception e) {
             // 打印日志
-            log.error(e.getMessage(),e);
+            log.error(e.getMessage(), e);
             // 任何异常，统一返回给前端文件不存在
             throw new MinioPlusException(MinioPlusErrorCode.FILE_EXIST_FAILED);
         }
@@ -394,15 +394,15 @@ public class StorageEngineServiceImpl implements StorageEngineService {
 
         FileMetadataInfoVo metadata = getFileMetadataInfo(fileKey, userId);
 
-        try{
+        try {
             // 文件权限校验，元数据为空或者当前登录用户不是文件所有者时抛出异常
             this.authentication(metadata, fileKey, userId);
 
-            return minioS3Client.getPreviewUrl(metadata.getFileMimeType(),metadata.getStorageBucket(),metadata.getStoragePath() + "/"+ metadata.getFileMd5());
+            return minioS3Client.getPreviewUrl(metadata.getFileMimeType(), metadata.getStorageBucket(), metadata.getStoragePath() + "/" + metadata.getFileMd5());
 
-        }catch(Exception e){
+        } catch (Exception e) {
             // 打印日志
-            log.error(e.getMessage(),e);
+            log.error(e.getMessage(), e);
             // 任何异常，统一返回给前端文件不存在
             throw new MinioPlusException(MinioPlusErrorCode.FILE_EXIST_FAILED);
         }
@@ -413,48 +413,63 @@ public class StorageEngineServiceImpl implements StorageEngineService {
 
         FileMetadataInfoVo metadata = getFileMetadataInfo(fileKey, userId);
 
-        try{
+        try {
             // 文件权限校验，元数据为空或者当前登录用户不是文件所有者时抛出异常
             this.authentication(metadata, fileKey, userId);
-            // 判断是否存在缩略图，设置桶名称
-            String bucketName = Boolean.TRUE.equals(metadata.getIsPreview()) ? StorageBucketEnums.IMAGE_PREVIEW.getCode() : metadata.getStorageBucket();
+            // 生成缩略图
+            String bucketName = generatePreviewImage(metadata);
             // 创建图片预览地址
-            return minioS3Client.getPreviewUrl(metadata.getFileMimeType(),bucketName,metadata.getStoragePath() + "/"+ metadata.getFileMd5());
-
-        }catch(Exception e){
+            return minioS3Client.getPreviewUrl(metadata.getFileMimeType(), bucketName, metadata.getStoragePath() + "/" + metadata.getFileMd5());
+        } catch (Exception e) {
             // 打印日志
-            log.error(e.getMessage(),e);
+            log.error(e.getMessage(), e);
             // 任何异常，统一返回给前端文件不存在
             throw new MinioPlusException(MinioPlusErrorCode.FILE_EXIST_FAILED);
         }
     }
 
+    /**
+     * 文件元数据
+     *
+     * @param metadata 文件元数据
+     * @return 缩略图桶路径
+     * @author <a href="mailto:tianxiang.deng@foxmail.com">BaldHead</a>
+     * @since 2024-06-14 14:44:52
+     */
+    private String generatePreviewImage(FileMetadataInfoVo metadata) {
+        try {
+            if (Boolean.FALSE.equals(metadata.getIsPreview())) {
+                // 获取原图的bytes
+                byte[] imageOriginBytes = minioS3Client.getObject(StorageBucketEnums.IMAGE.getCode(), metadata.getStoragePath() + "/" + metadata.getFileMd5());
+                // 压缩缩略图
+                ByteArrayOutputStream largeImage = CommonUtil.resizeImage(new ByteArrayInputStream(imageOriginBytes), properties.getThumbnail().getSize());
+                byte[] largeImageBytes = largeImage.toByteArray();
+                minioS3Client.putObject(StorageBucketEnums.IMAGE_PREVIEW.getCode(), CommonUtil.getObjectName(metadata.getFileMd5()), new ByteArrayInputStream(largeImageBytes), largeImageBytes.length, metadata.getFileMimeType());
+                metadata.setIsPreview(Boolean.TRUE);
+                FileMetadataInfoUpdateDTO fileMetadataInfoUpdateDTO = BeanUtil.copyProperties(metadata, FileMetadataInfoUpdateDTO.class);
+                metadataRepository.update(fileMetadataInfoUpdateDTO);
+                return StorageBucketEnums.IMAGE_PREVIEW.getCode();
+            }
+        } catch (Exception e) {
+            // 打印日志
+            log.error(e.getMessage(), e);
+            // 任何异常，统一返回给前端文件不存在
+            throw new MinioPlusException(MinioPlusErrorCode.FILE_EXIST_FAILED);
+        }
+        return null;
+    }
+
     @Override
     public Boolean createFile(FileMetadataInfoSaveDTO saveDTO, byte[] fileBytes) {
-
         // 写入文件
         minioS3Client.putObject(saveDTO.getStorageBucket(), CommonUtil.getObjectName(saveDTO.getFileMd5()), new ByteArrayInputStream(fileBytes), saveDTO.getFileSize(), saveDTO.getFileMimeType());
-
-        // 判断是否生成缩略图
-        if(Boolean.TRUE.equals(saveDTO.getIsPreview())){
-
-            try{
-                ByteArrayOutputStream largeImage = CommonUtil.resizeImage(new ByteArrayInputStream(fileBytes), properties.getThumbnail().getSize());
-                byte[] largeImageBytes = largeImage.toByteArray();
-                minioS3Client.putObject(StorageBucketEnums.IMAGE_PREVIEW.getCode(), CommonUtil.getObjectName(saveDTO.getFileMd5()), new ByteArrayInputStream(largeImageBytes), largeImageBytes.length, saveDTO.getFileMimeType());
-            }catch(Exception e){
-                log.error(MinioPlusErrorCode.FILE_PREVIEW_WRITE_FAILED.getMessage(),e);
-                throw new MinioPlusException(MinioPlusErrorCode.FILE_PREVIEW_WRITE_FAILED);
-            }
-        }
-
         return true;
 
 
     }
 
     @Override
-    public Pair<FileMetadataInfoVo,byte[]> read(String fileKey) {
+    public Pair<FileMetadataInfoVo, byte[]> read(String fileKey) {
 
         // 查询文件元数据
         FileMetadataInfoDTO fileMetadataInfo = new FileMetadataInfoDTO();
@@ -466,9 +481,9 @@ public class StorageEngineServiceImpl implements StorageEngineService {
         }
 
         // 读取流
-        byte[] fileBytes = minioS3Client.getObject(fileMetadataInfoVo.getStorageBucket(), fileMetadataInfoVo.getStoragePath() + "/" +  fileMetadataInfoVo.getFileMd5());
+        byte[] fileBytes = minioS3Client.getObject(fileMetadataInfoVo.getStorageBucket(), fileMetadataInfoVo.getStoragePath() + "/" + fileMetadataInfoVo.getFileMd5());
 
-        return Pair.of(fileMetadataInfoVo,fileBytes);
+        return Pair.of(fileMetadataInfoVo, fileBytes);
     }
 
     @Override
@@ -501,7 +516,7 @@ public class StorageEngineServiceImpl implements StorageEngineService {
         return true;
     }
 
-    private void remove(FileMetadataInfoVo metadata){
+    private void remove(FileMetadataInfoVo metadata) {
         // 删除元数据信息
         metadataRepository.remove(metadata.getId());
 
@@ -509,12 +524,12 @@ public class StorageEngineServiceImpl implements StorageEngineService {
         fileMetadataInfo.setFileMd5(metadata.getFileMd5());
         List<FileMetadataInfoVo> metadataList = metadataRepository.list(fileMetadataInfo);
 
-        if(CollUtil.isEmpty(metadataList)){
+        if (CollUtil.isEmpty(metadataList)) {
             // 当不存在任何该MD5值的文件元数据时，删除物理文件
-            minioS3Client.removeObject(metadata.getStorageBucket(), metadata.getStoragePath() + "/" +  metadata.getFileMd5());
-            if(Boolean.TRUE.equals(metadata.getIsPreview())){
+            minioS3Client.removeObject(metadata.getStorageBucket(), metadata.getStoragePath() + "/" + metadata.getFileMd5());
+            if (Boolean.TRUE.equals(metadata.getIsPreview())) {
                 // 当存在缩略图时，同步删除缩略图
-                minioS3Client.removeObject(StorageBucketEnums.IMAGE_PREVIEW.getCode(), metadata.getStoragePath() + "/" +  metadata.getFileMd5());
+                minioS3Client.removeObject(StorageBucketEnums.IMAGE_PREVIEW.getCode(), metadata.getStoragePath() + "/" + metadata.getFileMd5());
             }
         }
     }
@@ -522,6 +537,7 @@ public class StorageEngineServiceImpl implements StorageEngineService {
     /**
      * 根据用户取得文件元数据信息
      * 当userId匹配时直接返回，不匹配时检查是否存在公有元数据
+     *
      * @param fileKey 文件KEY
      * @param userId  用户主键
      * @return 文件元数据信息
@@ -547,17 +563,17 @@ public class StorageEngineServiceImpl implements StorageEngineService {
      * 文件为私有文件且当前登录用户不是文件所有者时抛出异常
      *
      * @param metadata 文件元数据
-     * @param fileKey 文件key
-     * @param userId 用户主键
+     * @param fileKey  文件key
+     * @param userId   用户主键
      */
-    private void authentication(FileMetadataInfoVo metadata, String fileKey, String userId){
+    private void authentication(FileMetadataInfoVo metadata, String fileKey, String userId) {
         if (null == metadata) {
             throw new MinioPlusException(MinioPlusErrorCode.FILE_EXIST_FAILED.getCode(), fileKey + MinioPlusErrorCode.FILE_EXIST_FAILED.getMessage());
         }
 
         // 元数据信息存在，判断权限
-        if(Boolean.TRUE.equals(metadata.getIsPrivate()) && !userId.equals(metadata.getCreateUser())){
-            throw new MinioPlusException(MinioPlusErrorCode.FILE_PERMISSION_CHECK_FAILED.getCode(), fileKey + "用户"+userId+MinioPlusErrorCode.FILE_PERMISSION_CHECK_FAILED.getMessage());
+        if (Boolean.TRUE.equals(metadata.getIsPrivate()) && !userId.equals(metadata.getCreateUser())) {
+            throw new MinioPlusException(MinioPlusErrorCode.FILE_PERMISSION_CHECK_FAILED.getCode(), fileKey + "用户" + userId + MinioPlusErrorCode.FILE_PERMISSION_CHECK_FAILED.getMessage());
         }
     }
 
@@ -580,16 +596,16 @@ public class StorageEngineServiceImpl implements StorageEngineService {
      *
      * @param bucketName 桶名称
      * @param objectName 对象名称（含路径）
-     * @param uploadId 上传任务编号
-     * @param fileSize 文件大小
-     * @param start 开始位置
+     * @param uploadId   上传任务编号
+     * @param fileSize   文件大小
+     * @param start      开始位置
      * @param partNumber 块号
      * @return {@link FileCheckResultVo.Part}
      */
-    private FileCheckResultVo.Part buildResultPart(String bucketName,String objectName,String uploadId, Long fileSize, long start, Integer partNumber) {
+    private FileCheckResultVo.Part buildResultPart(String bucketName, String objectName, String uploadId, Long fileSize, long start, Integer partNumber) {
         // 计算起始位置
         long end = Math.min(start + properties.getPart().getSize(), fileSize);
-        String uploadUrl = minioS3Client.getUploadObjectUrl(bucketName, objectName, uploadId,String.valueOf(partNumber));
+        String uploadUrl = minioS3Client.getUploadObjectUrl(bucketName, objectName, uploadId, String.valueOf(partNumber));
         FileCheckResultVo.Part part = new FileCheckResultVo.Part();
         part.setUploadId(uploadId);
         // 上传地址
@@ -603,6 +619,7 @@ public class StorageEngineServiceImpl implements StorageEngineService {
 
     /**
      * 断点续传-创建断点的URL
+     *
      * @param fileMetadataVo 文件元数据信息
      * @return CreateUploadUrlRespBO 分片结果
      */
@@ -644,7 +661,7 @@ public class StorageEngineServiceImpl implements StorageEngineService {
             // 丢失的块号-断点续传时必传
             bo.setMissPartNum(missingNumbers);
 
-            if(missingNumbers.size() != chunkNum){
+            if (missingNumbers.size() != chunkNum) {
                 // 任务id，任务id可能会失效
                 bo.setUploadId(fileMetadataVo.getUploadTaskId());
             }
@@ -665,8 +682,9 @@ public class StorageEngineServiceImpl implements StorageEngineService {
 
     /**
      * 合并分片
+     *
      * @param metadataInfo 文件元数据信息
-     * @param partMd5List 分片集合
+     * @param partMd5List  分片集合
      * @return 合并结果
      */
     public CompleteResultVo completeMultipartUpload(FileMetadataInfoVo metadataInfo, List<String> partMd5List) {
@@ -676,12 +694,12 @@ public class StorageEngineServiceImpl implements StorageEngineService {
         // 获取所有的分片信息
         ListParts listParts = this.buildResultPart(metadataInfo);
 
-        List<Integer> missingNumbers =new ArrayList<>();
+        List<Integer> missingNumbers = new ArrayList<>();
 
         // 分块数量
         Integer chunkNum = metadataInfo.getPartNumber();
 
-        if(partMd5List==null || chunkNum != partMd5List.size()){
+        if (partMd5List == null || chunkNum != partMd5List.size()) {
             throw new MinioPlusException(MinioPlusErrorCode.FILE_PART_NUM_CHECK_FAILED);
         }
 
@@ -689,16 +707,16 @@ public class StorageEngineServiceImpl implements StorageEngineService {
         for (int i = 1; i <= chunkNum; i++) {
             boolean findPart = false;
             for (ListParts.Part part : listParts.getPartList()) {
-                if(part.getPartNumber() == i && CharSequenceUtil.equalsIgnoreCase(part.getEtag(), partMd5List.get(i - 1))){
+                if (part.getPartNumber() == i && CharSequenceUtil.equalsIgnoreCase(part.getEtag(), partMd5List.get(i - 1))) {
                     findPart = true;
                 }
             }
-            if(!findPart){
+            if (!findPart) {
                 missingNumbers.add(i);
             }
         }
 
-        if(CollUtil.isNotEmpty(missingNumbers)){
+        if (CollUtil.isNotEmpty(missingNumbers)) {
             CreateUploadUrlReqBO bo = new CreateUploadUrlReqBO();
             // 文件md5
             bo.setFileMd5(metadataInfo.getFileMd5());
@@ -710,7 +728,7 @@ public class StorageEngineServiceImpl implements StorageEngineService {
             bo.setIsSequel(Boolean.TRUE);
             // 丢失的块号-断点续传时必传
             bo.setMissPartNum(missingNumbers);
-            if(missingNumbers.size() != chunkNum){
+            if (missingNumbers.size() != chunkNum) {
                 // 任务id，任务id可能会失效
                 bo.setUploadId(metadataInfo.getUploadTaskId());
             }
@@ -725,12 +743,12 @@ public class StorageEngineServiceImpl implements StorageEngineService {
             completeResultVo.setIsComplete(false);
             completeResultVo.setUploadTaskId(createUploadUrlRespBO.getUploadTaskId());
             completeResultVo.setPartList(createUploadUrlRespBO.getParts());
-        }else{
+        } else {
             // 合并分块
             boolean writeResponse = minioS3Client.completeMultipartUpload(metadataInfo.getStorageBucket()
-                    ,listParts.getObjectName()
-                    ,metadataInfo.getUploadTaskId()
-                    ,listParts.getPartList()
+                    , listParts.getObjectName()
+                    , metadataInfo.getUploadTaskId()
+                    , listParts.getPartList()
             );
             completeResultVo.setIsComplete(writeResponse);
             completeResultVo.setPartList(new ArrayList<>());
@@ -745,7 +763,7 @@ public class StorageEngineServiceImpl implements StorageEngineService {
      * @param metadataInfo 文件元数据信息
      * @return {@link ListParts}    分片任务信息
      */
-    private ListParts buildResultPart(FileMetadataInfoVo metadataInfo){
+    private ListParts buildResultPart(FileMetadataInfoVo metadataInfo) {
         String objectName = CommonUtil.getObjectName(metadataInfo.getFileMd5());
         // 获取所有的分片信息
         return minioS3Client.listParts(metadataInfo.getStorageBucket(), objectName, metadataInfo.getPartNumber(), metadataInfo.getUploadTaskId());
@@ -777,7 +795,7 @@ public class StorageEngineServiceImpl implements StorageEngineService {
             // 开始位置
             long start = (long) (bo.getMissPartNum().get(0) - 1) * properties.getPart().getSize();
             for (int partNumber : bo.getMissPartNum()) {
-                FileCheckResultVo.Part part = this.buildResultPart(bucketName,storagePath, uploadId, bo.getFileSize(), start, partNumber);
+                FileCheckResultVo.Part part = this.buildResultPart(bucketName, storagePath, uploadId, bo.getFileSize(), start, partNumber);
                 // 更改下一次的开始位置
                 start = start + properties.getPart().getSize();
                 partList.add(part);
@@ -803,7 +821,7 @@ public class StorageEngineServiceImpl implements StorageEngineService {
                 FileCheckResultVo.Part part = new FileCheckResultVo.Part();
                 // 图片上传时，直接使用fileKey作为uploadId
                 part.setUploadId(fileKey);
-                part.setUrl("/storage/upload/image/"+fileKey);
+                part.setUrl("/storage/upload/image/" + fileKey);
                 part.setStartPosition(0L);
                 part.setEndPosition(bo.getFileSize());
                 partList.add(part);
