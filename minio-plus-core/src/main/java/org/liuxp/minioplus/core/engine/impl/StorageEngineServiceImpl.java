@@ -1,5 +1,6 @@
 package org.liuxp.minioplus.core.engine.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.lang.Pair;
@@ -241,7 +242,7 @@ public class StorageEngineServiceImpl implements StorageEngineService {
         // 分片数量
         saveDTO.setPartNumber(createUploadUrlRespBO.getPartCount());
         // 预览图 0:无 1:有
-        saveDTO.setIsPreview(saveDTO.getStorageBucket().equals(StorageBucketEnums.IMAGE.getCode()) && properties.getThumbnail().isEnable());
+        saveDTO.setIsPreview(Boolean.FALSE);
         // 是否私有 0:否 1:是
         saveDTO.setIsPrivate(isPrivate);
         // 创建人
@@ -444,6 +445,9 @@ public class StorageEngineServiceImpl implements StorageEngineService {
                 ByteArrayOutputStream largeImage = CommonUtil.resizeImage(new ByteArrayInputStream(imageOriginBytes), properties.getThumbnail().getSize());
                 byte[] largeImageBytes = largeImage.toByteArray();
                 minioS3Client.putObject(StorageBucketEnums.IMAGE_PREVIEW.getCode(), CommonUtil.getObjectName(metadata.getFileMd5()), new ByteArrayInputStream(largeImageBytes), largeImageBytes.length, metadata.getFileMimeType());
+                metadata.setIsPreview(Boolean.TRUE);
+                FileMetadataInfoUpdateDTO fileMetadataInfoUpdateDTO = BeanUtil.copyProperties(metadata, FileMetadataInfoUpdateDTO.class);
+                metadataRepository.update(fileMetadataInfoUpdateDTO);
                 return StorageBucketEnums.IMAGE_PREVIEW.getCode();
             }
         } catch (Exception e) {
