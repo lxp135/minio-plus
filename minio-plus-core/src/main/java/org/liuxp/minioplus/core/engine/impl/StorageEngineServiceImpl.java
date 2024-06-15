@@ -6,6 +6,7 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.lang.Pair;
 import cn.hutool.core.text.CharSequenceUtil;
 import cn.hutool.core.util.IdUtil;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.liuxp.minioplus.api.model.bo.CreateUploadUrlReqBO;
 import org.liuxp.minioplus.api.model.bo.CreateUploadUrlRespBO;
@@ -27,7 +28,6 @@ import org.liuxp.minioplus.s3.def.MinioS3Client;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
-import jakarta.annotation.Resource;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
