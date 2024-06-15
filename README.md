@@ -24,7 +24,8 @@
 
 # 0 简介 | Intro
 
-[MinIO-Plus](https://gitee.com/lxp135/minio-plus/) 是一个 [MinIO](https://github.com/minio/minio) 的二次封装与增强工具，在 MinIO 的基础上只做增强，不侵入 MinIO 代码，只为简化开发、提高效率而生。成为 MinIO 在项目中落地的润滑剂。
+[MinIO-Plus](https://gitee.com/lxp135/minio-plus/) 是一个 [MinIO](https://github.com/minio/minio) 的二次封装与增强工具，在
+MinIO 的基础上只做增强，不侵入 MinIO 代码，只为简化开发、提高效率而生。成为 MinIO 在项目中落地的润滑剂。
 
 /TODO 演示地址
 
@@ -49,19 +50,20 @@
 
 * minio-plus-api：MinIO Plus 对外提供的能力接口定义，可以理解为 Service 层接口定义
 * minio-plus-core：核心业务逻辑包，可以理解为 minio-plus-api 包的接口实现
-* minio-plus-extension：扩展包，该包封装了Controller相关接口，可以理解为 minio-plus-api 包的接口的 Controller 层封装，帮助项目使用时开箱即用
+* minio-plus-extension：扩展包，该包封装了Controller相关接口，可以理解为 minio-plus-api 包的接口的 Controller
+  层封装，帮助项目使用时开箱即用
 * minio-plus-common：工具类、配置类包
 * minio-s3-api
-  * minio-s3-api-definition：MinIO Plus 使用的S3规范接口定义
-  * minio-s3-api-official：原生SDK实现
-  * minio-s3-api-custom：自主实现
+    * minio-s3-api-definition：MinIO Plus 使用的S3规范接口定义
+    * minio-s3-api-official：原生SDK实现
+    * minio-s3-api-custom：自主实现
 * minio-plus-spring-boot-starter
-  * minio-plus-all-spring-boot-starter：包含core、extension、common、api
-  * minio-plus-core-spring-boot-starter：包含core、common、api
+    * minio-plus-all-spring-boot-starter：包含core、extension、common、api
+    * minio-plus-core-spring-boot-starter：包含core、common、api
 * minio-plus-application
-  * minio-plus-application-official：使用原生MinIO SDK与元数据使用MySQL数据库的示例工程
-  * minio-plus-application-custom：使用自主实现S3规范与数据使用MySQL数据库的示例工程
-  
+    * minio-plus-application-official：使用原生MinIO SDK与元数据使用MySQL数据库的示例工程
+    * minio-plus-application-custom：使用自主实现S3规范与数据使用MySQL数据库的示例工程
+
 ## 2.1 文件下载 | File Download
 
 ![文件下载逻辑时序图](doc/image/文件下载时序图.png)
@@ -229,35 +231,35 @@ PS：原图尺寸小于缩略图压缩尺寸时，储存原图。
 
 ## 4.1 文件元数据信息表 | file_metadata_info
 
-| Name           | Type     | Length | Not Null | Virtual | Key  | Comment                |
-| ---------------- | ---------- | -------- | ---------- | --------- | ------ | ------------------------ |
-| id             | bigint   | 20     | True     | False   | True | 自增ID                 |
-| file_key       | varchar  | 50     | True     | False   |      | 文件KEY                |
-| file_md5       | varchar  | 50     | False    | False   |      | 文件MD5值              |
-| file_name      | varchar  | 255    | True     | False   |      | 文件名                 |
-| file_mime_type | varchar  | 50     | False    | False   |      | MIME类型               |
-| file_suffix    | varchar  | 20     | False    | False   |      | 文件后缀               |
-| file_size      | bigint   | 20     | False    | False   |      | 文件大小               |
-| is_preview     | tinyint  | 1      | False    | False   |      | 预览图 0:无 1:有       |
-| is_private     | tinyint  | 1      | False    | False   |      | 是否私有 0:否 1:是     |
-| bucket         | varchar  | 20     | True     | False   |      | 存储桶                 |
-| bucket_path    | varchar  | 20     | True     | False   |      | 存储桶路径             |
-| upload_id      | varchar  | 255    | False    | False   |      | 上传任务id             |
+| Name           | Type     | Length | Not Null | Virtual | Key  | Comment        |
+|----------------|----------|--------|----------|---------|------|----------------|
+| id             | bigint   | 20     | True     | False   | True | 自增ID           |
+| file_key       | varchar  | 50     | True     | False   |      | 文件KEY          |
+| file_md5       | varchar  | 50     | False    | False   |      | 文件MD5值         |
+| file_name      | varchar  | 255    | True     | False   |      | 文件名            |
+| file_mime_type | varchar  | 128    | False    | False   |      | MIME类型         |
+| file_suffix    | varchar  | 20     | False    | False   |      | 文件后缀           |
+| file_size      | bigint   | 20     | False    | False   |      | 文件大小           |
+| is_preview     | tinyint  | 1      | False    | False   |      | 预览图 0:无 1:有    |
+| is_private     | tinyint  | 1      | False    | False   |      | 是否私有 0:否 1:是   |
+| bucket         | varchar  | 20     | True     | False   |      | 存储桶            |
+| bucket_path    | varchar  | 20     | True     | False   |      | 存储桶路径          |
+| upload_id      | varchar  | 255    | False    | False   |      | 上传任务id         |
 | is_finished    | tinyint  | 1      | True     | False   |      | 状态 0:未完成 1:已完成 |
-| is_part        | tinyint  | 1      | False    | False   |      | 是否分块 0:否 1:是     |
-| part_number    | int      | 4      | False    | False   |      | 分块数量               |
-| create_time    | datetime |        | True     | False   |      | 创建时间               |
-| create_user    | varchar  | 255    | True     | False   |      | 创建用户               |
-| update_time    | datetime |        | True     | False   |      | 更新时间               |
-| update_user    | varchar  | 255    | True     | False   |      | 更新用户               |
+| is_part        | tinyint  | 1      | False    | False   |      | 是否分块 0:否 1:是   |
+| part_number    | int      | 4      | False    | False   |      | 分块数量           |
+| create_time    | datetime |        | True     | False   |      | 创建时间           |
+| create_user    | varchar  | 255    | True     | False   |      | 创建用户           |
+| update_time    | datetime |        | True     | False   |      | 更新时间           |
+| update_user    | varchar  | 255    | True     | False   |      | 更新用户           |
 
-```
+``` sql
 CREATE TABLE `file_metadata_info` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `file_key` varchar(50) NOT NULL COMMENT '文件KEY',
   `file_md5` varchar(50) DEFAULT NULL COMMENT '文件md5',
   `file_name` varchar(255) NOT NULL COMMENT '文件名',
-  `file_mime_type` varchar(50) DEFAULT NULL COMMENT 'MIME类型',
+  `file_mime_type` varchar(128) DEFAULT NULL COMMENT 'MIME类型',
   `file_suffix` varchar(20) DEFAULT NULL COMMENT '文件后缀',
   `file_size` bigint(20) DEFAULT NULL COMMENT '文件大小',
   `is_preview` tinyint(1) DEFAULT '0' COMMENT '预览图 0:无 1:有',
@@ -277,12 +279,12 @@ CREATE TABLE `file_metadata_info` (
   KEY `INDEX_MD5` (`file_md5`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='文件元数据信息表';
 ```
+
 # 5 开发计划 | Plan
 
 简单画了一个要实现内容的看板
 
 ![开发计划](doc/image/开发计划.png)
-
 
 # 6 使用 | Getting Started
 
