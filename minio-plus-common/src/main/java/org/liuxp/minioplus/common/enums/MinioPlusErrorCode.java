@@ -21,7 +21,7 @@ public enum MinioPlusErrorCode {
     FILE_SUFFIX_GET_FAILED(1004,"无法获取文件的拓展名"),
     FILE_BYTES_FAILED(1005,"文件流不能为空"),
     FILE_UPLOAD_FAILED(1006,"文件上传失败"),
-    FILE_PREVIEW_WRITE_FAILED(1007,"缩略图写入失败"),
+    FILE_PREVIEW_WRITE_FAILED(1007,"缩略图生成失败"),
 
     /**
      * MinIO 异常

@@ -41,7 +41,7 @@ server:
 ### MinIO Plus Config
 ##################################################################
 minioplus:
-    # 存储引擎地址，如配置为local则不用配置
+    # MinIO 部署地址
     backend: http://localhost:9000
     # 浏览器访问地址，文件、图片上传下载访问地址代理，如果minio被nginx代理，需要配置这个参数为代理后的前端访问地址
     browser-url: http://localhost:9000
