@@ -72,10 +72,14 @@ export default defineConfig({
             {icon: 'github', link: 'https://github.com/lxp135/minio-plus'},
 
         ],
-        algolia: {
-            appId: 'sddsf',
-            apiKey: 'sdfsdf',
-            indexName: 'BaldHead'
+        search: {
+            provider: "algolia",
+            options: {
+                appId: "xxxx",
+                apiKey: "xxx",
+                indexName: "string",
+                placeholder: "Search Doc",
+            }
         },
         footer: {
             message: 'Publish under the MIT license',

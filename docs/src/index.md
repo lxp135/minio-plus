@@ -14,10 +14,10 @@ hero:
   actions:
     - theme: brand
       text: 快速开始
-      link: /zh/guide/quick-start
+      link: /guide/quick-start
     - theme: alt
       text: 介绍
-      link: /zh/guide/intro
+      link: /guide/intro
     - theme: alt
       text: 在github上查看
       link: https://github.com/lxp135/minio-plus
