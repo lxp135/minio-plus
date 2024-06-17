@@ -1,0 +1,69 @@
+spring:
+    #应用唯一标识
+    application:
+        name: MinIOPlus
+    #配置文件
+    profiles:
+        active: dev
+    # 解决Feign接口名称重复报错问题
+    main:
+        allow-bean-definition-overriding: true
+    #jdk proxy
+    aop:
+        proxy-target-class: false
+        auto: false
+    jackson:
+        date-format: yyyy-MM-dd HH:mm:ss
+        time-zone: GMT+8
+        default-property-inclusion: non_null # 全局jackson配置
+    mvc:
+        # 放开 Spring Boot 项目中 /static 目录下静态资源的拦截
+        static-path-pattern: /static/**
+        pathmatch:
+            # Springfox使用的路径匹配是基于AntPathMatcher的，而Spring Boot 2.6.X使用的是PathPatternMatcher所以需要配置此参数
+            matching-strategy: ant_path_matcher
+    #数据源配置
+    datasource:
+        #驱动名称
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        #链接地址
+        url: jdbc:mysql://192.168.50.141:3306/minio-plus?characterEncoding=UTF-8&useSSL=true&serverTimezone=Asia/Shanghai
+        #用户名
+        username: minio
+        #密码
+        password: minioadmin
+##################################################################
+# 服务器
+##################################################################
+server:
+    port: 9010
+##################################################################
+### MinIO Plus Config
+##################################################################
+minioplus:
+    # MinIO 部署地址
+    backend: http://localhost:9000
+    # 浏览器访问地址，文件、图片上传下载访问地址代理，如果minio被nginx代理，需要配置这个参数为代理后的前端访问地址
+    browser-url: http://localhost:9000
+    # 授权key
+    key: minioadmin
+    # 密钥
+    secret: minioadmin
+    # 上传预签名URL有效期，单位为分钟，可选参数，默认值为60分钟
+    upload-expiry: 120
+    # 下载和预览预签名URL有效期，单位为分钟，可选参数，默认值为60分钟
+    download-expiry: 20
+    # 可选参数，分块配置
+    part:
+        # 可选参数，是否开启分块能力。默认为true
+        enable: true
+        # 可选参数，分块大小，配置单位为byte，默认为5242880
+        size: 5242880
+        # 可选参数，分块上传时建议并发数，默认为3
+        iis: 2
+    # 可选参数，缩略图配置
+    thumbnail:
+        # 可选参数，是否开启缩略图。默认为true
+        enable: true
+        # 可选参数，缩略图尺寸，默认为300
+        size: 300
