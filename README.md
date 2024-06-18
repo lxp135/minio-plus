@@ -46,7 +46,7 @@ MinIO 的基础上只做增强，不侵入 MinIO 代码，只为简化开发、�
 项目定位为一个MinIO的Java语言SDK，非独立部署服务，并支持spring-boot自动装配。
 用户自行实现数据存储部分，项目仅提供MySQL默认实现。
 
-![模块划分](doc/image/模块划分.png)
+![模块划分](docs/src/public/image/模块划分.png)
 
 * minio-plus-api：MinIO Plus 对外提供的能力接口定义，可以理解为 Service 层接口定义
 * minio-plus-core：核心业务逻辑包，可以理解为 minio-plus-api 包的接口实现
@@ -66,7 +66,7 @@ MinIO 的基础上只做增强，不侵入 MinIO 代码，只为简化开发、�
 
 ## 2.1 文件下载 | File Download
 
-![文件下载逻辑时序图](doc/image/文件下载时序图.png)
+![文件下载逻辑时序图](docs/src/public/image/文件下载时序图.png)
 
 浏览器向服务端发起文件读取请求，服务端会根据fileKey入参取得文件的元数据信息。获取文件元数据信息后，根据元数据信息中的是否私有字段和所有者字段判断是否具备文件读取权限。
 
@@ -81,7 +81,7 @@ MinIO 的基础上只做增强，不侵入 MinIO 代码，只为简化开发、�
 
 ### 2.2.1 秒传
 
-![秒传时序图](doc/image/秒传时序图.png)
+![秒传时序图](docs/src/public/image/秒传时序图.png)
 
 当用户重复上传相同的文件时，每次都需要执行一次完整的文件上传操作，这造成了文件上传过程的冗余，即浪费了用户的时间和服务器的网络IO，重复文件又占用了不必要的服务器磁盘空间。
 针对以上两个问题，minio-plus支持文件秒传特性，解决了传统文件上传中重复文件上传时的问题，提高了文件传输的效率和用户体验，同时减少了文件服务器的存储空间占用。
@@ -97,7 +97,7 @@ MinIO 的基础上只做增强，不侵入 MinIO 代码，只为简化开发、�
 * 提高传输速度：当上传的文件比较大时，将大文件进行分块，同时并发上传多个小块，而不是一整个大文件按顺序上传。这样可以最大限度地利用带宽，从而加快上传速度。
 * 支持断点续传：分块上传是断点续传技术的前置条件，要想实现断点续传，必须先支持分块。
 
-![文件上传时序图](doc/image/文件上传时序图.png)
+![文件上传时序图](docs/src/public/image/文件上传时序图.png)
 
 ### 2.2.3 断点续传
 
@@ -133,7 +133,7 @@ http://127.0.0.1:9000/test/test123
 
 ## 2.4 缩略图
 
-![缩略图生成序图](doc/image/缩略图.png)
+![缩略图生成序图](docs/src/public/image/缩略图.png)
 
 在用户第一次访问图片预览接口时自动生成缩略图，压缩时比例按照图片原始比例不做变化，使用相同的md5名称存入缩略图桶中。
 
@@ -286,7 +286,7 @@ CREATE TABLE `file_metadata_info` (
 
 简单画了一个要实现内容的看板
 
-![开发计划](doc/image/开发计划.png)
+![开发计划](docs/src/public/image/开发计划.png)
 
 # 6 使用 | Getting Started
 
@@ -327,13 +327,13 @@ CREATE TABLE `file_metadata_info` (
 
 ## 9.3 微信群
 
-![开发计划](doc/image/wechat_group.jpg)
+![开发计划](docs/src/public/image/wechat_group.jpg)
 
 如果二维码失效，可以加我的微信*movedisk_1*，我会手动拉您入群。
 
 # 10 参考资料 | Reference
 
-* [MinIO S3 APIs](doc/minio-s3-api.md)
+* [MinIO S3 APIs](docs/src/guide/references/minio-s3-api.md)
 
 
 

@@ -17,8 +17,8 @@ export default defineConfig({
             description: '成为 MinIO 最好的搭档',
             themeConfig: {
                 footer: {
-                    message: '根据 MIT 许可证发布',
-                    copyright: 'Copyright © 2024 lxp'
+                    message: '根据 <a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank">Apache License 2.0</a> 许可证发布',
+                    copyright: 'Copyright © 2024 <a href="https://liuxp.me" target="_blank">liuxp.me</a>'
                 },
                 nav: [
                     {text: '指引', link: '/en/guide/intro', activeMatch: '/en/guide/'},
@@ -46,7 +46,7 @@ export default defineConfig({
         }
     },
     head: [
-        ['meta', {name: 'author', content: 'lxp'}],
+        ['meta', {name: 'author', content: 'liuxp'}],
         [
             'meta',
             {
@@ -82,8 +82,8 @@ export default defineConfig({
             }
         },
         footer: {
-            message: 'Publish under the MIT license',
-            copyright: 'Copyright © 2024 lxp'
+            message: 'Publish under the <a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank">Apache License 2.0</a>',
+            copyright: 'Copyright © 2024 <a href="https://liuxp.me" target="_blank">liuxp.me</a>'
         },
         nav: [
             {text: '指引', link: '/guide/intro', activeMatch: '/zh/guide/'},
