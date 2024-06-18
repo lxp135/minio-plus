@@ -24,7 +24,7 @@
         <File>C:\logs\${projectName}\log\logback.log</File>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!--活动文件的名字会根据fileNamePattern的值，每隔一段时间改变一次-->
-            <fileNamePattern>C:\logs${projectName}log\logback.%d.%i.log</fileNamePattern>
+            <fileNamePattern>C:\logs\${projectName}\log\logback.%d.%i.log</fileNamePattern>
             <!--每产生一个日志文件，该日志文件的保存期限为30天-->
             <maxHistory>30</maxHistory>
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
