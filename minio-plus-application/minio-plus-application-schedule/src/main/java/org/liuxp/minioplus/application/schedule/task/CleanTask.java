@@ -22,7 +22,7 @@ public class CleanTask {
     @Resource
     private StorageService storageService;
 
-    @Scheduled(cron = "0 */1 * * * ?")
+    @Scheduled(cron = "0 0 */1 * * ?")
     public void clean(){
 
         List<FileMetadataInfoVo> fileList = storageService.list(new FileMetadataInfoDTO());
