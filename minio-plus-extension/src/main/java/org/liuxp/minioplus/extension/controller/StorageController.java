@@ -1,33 +1,30 @@
 package org.liuxp.minioplus.extension.controller;
 
-import cn.hutool.core.io.IoUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.liuxp.minioplus.api.StorageService;
-import org.liuxp.minioplus.extension.context.UserHolder;
-import org.liuxp.minioplus.extension.dto.FileCheckDTO;
-import org.liuxp.minioplus.extension.dto.FileCompleteDTO;
 import org.liuxp.minioplus.api.model.vo.CompleteResultVo;
 import org.liuxp.minioplus.api.model.vo.FileCheckResultVo;
 import org.liuxp.minioplus.extension.context.Response;
+import org.liuxp.minioplus.extension.context.UserHolder;
+import org.liuxp.minioplus.extension.dto.FileCheckDTO;
+import org.liuxp.minioplus.extension.dto.FileCompleteDTO;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * 对象存储标准接口定义
  * 本类的方法是给前端使用的方法
  * @author contact@liuxp.me
+ * @since 2024/6/18
  */
 @Controller
 @RequestMapping("/storage")
-@Api(tags = "TOS对象存储")
+@Api(tags = "MinIO Plus Demo 接口")
 @Slf4j
 public class StorageController {
 
