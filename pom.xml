@@ -54,7 +54,7 @@
         <mybatisplus.version>3.5.7</mybatisplus.version>
         <lombok.version>1.18.32</lombok.version>
         <hutool.version>5.8.28</hutool.version>
-        <knife4j.version>2.0.2</knife4j.version>
+        <knife4j.version>2.0.9</knife4j.version>
         <swagger.version>1.5.22</swagger.version>
         <minio.version>8.3.3</minio.version>
         <thumbnailator.version>0.4.20</thumbnailator.version>
@@ -85,7 +85,7 @@
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool.version}</version>
             </dependency>
-            <!--Swagger工具包 knife4j -->
+            <!-- https://mvnrepository.com/artifact/com.github.xiaoymin/knife4j-spring-boot-starter -->
             <dependency>
                 <groupId>com.github.xiaoymin</groupId>
                 <artifactId>knife4j-spring-boot-starter</artifactId>

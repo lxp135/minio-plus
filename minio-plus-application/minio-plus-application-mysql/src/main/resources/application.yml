@@ -17,8 +17,6 @@ spring:
         time-zone: GMT+8
         default-property-inclusion: non_null # 全局jackson配置
     mvc:
-        # 放开 Spring Boot 项目中 /static 目录下静态资源的拦截
-        static-path-pattern: /static/**
         pathmatch:
             # Springfox使用的路径匹配是基于AntPathMatcher的，而Spring Boot 2.6.X使用的是PathPatternMatcher所以需要配置此参数
             matching-strategy: ant_path_matcher
