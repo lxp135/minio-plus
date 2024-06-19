@@ -93,18 +93,86 @@ export default defineConfig({
         sidebar: {
             '/guide/': [
                 {
-                    text: '开始',
+                    text: '概述',
                     items: [
                         {
-                            text: '简介',
+                            text: '首页',
                             link: '/guide/intro'
                         },
                         {
-                            text: '快速上手',
-                            link: '/guide/quick-start'
+                            text: '更新日志',
+                            link: '/guide/released'
                         }
                     ]
-                },
+                },{
+                    text: '用户手册',
+                    items: [
+                        {
+                            text: '快速开始',
+                            link: '/guide/user/quick-start'
+                        },
+                        {
+                            text: 'API 使用',
+                            link: '/guide/user/api'
+                        },
+                        {
+                            text: '配置文件',
+                            link: '/guide/user/config'
+                        },
+                        {
+                            text: '非官方S3实现',
+                            link: '/guide/user/custom'
+                        },
+                    ]
+                },{
+                    text: '开发者手册',
+                    items: [
+                        {
+                            text: '开发计划',
+                            link: '/guide/developers/plan'
+                        },
+                        {
+                            text: '构建与运行',
+                            link: '/guide/developers/building'
+                        },
+                        {
+                            text: '代码结构',
+                            link: '/guide/developers/framework'
+                        },
+                        {
+                            text: '提交代码',
+                            link: '/guide/developers/writing-code'
+                        },
+                        {
+                            text: '编写文档',
+                            link: '/guide/developers/writing-documents'
+                        },
+                        {
+                            text: '贡献者列表',
+                            link: '/guide/developers/contributors'
+                        },
+                    ]
+                },{
+                    text: '参考资料',
+                    items: [
+                        {
+                            text: 'FAQ',
+                            link: '/guide/references/faq'
+                        },
+                        {
+                            text: 'MinIO S3 接口',
+                            link: '/guide/references/minio-s3-api'
+                        }
+                    ]
+                },{
+                    text: 'MinIO 研究',
+                    items: [
+                        {
+                            text: 'MinIO 分片 ETAG 生成机制',
+                            link: '/guide/study/etag'
+                        }
+                    ]
+                }
             ],
         }
     }
