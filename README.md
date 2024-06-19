@@ -153,34 +153,34 @@ PS：原图尺寸小于缩略图压缩尺寸时，储存原图。
 
 # 3 项目文档 | Document
 
-* [首页](https://minioplus.liuxp.me/guide/intro)
-* [更新日志](https://minioplus.liuxp.me/guide/released.md)
+* [首页](https://minioplus.liuxp.me/guide/intro.html)
+* [更新日志](https://minioplus.liuxp.me/guide/released.html)
 * 用户手册
-  - [快速开始](https://minioplus.liuxp.me/guide/user/quick-start)
-  - [API接口](https://minioplus.liuxp.me/guide/user/api)
-  - [文件元数据](https://minioplus.liuxp.me/guide/user/db)
-  - [配置文件](https://minioplus.liuxp.me/guide/user/config)
-  - [非官方S3实现](https://minioplus.liuxp.me/guide/user/custom)
+  - [快速开始](https://minioplus.liuxp.me/guide/user/quick-start.html)
+  - [API接口](https://minioplus.liuxp.me/guide/user/api.html)
+  - [文件元数据](https://minioplus.liuxp.me/guide/user/db.html)
+  - [配置文件](https://minioplus.liuxp.me/guide/user/config.html)
+  - [非官方S3实现](https://minioplus.liuxp.me/guide/user/custom.html)
 * 开发者手册
-  - [开发计划](https://minioplus.liuxp.me/guide/developers/plan)
-  - [构建与运行](https://minioplus.liuxp.me/guide/developers/building)
-  - [代码结构](https://minioplus.liuxp.me/guide/developers/framework)
-  - [提交代码](https://minioplus.liuxp.me/guide/developers/writing-code)
-  - [编写文档](https://minioplus.liuxp.me/guide/developers/writing-documents)
-  - [贡献者列表](https://minioplus.liuxp.me/guide/developers/contributors)
+  - [开发计划](https://minioplus.liuxp.me/guide/developers/plan.html)
+  - [构建与运行](https://minioplus.liuxp.me/guide/developers/building.html)
+  - [代码结构](https://minioplus.liuxp.me/guide/developers/framework.html)
+  - [提交代码](https://minioplus.liuxp.me/guide/developers/writing-code.html)
+  - [编写文档](https://minioplus.liuxp.me/guide/developers/writing-documents.html)
+  - [贡献者列表](https://minioplus.liuxp.me/guide/developers/contributors.html)
 * 核心机制
-  - [上传](https://minioplus.liuxp.me/guide/core/upload)
-  - [下载](https://minioplus.liuxp.me/guide/core/download)
-  - [客户端直连](https://minioplus.liuxp.me/guide/core/direct)
-  - [缩略图](https://minioplus.liuxp.me/guide/core/preview)
-  - [桶策略](https://minioplus.liuxp.me/guide/core/bucket)
-  - [权限控制](https://minioplus.liuxp.me/guide/core/auth)
+  - [上传](https://minioplus.liuxp.me/guide/core/upload.html)
+  - [下载](https://minioplus.liuxp.me/guide/core/download.html)
+  - [客户端直连](https://minioplus.liuxp.me/guide/core/direct.html)
+  - [缩略图](https://minioplus.liuxp.me/guide/core/preview.html)
+  - [桶策略](https://minioplus.liuxp.me/guide/core/bucket.html)
+  - [权限控制](https://minioplus.liuxp.me/guide/core/auth.html)
 * 参考资料
-  - [FAQ](https://minioplus.liuxp.me/guide/references/faq)
-  - [MinIO S3 接口](https://minioplus.liuxp.me/guide/references/minio-s3-api)
+  - [FAQ](https://minioplus.liuxp.me/guide/references/faq.html)
+  - [MinIO S3 接口](https://minioplus.liuxp.me/guide/references/minio-s3-api.html)
 * MinIO 研究
-  - [MinIO 分片 ETAG 生成机制](https://minioplus.liuxp.me/guide/study/etag)
-  - [Nginx 代理](https://minioplus.liuxp.me/guide/study/proxy)
+  - [MinIO 分片 ETAG 生成机制](https://minioplus.liuxp.me/guide/study/etag.html)
+  - [Nginx 代理](https://minioplus.liuxp.me/guide/study/proxy.html)
 
 # 4 代码托管 | Managed Code
 
