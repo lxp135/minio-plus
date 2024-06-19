@@ -1,6 +1,12 @@
 import {defineConfig} from 'vitepress';
 
 export default defineConfig({
+    // 对 markdown 的配置
+    markdown: {
+        toc: {
+            level: [1, 2, 3, 4], // 指定标题的层级
+        }
+    },
     locales: {
         root: {
             label: '简体中文',
@@ -104,7 +110,7 @@ export default defineConfig({
                             link: '/guide/released'
                         }
                     ]
-                },{
+                }, {
                     text: '用户手册',
                     items: [
                         {
@@ -124,7 +130,7 @@ export default defineConfig({
                             link: '/guide/user/custom'
                         },
                     ]
-                },{
+                }, {
                     text: '开发者手册',
                     items: [
                         {
@@ -152,7 +158,7 @@ export default defineConfig({
                             link: '/guide/developers/contributors'
                         },
                     ]
-                },{
+                }, {
                     text: '参考资料',
                     items: [
                         {
@@ -164,7 +170,7 @@ export default defineConfig({
                             link: '/guide/references/minio-s3-api'
                         }
                     ]
-                },{
+                }, {
                     text: 'MinIO 研究',
                     items: [
                         {
