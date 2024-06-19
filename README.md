@@ -27,8 +27,6 @@
 [MinIO-Plus](https://gitee.com/lxp135/minio-plus/) 是一个 [MinIO](https://github.com/minio/minio) 的二次封装与增强工具，在
 MinIO 的基础上只做增强，不侵入 MinIO 代码，只为简化开发、提高效率而生。成为 MinIO 在项目中落地的润滑剂。
 
-/TODO 演示地址
-
 # 1 特性 | Feature
 
 * **无侵入** ：只做增强不做改变，引入它不会对现有工程产生影响，如丝般顺滑。
@@ -107,7 +105,7 @@ MinIO 的基础上只做增强，不侵入 MinIO 代码，只为简化开发、�
 * 增加传输的可靠性：可以避免由于网络波动或其他原因导致整个文件需要重新传输的情况。再也不怕意外断网。在大文件传输时，尤其有用。
 * 随时暂停和恢复：用户可以在传输过程中暂停传输或者中断传输，断点续传可以方便地恢复传输任务。
 
-## 2.3 前端直连
+## 2.3 客户端直连
 
 当用户进行文件流的上传和下载时，直接访问MinIO服务器（可配置Nginx代理）。
 
@@ -153,163 +151,53 @@ PS：原图尺寸小于缩略图压缩尺寸时，储存原图。
 
 其他规则：文件在桶中存储时，按照 /年/月 划分路径。用以规避Linux ext3文件系统下单个目录最多创建32000个目录的问题，参考了阿里云OSS的处理办法。
 
-# 3 接口设计 | Interface Design
+# 3 项目文档 | Document
 
-## 3.1 Service 层接口
+* [首页](https://minioplus.liuxp.me/guide/intro)
+* [更新日志](https://minioplus.liuxp.me/guide/released.md)
+* 用户手册
+  - [快速开始](https://minioplus.liuxp.me/guide/user/quick-start)
+  - [API接口](https://minioplus.liuxp.me/guide/user/api)
+  - [文件元数据](https://minioplus.liuxp.me/guide/user/db)
+  - [配置文件](https://minioplus.liuxp.me/guide/user/config)
+  - [非官方S3实现](https://minioplus.liuxp.me/guide/user/custom)
+* 开发者手册
+  - [开发计划](https://minioplus.liuxp.me/guide/developers/plan)
+  - [构建与运行](https://minioplus.liuxp.me/guide/developers/building)
+  - [代码结构](https://minioplus.liuxp.me/guide/developers/framework)
+  - [提交代码](https://minioplus.liuxp.me/guide/developers/writing-code)
+  - [编写文档](https://minioplus.liuxp.me/guide/developers/writing-documents)
+  - [贡献者列表](https://minioplus.liuxp.me/guide/developers/contributors)
+* 核心机制
+  - [上传](https://minioplus.liuxp.me/guide/core/upload)
+  - [下载](https://minioplus.liuxp.me/guide/core/download)
+  - [客户端直连](https://minioplus.liuxp.me/guide/core/direct)
+  - [缩略图](https://minioplus.liuxp.me/guide/core/preview)
+  - [桶策略](https://minioplus.liuxp.me/guide/core/bucket)
+  - [权限控制](https://minioplus.liuxp.me/guide/core/auth)
+* 参考资料
+  - [FAQ](https://minioplus.liuxp.me/guide/references/faq)
+  - [MinIO S3 接口](https://minioplus.liuxp.me/guide/references/minio-s3-api)
+* MinIO 研究
+  - [MinIO 分片 ETAG 生成机制](https://minioplus.liuxp.me/guide/study/etag)
+  - [Nginx 代理](https://minioplus.liuxp.me/guide/study/proxy)
 
-提供文件上传、下载、删除等接口。
-
-### 3.1.1 文件上传任务初始化
-
-### 3.1.2 上传完成
-
-### 3.1.3 取得文件下载地址
-
-### 3.1.4 取得原图地址
-
-### 3.1.5 取得缩略图地址
-
-### 3.1.6 查询文件元数据
-
-### 3.1.7 列表查询文件元数据
-
-### 3.1.8 从字节数组创建文件
-
-### 3.1.9 从输入流创建文件
-
-### 3.1.10 从外部url创建文件
-
-### 3.1.11 读取文件
-
-### 3.1.12 删除文件
-
-### 3.1.13 文件上传（MinIO原生接口）
-
-### 3.1.14 文件下载（MinIO原生接口）
-
-## 3.2 Controller 层接口
-
-如没有特殊需求，也可以不写 Controller 层接口，minio-plus-extension 中提供了 Controller 层接口定义。
-
-### 3.2.1 文件上传任务初始化
-
-### 3.2.2 上传完成
-
-### 3.2.3 文件下载
-
-调用 3.1.3 取得文件下载地址后，返回前端时进行302跳转。
-
-### 3.2.4 图片预览 - 原图
-
-调用 3.1.3 取得原图地址后，返回前端时进行302跳转。
-
-### 3.2.5 图片预览 - 缩略图
-
-调用 3.1.3 取得缩略图地址后，返回前端时进行302跳转。
-
-## 3.3 引用 MinIO 接口
-
-这里给出本项目引用的 MinIO 接口列表。
-
-### 3.3.1 bucketExists 检查文件桶是否存在
-
-### 3.3.2 makeBucket 创建文件桶
-
-### 3.3.3 createMultipartUpload 创建分片上传
-
-### 3.3.4 completeMultipartUpload 合并文件
-
-### 3.3.5 listParts 查询已上传的分片列表
-
-### 3.3.6 getPresignedObjectUrl 获取上传、下载、预览图链接
-
-### 3.3.7 putObject 上传
-
-### 3.3.8 getObject 下载
-
-### 3.3.9 removeObject 删除
-
-# 4 数据库设计 | Database Design
-
-## 4.1 文件元数据信息表 | file_metadata_info
-
-| Name           | Type     | Length | Not Null | Virtual | Key  | Comment        |
-|----------------|----------|--------|----------|---------|------|----------------|
-| id             | bigint   | 20     | True     | False   | True | 自增ID           |
-| file_key       | varchar  | 50     | True     | False   |      | 文件KEY          |
-| file_md5       | varchar  | 50     | False    | False   |      | 文件MD5值         |
-| file_name      | varchar  | 255    | True     | False   |      | 文件名            |
-| file_mime_type | varchar  | 128    | False    | False   |      | MIME类型         |
-| file_suffix    | varchar  | 20     | False    | False   |      | 文件后缀           |
-| file_size      | bigint   | 20     | False    | False   |      | 文件大小           |
-| is_preview     | tinyint  | 1      | False    | False   |      | 预览图 0:无 1:有    |
-| is_private     | tinyint  | 1      | False    | False   |      | 是否私有 0:否 1:是   |
-| bucket         | varchar  | 20     | True     | False   |      | 存储桶            |
-| bucket_path    | varchar  | 20     | True     | False   |      | 存储桶路径          |
-| upload_id      | varchar  | 255    | False    | False   |      | 上传任务id         |
-| is_finished    | tinyint  | 1      | True     | False   |      | 状态 0:未完成 1:已完成 |
-| is_part        | tinyint  | 1      | False    | False   |      | 是否分块 0:否 1:是   |
-| part_number    | int      | 4      | False    | False   |      | 分块数量           |
-| create_time    | datetime |        | True     | False   |      | 创建时间           |
-| create_user    | varchar  | 255    | True     | False   |      | 创建用户           |
-| update_time    | datetime |        | True     | False   |      | 更新时间           |
-| update_user    | varchar  | 255    | True     | False   |      | 更新用户           |
-
-```
-CREATE TABLE `file_metadata_info` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `file_key` varchar(50) NOT NULL COMMENT '文件KEY',
-  `file_md5` varchar(50) DEFAULT NULL COMMENT '文件md5',
-  `file_name` varchar(255) NOT NULL COMMENT '文件名',
-  `file_mime_type` varchar(128) DEFAULT NULL COMMENT 'MIME类型',
-  `file_suffix` varchar(20) DEFAULT NULL COMMENT '文件后缀',
-  `file_size` bigint(20) DEFAULT NULL COMMENT '文件大小',
-  `is_preview` tinyint(1) DEFAULT '0' COMMENT '预览图 0:无 1:有',
-  `is_private` tinyint(1) DEFAULT '0' COMMENT '是否私有 0:否 1:是',
-  `bucket` varchar(20) NOT NULL COMMENT '存储桶',
-  `bucket_path` varchar(20) NOT NULL COMMENT '存储桶路径',
-  `upload_id` varchar(255) DEFAULT NULL COMMENT '上传任务id',
-  `is_finished` tinyint(1) NOT NULL DEFAULT '0' COMMENT '状态 0:未完成 1:已完成',
-  `is_part` tinyint(1) DEFAULT NULL COMMENT '是否分块 0:否 1:是',
-  `part_number` int(4) DEFAULT NULL COMMENT '分块数量',
-  `create_time` datetime NOT NULL COMMENT '创建时间',
-  `create_user` varchar(255) NOT NULL COMMENT '创建用户',
-  `update_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  `update_user` varchar(255) NOT NULL COMMENT '更新用户',
-  PRIMARY KEY (`id`) USING BTREE,
-  KEY `INDEX_KEY` (`file_key`),
-  KEY `INDEX_MD5` (`file_md5`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='文件元数据信息表';
-```
-
-# 5 开发计划 | Plan
-
-简单画了一个要实现内容的看板
-
-![开发计划](docs/src/public/image/开发计划.png)
-
-# 6 使用 | Getting Started
-
-## 6.1 使用 minio-plus-all-spring-boot-starter
-
-## 6.2 使用 minio-plus-core-spring-boot-starter
-
-# 7 代码托管 | Managed Code
+# 4 代码托管 | Managed Code
 
 * [https://gitee.com/lxp135/minio-plus](https://gitee.com/lxp135/minio-plus/)
 * [https://github.com/lxp135/minio-plus](https://github.com/lxp135/minio-plus/)
 
 以上仓库中代码完全一致，各位同学可根据网络状况自行选择。
 
-# 8 版权 | License
+# 5 版权 | License
 
 本项目基于 Apache License Version 2.0 开源协议，可用于商业项目。
 
 协议内容：[Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)
 
-# 9 参与贡献 | Credits
+# 6 参与贡献 | Credits
 
-## 9.1 编写代码
+## 6.1 编写代码
 
 * 在 Gitee Fork 项目到自己的仓库
 * 把 fork 过去的项目也就是你的项目 pull 到你的本地
@@ -318,23 +206,15 @@ CREATE TABLE `file_metadata_info` (
 * 登录 Gitee 在你首页可以看到一个 pull request 按钮，点击它，填写一些说明信息，然后提交
 * 等待维护者合并或者关闭
 
-## 9.2 反馈问题
+## 6.2 反馈问题
 
 欢迎提交**ISSUE**，请写清楚问题的具体原因，重现步骤和环境。
 
 * Gitee Issue 地址 [https://gitee.com/lxp135/minio-plus/issues](https://gitee.com/lxp135/minio-plus/issues)
 * GitHub Issue 地址 [https://github.com/lxp135/minio-plus/issues](https://github.com/lxp135/minio-plus/issues)
 
-## 9.3 微信群
+## 6.3 微信群
 
 ![开发计划](docs/src/public/image/wechat_group.jpg)
 
 如果二维码失效，可以加我的微信*movedisk_1*，我会手动拉您入群。
-
-# 10 参考资料 | Reference
-
-* [MinIO S3 APIs](docs/src/guide/references/minio-s3-api.md)
-
-
-
-

@@ -113,8 +113,12 @@ export default defineConfig({
                             link: '/guide/user/quick-start'
                         },
                         {
-                            text: 'API 使用',
+                            text: 'API接口',
                             link: '/guide/user/api'
+                        },
+                        {
+                            text: '文件元数据',
+                            link: '/guide/user/db'
                         },
                         {
                             text: '配置文件',
