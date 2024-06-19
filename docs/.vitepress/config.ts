@@ -29,7 +29,7 @@ export default defineConfig({
                 nav: [
                     {text: '指引', link: '/en/guide/intro', activeMatch: '/en/guide/'},
                     {text: '常见问题', link: '/en/faq/', activeMatch: '/en/faq/'},
-                    {text: '捐赠', link: '/en/other/donate'},
+                    {text: '捐赠', link: '/guide/donate'},
                 ],
                 sidebar: {
                     '/en/guide/': [
@@ -93,23 +93,18 @@ export default defineConfig({
         },
         nav: [
             {text: '指引', link: '/guide/intro', activeMatch: '/zh/guide/'},
-            {text: '常见问题', link: '/faq/', activeMatch: '/zh/faq/'},
-            {text: '捐赠', link: '/other/donate'},
+            {text: '常见问题', link: '/guide/references/faq', activeMatch: '/zh/faq/'},
+            {text: '捐赠', link: '/guide/donate'},
         ],
         sidebar: {
             '/guide/': [
                 {
-                    text: '概述',
-                    items: [
-                        {
-                            text: '首页',
-                            link: '/guide/intro'
-                        },
-                        {
-                            text: '更新日志',
-                            link: '/guide/released'
-                        }
-                    ]
+                    text: '首页',
+                    link: '/guide/intro'
+                },
+                {
+                    text: '更新日志',
+                    link: '/guide/released'
                 }, {
                     text: '用户手册',
                     items: [
@@ -159,6 +154,34 @@ export default defineConfig({
                         },
                     ]
                 }, {
+                    text: '核心机制',
+                    items: [
+                        {
+                            text: '上传',
+                            link: '/guide/core/upload'
+                        },
+                        {
+                            text: '下载',
+                            link: '/guide/core/download'
+                        },
+                        {
+                            text: '客户端直连',
+                            link: '/guide/core/direct'
+                        },
+                        {
+                            text: '缩略图',
+                            link: '/guide/core/preview.md'
+                        },
+                        {
+                            text: '桶策略',
+                            link: '/guide/core/bucket'
+                        },
+                        {
+                            text: '权限控制',
+                            link: '/guide/core/auth'
+                        },
+                    ]
+                }, {
                     text: '参考资料',
                     items: [
                         {
@@ -176,6 +199,10 @@ export default defineConfig({
                         {
                             text: 'MinIO 分片 ETAG 生成机制',
                             link: '/guide/study/etag'
+                        },
+                        {
+                            text: 'Nginx 代理',
+                            link: '/guide/study/proxy'
                         }
                     ]
                 }

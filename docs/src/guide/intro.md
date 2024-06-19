@@ -41,6 +41,32 @@ MinIO 的基础上只做增强，不侵入 MinIO 代码，只为简化开发、�
 * **访问链接时效** ：基于 MinIO 的临时链接创建策略，提供具备有效期并预签名的上传与下载地址。
 * **客户端直连** ：前端直连 MinIO ，项目工程不做文件流的搬运，在支持以上特性的情况下提供 MinIO 原生性能。
 
-# 目录
+# 文档目录
 
-[[TOC]]
+* [首页](intro)
+* [更新日志](released.md)
+* 用户手册
+    - [快速开始](user/quick-start)
+    - [API 使用](user/api)
+    - [配置文件](user/config)
+    - [非官方S3实现](user/custom)
+* 开发者手册
+    - [开发计划](developers/plan)
+    - [构建与运行](developers/building)
+    - [代码结构](developers/framework)
+    - [提交代码](developers/writing-code)
+    - [编写文档](developers/writing-documents)
+    - [贡献者列表](developers/contributors)
+* 核心机制
+    - [上传](core/upload)
+    - [下载](core/download)
+    - [客户端直连](core/direct)
+    - [缩略图](core/preview)
+    - [桶策略](core/bucket)
+    - [权限控制](core/auth)
+* 参考资料
+    - [FAQ](references/faq)
+    - [MinIO S3 接口](references/minio-s3-api)
+* MinIO 研究
+    - [MinIO 分片 ETAG 生成机制](study/etag)
+    - [Nginx 代理](study/proxy)
