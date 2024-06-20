@@ -29,12 +29,12 @@ import java.io.InputStream;
 /**
  * 对象存储标准接口定义
  * 本类的方法是给前端使用的方法
- *
  * @author contact@liuxp.me
+ * @since 2024/6/18
  */
 @Controller
 @RequestMapping("/storage")
-@Tag(name = "TOS对象存储")
+@Tag(name = "MinIO Plus Demo 接口")
 @Slf4j
 public class StorageController {
 

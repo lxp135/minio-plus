@@ -1,0 +1,24 @@
+{
+  "name": "MinIO-Plus-docs",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "The documentation of MinIO-Plus",
+  "author": {
+    "name": "BaldHead",
+    "email": "tianxiang.deng@foxmail.com",
+    "url": "https://github.com/bald-head"
+  },
+  "scripts": {
+    "dev": "vitepress dev --port 1026",
+    "docs:build": "vitepress build",
+    "preview": "vite preview",
+    "release": "soy release",
+    "serve": "vitepress serve"
+  },
+  "devDependencies": {
+    "@soybeanjs/cli": "1.0.13",
+    "@types/node": "20.12.7",
+    "typescript": "5.4.5",
+    "vitepress": "^1.2.3"
+  }
+}

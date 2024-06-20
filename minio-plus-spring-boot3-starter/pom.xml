@@ -14,6 +14,7 @@
 
     <modules>
         <module>minio-plus-all-spring-boot3-starter</module>
+        <module>minio-plus-core-spring-boot3-starter</module>
     </modules>
 
 </project>
