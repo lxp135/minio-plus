@@ -20,16 +20,16 @@ export default defineConfig({
             lang: 'en',
             dir: 'src/en',
             title: 'MinIO-Plus',
-            description: '成为 MinIO 最好的搭档',
+            description: 'Be MinIO\'s best partner',
             themeConfig: {
                 footer: {
-                    message: '根据 <a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank">Apache License 2.0</a> 许可证发布',
+                    message: 'Publish under the <a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank">Apache License 2.0</a>',
                     copyright: 'Copyright © 2024 <a href="https://liuxp.me" target="_blank">liuxp.me</a>'
                 },
                 nav: [
-                    {text: '指引', link: '/en/guide/intro', activeMatch: '/en/guide/'},
-                    {text: '常见问题', link: '/en/faq/', activeMatch: '/en/faq/'},
-                    {text: '捐赠', link: '/guide/donate'},
+                    {text: 'INTRO', link: '/en/guide/intro', activeMatch: '/en/guide/'},
+                    {text: 'FAQ', link: '/en/faq/', activeMatch: '/en/faq/'},
+                    {text: 'DONATE', link: '/guide/donate'},
                 ],
                 sidebar: {
                     '/en/guide/': [
@@ -68,7 +68,8 @@ export default defineConfig({
                 content: 'width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no'
             }
         ],
-        ['link', {rel: 'icon', href: '/favicon.ico'}]
+        ['link', {rel: 'icon', href: '/favicon.ico'}],
+        ['script',{},`!function(p){"use strict";!function(t){var s=window,e=document,i=p,c="".concat("https:"===e.location.protocol?"https://":"http://","sdk.51.la/js-sdk-pro.min.js"),n=e.createElement("script"),r=e.getElementsByTagName("script")[0];n.type="text/javascript",n.setAttribute("charset","UTF-8"),n.async=!0,n.src=c,n.id="LA_COLLECT",i.d=n;var o=function(){s.LA.ids.push(i)};s.LA?s.LA.ids&&o():(s.LA=p,s.LA.ids=[],o()),r.parentNode.insertBefore(n,r)}()}({id:"CDqGooQbS8dts6eI",ck:"CDqGooQbS8dts6eI",hashMode:true});`]
     ],
     assetsDir: 'public',
     srcDir: 'src',
@@ -88,7 +89,7 @@ export default defineConfig({
             }
         },
         footer: {
-            message: 'Publish under the <a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank">Apache License 2.0</a>',
+            message: '根据 <a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank">Apache License 2.0</a> 许可证发布',
             copyright: 'Copyright © 2024 <a href="https://liuxp.me" target="_blank">liuxp.me</a>'
         },
         nav: [
