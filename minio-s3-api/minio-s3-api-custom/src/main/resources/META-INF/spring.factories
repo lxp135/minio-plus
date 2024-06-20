@@ -1,2 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-org.liuxp.minioplus.s3.custom.MinioS3ClientImpl

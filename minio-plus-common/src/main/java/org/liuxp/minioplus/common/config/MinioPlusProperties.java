@@ -1,11 +1,11 @@
 package org.liuxp.minioplus.common.config;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
 
 /**
  * MinioPlus配置类
@@ -13,9 +13,7 @@ import org.springframework.context.annotation.Configuration;
  * @author contact@liuxp.me
  * @since 2024/05/22
  */
-@Getter
-@Setter
-@Configuration
+@Data
 @ConfigurationProperties(prefix = "minioplus")
 public class MinioPlusProperties {
 

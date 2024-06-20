@@ -1,3 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-org.liuxp.minioplus.core.service.impl.StorageServiceImpl,\
-org.liuxp.minioplus.core.engine.impl.StorageEngineServiceImpl
