@@ -3,7 +3,7 @@
 
 <p align="center">
   <a target="_blank" href="https://central.sonatype.com/search?q=me.liuxp.minio-plus-all-spring-boot-starter">
-      <img src="https://img.shields.io/maven-central/v/me.liuxp/minio-plus-core.svg?label=Maven%20Central" />
+      <img src="https://img.shields.io/maven-central/v/me.liuxp/minio-plus-core.svg?label=Maven%20Central" alt="maven中央仓库版本号"/>
   </a>
   <a target="_blank" href="https://www.apache.org/licenses/LICENSE-2.0">
       <img src="https://img.shields.io/badge/license-Apache%202-green.svg" alt="开源协议" />
@@ -26,6 +26,12 @@
 
 [MinIO-Plus](https://gitee.com/lxp135/minio-plus/) 是一个 [MinIO](https://github.com/minio/minio) 的二次封装与增强工具，在
 MinIO 的基础上只做增强，不侵入 MinIO 代码，只为简化开发、提高效率而生。成为 MinIO 在项目中落地的润滑剂。
+
+*我们的开源原则*
+
+* 我们承诺 Apache License 2.0 开源许可证永不变更。
+* 我们承诺此项目使用永久免费可商用，杜绝文档收费、升级收费、功能收费等情况。
+* 我们承诺绝不竞价排名，杜绝刷 star 数据、刷 fork 数据，保证项目纯洁。
 
 # 1 特性 | Feature
 
