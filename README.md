@@ -76,6 +76,12 @@ MinIO 的基础上只做增强，不侵入 MinIO 代码，只为简化开发、�
   - [MinIO 分片 ETAG 生成机制](https://minioplus.liuxp.me/guide/study/etag.html)
   - [Nginx 代理](https://minioplus.liuxp.me/guide/study/proxy.html)
 
+*文档访问地址*
+
+* github.io [https://lxp135.github.io/minio-plus-docs/](https://lxp135.github.io/minio-plus-docs/)
+* cloudflare镜像 [http://minio-plus-docs.baldhead.cn/minio-plus-docs/](http://minio-plus-docs.baldhead.cn/minio-plus-docs/)
+* 国内镜像 [https://minioplus.liuxp.me](https://minioplus.liuxp.me)
+
 *文档仓库地址*
 
 * [https://gitee.com/lxp135/minio-plus-docs](https://gitee.com/lxp135/minio-plus-docs/)
