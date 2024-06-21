@@ -78,9 +78,8 @@ MinIO 的基础上只做增强，不侵入 MinIO 代码，只为简化开发、�
 
 *文档访问地址*
 
-* github.io [https://lxp135.github.io/minio-plus-docs/](https://lxp135.github.io/minio-plus-docs/)
-* cloudflare镜像 [http://minio-plus-docs.baldhead.cn/minio-plus-docs/](http://minio-plus-docs.baldhead.cn/minio-plus-docs/)
-* 国内镜像 [https://minioplus.liuxp.me](https://minioplus.liuxp.me)
+* github.io 托管 [https://minioplus.liuxp.me](https://minioplus.liuxp.me)
+* cloudflare 镜像 [http://minio-plus-docs.baldhead.cn/minio-plus-docs/](http://minio-plus-docs.baldhead.cn/minio-plus-docs/)
 
 *文档仓库地址*
 
