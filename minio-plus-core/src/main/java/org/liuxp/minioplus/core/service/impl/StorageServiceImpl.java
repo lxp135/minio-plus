@@ -137,12 +137,6 @@ public class StorageServiceImpl implements StorageService {
                     break;
                 }
             }
-            for (FileMetadataInfoVo fileMetadataInfoVo : alreadyFileList) {
-                if(Boolean.TRUE.equals(fileMetadataInfoVo.getIsFinished())&&fileMetadataInfoVo.getCreateUser().equals(saveDTO.getCreateUser())){
-                    // 当存在该用户上传的相同md5值文件时，直接返回，元数据不再创建
-                    return fileMetadataInfoVo;
-                }
-            }
         }
 
         if(!sameMd5){
