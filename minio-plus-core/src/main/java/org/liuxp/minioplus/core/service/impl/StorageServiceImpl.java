@@ -15,6 +15,7 @@ import org.liuxp.minioplus.api.model.dto.FileMetadataInfoSaveDTO;
 import org.liuxp.minioplus.api.model.vo.CompleteResultVo;
 import org.liuxp.minioplus.api.model.vo.FileCheckResultVo;
 import org.liuxp.minioplus.api.model.vo.FileMetadataInfoVo;
+import org.liuxp.minioplus.api.model.vo.FilePreShardingVo;
 import org.liuxp.minioplus.common.config.MinioPlusProperties;
 import org.liuxp.minioplus.common.enums.MinioPlusErrorCode;
 import org.liuxp.minioplus.common.enums.StorageBucketEnums;
@@ -27,6 +28,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -54,6 +56,39 @@ public class StorageServiceImpl implements StorageService {
      */
     @Resource
     MinioPlusProperties properties;
+
+    @Override
+    public FilePreShardingVo sharding(long fileSize) {
+
+        // 计算分块数量
+        Integer chunkNum = storageEngineService.computeChunkNum(fileSize);
+
+        List<FilePreShardingVo.Part> partList = new ArrayList<>();
+
+        long start = 0;
+        for (int partNumber = 1; partNumber <= chunkNum; partNumber++) {
+
+            long end = Math.min(start + properties.getPart().getSize(), fileSize);
+
+            FilePreShardingVo.Part part = new FilePreShardingVo.Part();
+            // 开始位置
+            part.setStartPosition(start);
+            // 结束位置
+            part.setEndPosition(end);
+
+            // 更改下一次的开始位置
+            start = start + properties.getPart().getSize();
+            partList.add(part);
+        }
+
+        FilePreShardingVo filePreShardingVo = new FilePreShardingVo();
+        filePreShardingVo.setFileSize(fileSize);
+        filePreShardingVo.setPartCount(chunkNum);
+        filePreShardingVo.setPartSize(properties.getPart().getSize());
+        filePreShardingVo.setPartList(partList);
+
+        return filePreShardingVo;
+    }
 
     @Override
     public FileCheckResultVo init(String fileMd5, String fullFileName, long fileSize, Boolean isPrivate, String userId) {

@@ -17,6 +17,14 @@ import java.util.List;
 public interface StorageEngineService {
 
     /**
+     * 计算分块的数量
+     *
+     * @param fileSize 文件大小
+     * @return {@link Integer}
+     */
+    Integer computeChunkNum(Long fileSize);
+
+    /**
      * 上传任务初始化
      * @param fileMd5 文件md5
      * @param fullFileName 文件名（含扩展名）

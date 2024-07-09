@@ -4,9 +4,8 @@
     <meta charset="UTF-8">
     <title>MinIO Plus Demo</title>
 </head>
-<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="js/vue.global.js"></script>
 <script src="js/spark-md5.js"></script>
-<script src="js/upload.js"></script>
 <body>
 <div id="app">
     <div>
@@ -18,7 +17,7 @@
     <button @click="uploadFile(false)" :disabled="partList.length === 0">正常上传</button>
     <button @click="uploadFile(true)" :disabled="partList.length < 2">模拟丢片上传</button>
     <button @click="recover" :disabled="missChunkNumber == null">丢片恢复</button>
-    <button @click="remove" :disabled="uploadId == null">删除文件</button>
+<!--    <button @click="remove" :disabled="uploadId == null">删除文件</button>-->
     <div>
         <input type="text" v-model="uploadId" id="uploadId">
         <button @click="merge" :disabled="uploadId == null">合并分片</button>
@@ -27,6 +26,9 @@
         <button @click="preview" :disabled="uploadId == null">预览图片</button>
         <button @click="download" :disabled="uploadId == null">下载文件</button>
         <img :src="previewUrl">
+    </div>
+    <div>
+        <span>执行过程：</span><textarea id="logstr" style="height: 300px;width: 600px;"></textarea>
     </div>
     <div>
         <label>总计片数：{{partList.length}}</label>
@@ -48,6 +50,7 @@
             const state = reactive({
                 uploadId: null,
                 partList: [],
+                partMd5Map:{},
                 missChunkNumber: null,
                 partCount: null,
                 partSize: null,
@@ -64,38 +67,80 @@
                 const file = document.getElementById("upload").files[0];
                 //获取文件md5
                 let startTime = new Date();
-                const fileMd5 = await getFileMd5(file)
+                console.log('开始计算文件MD5值')
 
-                console.log("文件md5：" + fileMd5 + "，耗时" + (new Date() - startTime) + "毫秒");
-
-                console.log("向后端请求本次分片上传初始化")
-
-                fetch("/storage/upload/init", {
+                fetch("/storage/upload/sharding", {
                     method: "POST",
                     headers: {
-                        "Content-Type": "application/json",
-                        "Authorization":state.loginUser
+                        "Content-Type": "application/json"
                     },
                     body: JSON.stringify({
-                        fileMd5: fileMd5,
-                        fullFileName: file.name,
                         fileSize: file.size
                     })
                 }).then(res => res.json()).then(({data}) => {
                     console.log(data);
-                    // 获取文件上传id
-                    state.uploadId = data.fileKey;
-                    // 获取文件分片
-                    state.partList = data.partList;
-                    // 获取文件大小
-                    state.fileSize = data.fileSize;
-                    // 获取块大小
-                    state.partSize = data.partSize;
-                    // 获取文件分片数
-                    state.partCount = data.partCount;
+
+                    let fileReader = new FileReader();
+                    let md5 = new SparkMD5();
+                    let md5Total = new SparkMD5();
+                    let currentIndex = 0;
+
+                    const loadFile = () => {
+                        if (currentIndex >= data.partList.length) {
+                            let fileMd5 = md5Total.end();
+                            console.log("文件md5：" + fileMd5 + "，耗时" + (new Date() - startTime) + "毫秒");
+
+                            console.log("向后端请求本次分片上传初始化")
+
+                            fetch("/storage/upload/init", {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json",
+                                    "Authorization":state.loginUser
+                                },
+                                body: JSON.stringify({
+                                    fileMd5: fileMd5,
+                                    fullFileName: file.name,
+                                    fileSize: file.size
+                                })
+                            }).then(res => res.json()).then(({data}) => {
+                                console.log(data);
+                                // 获取文件上传id
+                                state.uploadId = data.fileKey;
+                                // 获取文件分片
+                                state.partList = data.partList;
+                                // 获取文件大小
+                                state.fileSize = data.fileSize;
+                                // 获取块大小
+                                state.partSize = data.partSize;
+                                // 获取文件分片数
+                                state.partCount = data.partCount;
+                            }).catch(err => {
+                                console.log(err);
+                            })
+                            return;
+                        }
+
+                        const item = data.partList[currentIndex];
+                        const slice = file.slice(item.startPosition, item.endPosition);
+                        fileReader.readAsBinaryString(slice);
+                        fileReader.onload = e => {
+                            md5.appendBinary(e.target.result);
+                            md5Total.appendBinary(e.target.result);
+                            let partMd5 = md5.end();
+                            console.log("开始计算第" + currentIndex + "个分片MD5值"+partMd5);
+                            state.partMd5Map[item.startPosition + '_' + item.endPosition] = partMd5;
+                            currentIndex++;
+                            loadFile();
+                        };
+                    }
+
+                    loadFile();
                 }).catch(err => {
                     console.log(err);
                 })
+
+
             }
             /**
              * 上传文件
@@ -149,12 +194,11 @@
                         continue;
                     }
                     if (i === state.partCount - 1) {
-                        _chunkFile = file.slice(i * state.partSize, state.fileSize)
+                        partMd5List.push(state.partMd5Map[i * state.partSize+'_'+ state.fileSize]);
                     } else {
-                        _chunkFile = file.slice(i * state.partSize, (i + 1) * state.partSize)
+                        partMd5List.push(state.partMd5Map[i * state.partSize+'_'+ (i + 1) * state.partSize]);
                     }
-                    let partMd5 = await getFileMd5(_chunkFile);
-                    partMd5List.push(partMd5);
+
                 }
                 //
                 fetch(`/storage/upload/complete/${state.uploadId}`, {
@@ -222,16 +266,6 @@
                 });
 
             }
-            // 删除文件
-            const remove = () => {
-                fetch(`/storage/remove/${state.uploadId}`, {
-                    method: "POST",
-                }).then(res => res.json()).then(({data}) => {
-                    console.log("删除文件完成", data)
-                }).catch(err => {
-                    console.log(err);
-                });
-            }
             /**
              * 获取文件MD5
              * @param file
@@ -249,16 +283,15 @@
                 })
             }
 
-
             return {
                 checkFile,
-                removeTaskId,
+                // removeTaskId,
                 clearState,
                 uploadFile,
                 merge,
                 download,
                 preview,
-                remove,
+                // remove,
                 recover,
                 ...toRefs(state)
             }

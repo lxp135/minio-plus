@@ -6,10 +6,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.liuxp.minioplus.api.StorageService;
 import org.liuxp.minioplus.api.model.vo.CompleteResultVo;
 import org.liuxp.minioplus.api.model.vo.FileCheckResultVo;
+import org.liuxp.minioplus.api.model.vo.FilePreShardingVo;
 import org.liuxp.minioplus.extension.context.Response;
 import org.liuxp.minioplus.extension.context.UserHolder;
 import org.liuxp.minioplus.extension.dto.FileCheckDTO;
 import org.liuxp.minioplus.extension.dto.FileCompleteDTO;
+import org.liuxp.minioplus.extension.dto.PreShardingDTO;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -38,6 +40,21 @@ public class StorageController {
      */
     @Resource
     private StorageService storageService;
+
+    /**
+     * 文件预分片方法
+     * 在大文件上传时，为了防止前端重复计算文件MD5值，提供该方法
+     * @return 预分片结果
+     */
+    @ApiOperation(value = "文件预分片")
+    @PostMapping("/upload/sharding")
+    @ResponseBody
+    public Response<FilePreShardingVo> sharding(@RequestBody @Validated PreShardingDTO preShardingDTO){
+
+        FilePreShardingVo resultVo = storageService.sharding(preShardingDTO.getFileSize());
+
+        return Response.success(resultVo);
+    }
 
     /**
      * 上传任务初始化

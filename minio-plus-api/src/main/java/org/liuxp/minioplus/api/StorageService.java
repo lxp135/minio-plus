@@ -5,6 +5,7 @@ import org.liuxp.minioplus.api.model.dto.FileMetadataInfoDTO;
 import org.liuxp.minioplus.api.model.vo.CompleteResultVo;
 import org.liuxp.minioplus.api.model.vo.FileCheckResultVo;
 import org.liuxp.minioplus.api.model.vo.FileMetadataInfoVo;
+import org.liuxp.minioplus.api.model.vo.FilePreShardingVo;
 
 import java.io.InputStream;
 import java.util.List;
@@ -15,6 +16,13 @@ import java.util.List;
  * @since  2024/06/05
  */
 public interface StorageService {
+
+    /**
+     * 文件预分片
+     * @param fileSize 文件大小
+     * @return 预分片结果
+     */
+    FilePreShardingVo sharding(long fileSize);
 
     /**
      * 上传任务初始化

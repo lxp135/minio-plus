@@ -528,7 +528,7 @@ public class StorageEngineServiceImpl implements StorageEngineService {
      * @param fileSize 文件大小
      * @return {@link Integer}
      */
-    private Integer computeChunkNum(Long fileSize) {
+    public Integer computeChunkNum(Long fileSize) {
         // 计算分块数量
         double tempNum = (double) fileSize / properties.getPart().getSize();
         // 向上取整
