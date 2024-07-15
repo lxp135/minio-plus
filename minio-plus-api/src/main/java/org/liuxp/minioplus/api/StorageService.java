@@ -120,6 +120,19 @@ public interface StorageService {
     FileMetadataInfoVo createFile(String fullFileName, Boolean isPrivate, String userId, String url);
 
     /**
+     * 创建大文件
+     * 大文件建议使用本方法
+     * @param fullFileName 文件名（含扩展名）
+     * @param md5 文件名MD5
+     * @param fileSize 文件名大小
+     * @param isPrivate 是否私有 false:否 true:是
+     * @param userId  用户编号
+     * @param inputStream 文件输入字节流
+     * @return 文件元数据信息
+     */
+    FileMetadataInfoVo createBigFile(String fullFileName, String md5, long fileSize,Boolean isPrivate, String userId, InputStream inputStream);
+
+    /**
      * 根据文件key读取文件字节流
      * @param fileKey 文件key
      * @return 文件字节流

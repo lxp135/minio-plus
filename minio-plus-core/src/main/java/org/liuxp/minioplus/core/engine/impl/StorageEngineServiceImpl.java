@@ -30,6 +30,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -407,10 +408,14 @@ public class StorageEngineServiceImpl implements StorageEngineService {
     @Override
     public Boolean createFile(FileMetadataInfoSaveDTO saveDTO, byte[] fileBytes) {
         // 写入文件
-        minioS3Client.putObject(saveDTO.getStorageBucket(), CommonUtil.getObjectName(saveDTO.getFileMd5()), new ByteArrayInputStream(fileBytes), saveDTO.getFileSize(), saveDTO.getFileMimeType());
+        return createFile(saveDTO,new ByteArrayInputStream(fileBytes));
+    }
+
+    @Override
+    public Boolean createFile(FileMetadataInfoSaveDTO saveDTO, InputStream inputStream) {
+        // 写入文件
+        minioS3Client.putObject(saveDTO.getStorageBucket(), CommonUtil.getObjectName(saveDTO.getFileMd5()), inputStream, saveDTO.getFileSize(), saveDTO.getFileMimeType());
         return true;
-
-
     }
 
     @Override

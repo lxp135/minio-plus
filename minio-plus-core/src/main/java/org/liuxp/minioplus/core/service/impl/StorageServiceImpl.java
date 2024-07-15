@@ -199,6 +199,37 @@ public class StorageServiceImpl implements StorageService {
     }
 
     @Override
+    public FileMetadataInfoVo createBigFile(String fullFileName, String md5, long fileSize,Boolean isPrivate, String userId,InputStream inputStream) {
+        // 组装文件保存入参
+        FileMetadataInfoSaveDTO saveDTO = buildSaveDto(fullFileName,md5,fileSize, isPrivate, userId);
+
+        // 查询MinIO中是否存在相同MD5值的文件
+        FileMetadataInfoDTO fileMetadataInfo = new FileMetadataInfoDTO();
+        fileMetadataInfo.setFileMd5(saveDTO.getFileMd5());
+        List<FileMetadataInfoVo> alreadyFileList = fileMetadataRepository.list(fileMetadataInfo);
+
+        boolean sameMd5 = false;
+
+        if(CollUtil.isNotEmpty(alreadyFileList)){
+            for (FileMetadataInfoVo fileMetadataInfoVo : alreadyFileList) {
+                if(Boolean.TRUE.equals(fileMetadataInfoVo.getIsFinished())){
+                    saveDTO.setStorageBucket(fileMetadataInfoVo.getStorageBucket());
+                    saveDTO.setStoragePath(fileMetadataInfoVo.getStoragePath());
+                    sameMd5 = true;
+                    break;
+                }
+            }
+        }
+
+        if(!sameMd5){
+            // 新文件时，执行写入逻辑
+            storageEngineService.createFile(saveDTO, inputStream);
+        }
+
+        return fileMetadataRepository.save(saveDTO);
+    }
+
+    @Override
     public Pair<FileMetadataInfoVo,byte[]> read(String fileKey) {
         return storageEngineService.read(fileKey);
     }
@@ -215,6 +246,12 @@ public class StorageServiceImpl implements StorageService {
         }
         // 计算文件MD5值
         String md5 = SecureUtil.md5().digestHex(fileBytes);
+
+        return buildSaveDto(fullFileName,md5,fileBytes.length,isPrivate,userId);
+    }
+
+    FileMetadataInfoSaveDTO buildSaveDto(String fullFileName, String md5,long fileSize,Boolean isPrivate, String userId){
+
         // 生成UUID作为文件KEY
         String key = IdUtil.fastSimpleUUID();
         String suffix = FileUtil.getSuffix(fullFileName);
@@ -236,7 +273,7 @@ public class StorageServiceImpl implements StorageService {
         fileMetadataInfoSaveDTO.setFileName(fullFileName);
         fileMetadataInfoSaveDTO.setFileMimeType(fileMimeType);
         fileMetadataInfoSaveDTO.setFileSuffix(suffix);
-        fileMetadataInfoSaveDTO.setFileSize((long) fileBytes.length);
+        fileMetadataInfoSaveDTO.setFileSize(fileSize);
         fileMetadataInfoSaveDTO.setStorageBucket(storageBucket);
         fileMetadataInfoSaveDTO.setStoragePath(storagePath);
         fileMetadataInfoSaveDTO.setUploadTaskId("");

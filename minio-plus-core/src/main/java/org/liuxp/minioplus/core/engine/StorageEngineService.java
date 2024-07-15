@@ -6,6 +6,7 @@ import org.liuxp.minioplus.api.model.vo.CompleteResultVo;
 import org.liuxp.minioplus.api.model.vo.FileCheckResultVo;
 import org.liuxp.minioplus.api.model.vo.FileMetadataInfoVo;
 
+import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -81,6 +82,14 @@ public interface StorageEngineService {
      * @return 是否成功
      */
     Boolean createFile(FileMetadataInfoSaveDTO saveDTO, byte[] fileBytes);
+
+    /**
+     * 写入文件流
+     * @param saveDTO 文件元数据信息保存入参
+     * @param inputStream 文件流
+     * @return 是否成功
+     */
+    Boolean createFile(FileMetadataInfoSaveDTO saveDTO, InputStream inputStream);
 
     /**
      * 读取文件流
