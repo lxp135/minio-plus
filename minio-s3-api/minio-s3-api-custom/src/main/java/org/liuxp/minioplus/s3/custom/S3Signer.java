@@ -1,8 +1,8 @@
 package org.liuxp.minioplus.s3.custom;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.text.CharSequenceUtil;
 import cn.hutool.core.util.HexUtil;
-import cn.hutool.core.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.crypto.Mac;
@@ -101,12 +101,12 @@ public class S3Signer {
      * @return
      */
     private static String buildSignedHeaders(Map<String, String> canonicalHeaders) {
-        return StrUtil.join(";", canonicalHeaders.keySet());
+        return CharSequenceUtil.join(";", canonicalHeaders.keySet());
     }
 
     private static String buildCanonicalQueryString(String params){
 
-        if(StrUtil.isBlank(params)){
+        if(CharSequenceUtil.isBlank(params)){
             return "";
         }
 

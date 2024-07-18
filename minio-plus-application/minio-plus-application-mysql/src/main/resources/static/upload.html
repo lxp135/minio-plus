@@ -25,7 +25,7 @@
     <div>
         <button @click="preview" :disabled="uploadId == null">预览图片</button>
         <button @click="download" :disabled="uploadId == null">下载文件</button>
-        <img :src="previewUrl">
+        <img :src="previewUrl" alt="预览图">
     </div>
     <div>
         <span>执行过程：</span><textarea id="logstr" style="height: 300px;width: 600px;"></textarea>

@@ -4,8 +4,8 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.lang.Pair;
+import cn.hutool.core.text.CharSequenceUtil;
 import cn.hutool.core.util.IdUtil;
-import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.http.HttpUtil;
@@ -295,7 +295,7 @@ public class StorageServiceImpl implements StorageService {
      */
     private String remakeUrl(String url){
 
-        if(StrUtil.isNotBlank(properties.getBrowserUrl())){
+        if(CharSequenceUtil.isNotBlank(properties.getBrowserUrl())){
             return url.replace(properties.getBackend(), properties.getBrowserUrl());
         }
         return url;
