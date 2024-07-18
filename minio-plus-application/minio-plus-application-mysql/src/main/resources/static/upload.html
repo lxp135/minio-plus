@@ -31,11 +31,11 @@
         <span>执行过程：</span><textarea id="logstr" style="height: 300px;width: 600px;"></textarea>
     </div>
     <div>
-        <label>总计片数：{{partList.length}}</label>
+        <span>总计片数：{{partList.length}}</span>
         <div v-for="(item,index) in partList" :style="{color:missChunkNumber === index ? 'red' : 'black'}">
-            <label>第{{index + 1}}片:</label>
+            <span>第{{index + 1}}片:</span>
             <br/>
-            <label>{{item.url}}</label>
+            <span>{{item.url}}</span>
         </div>
     </div>
 

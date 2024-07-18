@@ -38,17 +38,6 @@ body{
     height: 100%;
     margin-right: 10px;
 }
-.nav-body-item-so{
-    border-radius: 40px;
-    background:none;
-    outline:none;
-    border:none;
-    height: 30px;
-    text-indent: 10px;
-    padding-right: 35px;
-    background: #eee;
-    width: 200px;
-}
 .item-search {
     position: relative;
 }
