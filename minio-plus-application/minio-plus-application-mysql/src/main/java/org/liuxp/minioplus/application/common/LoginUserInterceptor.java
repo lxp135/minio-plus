@@ -1,5 +1,6 @@
 package org.liuxp.minioplus.application.common;
 
+import cn.hutool.core.text.CharSequenceUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.liuxp.minioplus.extension.context.UserHolder;
 import org.springframework.lang.Nullable;
@@ -31,7 +32,12 @@ public class LoginUserInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, @Nonnull HttpServletResponse response, @Nonnull Object handler) {
         String userId = request.getHeader("Authorization");
-        UserHolder.set(userId);
+        if(CharSequenceUtil.isBlank(userId)){
+            UserHolder.set("");
+        }else{
+            UserHolder.set(userId);
+        }
+
         return true;
     }
 
