@@ -23,6 +23,12 @@ public class ListParts {
 
     private List<Part> partList = null;
 
+    public static ListParts build(){
+        ListParts listParts = new ListParts();
+        listParts.setPartList(new ArrayList<>());
+        return listParts;
+    }
+
     @Getter
     @Setter
     @ToString

@@ -109,7 +109,7 @@ public class MinioS3ClientImpl implements MinioS3Client {
     @Override
     public ListParts listParts(String bucketName, String objectName, Integer maxParts, String uploadId) {
 
-        ListParts listParts = new ListParts();
+        ListParts listParts = ListParts.build();
 
         try {
             ListPartsResponse listPartsResponse = this.getClient().listParts(bucketName, null, objectName, maxParts
@@ -126,7 +126,8 @@ public class MinioS3ClientImpl implements MinioS3Client {
             }
 
         } catch (Exception e) {
-            log.error(MinioPlusErrorCode.LIST_PARTS_FAILED.getMessage()+":{}", e.getMessage(), e);
+            // 查询分片失败，打印日志，返回空的分片信息
+            log.error(MinioPlusErrorCode.LIST_PARTS_FAILED.getMessage()+":{}", e.getMessage());
         }
 
         return listParts;
