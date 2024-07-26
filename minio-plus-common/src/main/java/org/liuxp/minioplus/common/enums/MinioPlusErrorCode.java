@@ -22,6 +22,7 @@ public enum MinioPlusErrorCode {
     FILE_BYTES_FAILED(1005,"文件流不能为空"),
     FILE_UPLOAD_FAILED(1006,"文件上传失败"),
     FILE_PREVIEW_WRITE_FAILED(1007,"缩略图生成失败"),
+    FILE_ICON_FAILED(1008,"图标获取失败"),
 
     /**
      * MinIO 异常

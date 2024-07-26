@@ -365,6 +365,12 @@ public class StorageEngineServiceImpl implements StorageEngineService {
         try {
             // 文件权限校验，元数据为空或者当前登录用户不是文件所有者时抛出异常
             this.authentication(metadata, fileKey, userId);
+
+            if(!StorageBucketEnums.IMAGE.getCode().equals(metadata.getStorageBucket())){
+                // 不是图片时，返回文件类型
+                return metadata.getFileSuffix();
+            }
+
             // 生成缩略图
             generatePreviewImage(metadata);
             // 创建图片预览地址

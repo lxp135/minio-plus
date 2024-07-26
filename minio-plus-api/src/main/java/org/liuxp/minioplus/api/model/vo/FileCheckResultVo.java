@@ -9,14 +9,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 文件检查结果VO
+ * 文件初始化结果
  *
  * @author contact@liuxp.me
- * @since 2023-06-26
+ * @since 2024-06-26
  **/
 @Getter
 @Setter
-@ApiModel("文件检查结果")
+@ApiModel("文件初始化结果")
 public class FileCheckResultVo {
     /**
      * 主键

@@ -1,5 +1,6 @@
 package org.liuxp.minioplus.extension.controller;
 
+import cn.hutool.core.io.IoUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -7,16 +8,23 @@ import org.liuxp.minioplus.api.StorageService;
 import org.liuxp.minioplus.api.model.vo.CompleteResultVo;
 import org.liuxp.minioplus.api.model.vo.FileCheckResultVo;
 import org.liuxp.minioplus.api.model.vo.FilePreShardingVo;
+import org.liuxp.minioplus.common.enums.MinioPlusErrorCode;
+import org.liuxp.minioplus.common.enums.StorageBucketEnums;
+import org.liuxp.minioplus.common.exception.MinioPlusException;
 import org.liuxp.minioplus.extension.context.Response;
 import org.liuxp.minioplus.extension.context.UserHolder;
 import org.liuxp.minioplus.extension.dto.FileCheckDTO;
 import org.liuxp.minioplus.extension.dto.FileCompleteDTO;
 import org.liuxp.minioplus.extension.dto.PreShardingDTO;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayInputStream;
 
 /**
  * 对象存储标准接口定义
@@ -34,6 +42,11 @@ public class StorageController {
      * 重定向
      */
     private static final String REDIRECT_PREFIX = "redirect:";
+
+    /**
+     * 图标请求地址
+     */
+    private static final String ICON_PATH = "/storage/icon/";
 
     /**
      * 存储引擎Service接口定义
@@ -113,7 +126,7 @@ public class StorageController {
     }
 
     /**
-     * 图片原图预览
+     * 获取图像
      * @param fileKey 文件KEY
      * @return 原图地址
      */
@@ -129,7 +142,9 @@ public class StorageController {
     }
 
     /**
-     * 图片缩略图预览
+     * 文件预览
+     * 当文件为图片时，返回图片的缩略图
+     * 当文件不是图片时，返回文件类型图标
      * @param fileKey 文件KEY
      * @return 缩略图地址
      */
@@ -140,8 +155,44 @@ public class StorageController {
         // 取得当前登录用户信息
         String userId = UserHolder.get();
 
+        String url = storageService.preview(fileKey, userId);
+        if(url.length()<10){
+            // 当返回值为文件类型时，取得图标
+            url = ICON_PATH + url;
+        }
+
         // 取得文件读取路径
-        return REDIRECT_PREFIX + storageService.preview(fileKey, userId);
+        return REDIRECT_PREFIX + url;
+    }
+
+    /**
+     * 根据文件类型取得图标
+     * @param response HttpServletResponse
+     */
+    @ApiOperation(value = "获取图标")
+    @GetMapping("/icon/{fileType}")
+    public void icon(HttpServletResponse response,@PathVariable String fileType) {
+        try {
+
+            // 根据文件后缀取得桶
+            String storageBucket = StorageBucketEnums.getBucketByFileSuffix(fileType);
+
+            ClassPathResource cpr = new ClassPathResource(storageBucket+".png");
+
+            byte[] bytes = FileCopyUtils.copyToByteArray(cpr.getInputStream());
+
+            response.setHeader("content-disposition", "inline");
+            response.setHeader("Content-Length", String.valueOf(bytes.length));
+            ByteArrayInputStream inputStream = new ByteArrayInputStream(bytes);
+
+            IoUtil.copy(inputStream, response.getOutputStream());
+            inputStream.close();
+
+        } catch (Exception e) {
+            log.error(MinioPlusErrorCode.FILE_ICON_FAILED.getMessage(),e);
+            // 图标获取失败
+            throw new MinioPlusException(MinioPlusErrorCode.FILE_ICON_FAILED);
+        }
     }
 
 }
