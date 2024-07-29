@@ -49,14 +49,14 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven-source-plugin.version>3.0.1</maven-source-plugin.version>
-        <revision>0.1.3</revision>
+        <revision>0.1.4</revision>
         <spring-boot.version>2.7.18</spring-boot.version>
         <mybatisplus.version>3.5.7</mybatisplus.version>
         <lombok.version>1.18.32</lombok.version>
         <hutool.version>5.8.28</hutool.version>
         <knife4j.version>2.0.9</knife4j.version>
         <swagger.version>1.5.22</swagger.version>
-        <minio.version>8.3.3</minio.version>
+        <minio.version>8.5.11</minio.version>
         <thumbnailator.version>0.4.20</thumbnailator.version>
     </properties>
 
@@ -304,6 +304,12 @@
                 <groupId>org.owasp</groupId>
                 <artifactId>dependency-check-maven</artifactId>
                 <version>10.0.3</version>
+                <configuration>
+                    <skipRuntimeScope>true</skipRuntimeScope>
+                    <skipProvidedScope>true</skipProvidedScope>
+                    <skipSystemScope>true</skipSystemScope>
+                    <skipTestScope>true</skipTestScope>
+                </configuration>
                 <executions>
                     <execution>
                         <goals>

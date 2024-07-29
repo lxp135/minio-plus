@@ -42,7 +42,7 @@ public class MinioS3ClientImpl implements MinioS3Client {
     public CustomMinioClient getClient(){
 
         if(null==this.minioClient){
-            MinioClient client = MinioClient.builder()
+            MinioAsyncClient client = MinioAsyncClient.builder()
                     .endpoint(properties.getBackend())
                     .credentials(properties.getKey(), properties.getSecret())
                     .build();
@@ -55,7 +55,7 @@ public class MinioS3ClientImpl implements MinioS3Client {
     @Override
     public Boolean bucketExists(String bucketName) {
         try {
-            return this.getClient().bucketExists(BucketExistsArgs.builder().bucket(bucketName).build());
+            return this.getClient().bucketExists(BucketExistsArgs.builder().bucket(bucketName).build()).get();
         } catch (Exception e) {
             log.error(MinioPlusErrorCode.BUCKET_EXISTS_FAILED.getMessage()+":{}", e.getMessage(), e);
             throw new MinioPlusException(MinioPlusErrorCode.BUCKET_EXISTS_FAILED);
@@ -202,7 +202,7 @@ public class MinioS3ClientImpl implements MinioS3Client {
         try{
 
             // 检查存储桶是否已经存在
-            boolean isExist = this.getClient().bucketExists(BucketExistsArgs.builder().bucket(bucketName).build());
+            boolean isExist = this.getClient().bucketExists(BucketExistsArgs.builder().bucket(bucketName).build()).get();
             if (!isExist) {
                 // 创建存储桶。
                 this.getClient().makeBucket(MakeBucketArgs.builder().bucket(bucketName).build());
@@ -228,7 +228,7 @@ public class MinioS3ClientImpl implements MinioS3Client {
     @Override
     public byte[] getObject(String bucketName, String objectName) {
         // 从远程MinIO服务读取文件流
-        try (InputStream inputStream = this.getClient().getObject(GetObjectArgs.builder().bucket(bucketName).object(objectName).build())) {
+        try (InputStream inputStream = this.getClient().getObject(GetObjectArgs.builder().bucket(bucketName).object(objectName).build()).get()) {
             // 文件流转换为字节码
             return IoUtil.readBytes(inputStream);
         } catch (Exception e) {

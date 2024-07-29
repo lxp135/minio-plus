@@ -1,10 +1,7 @@
 package org.liuxp.minioplus.s3.official;
 
 import com.google.common.collect.Multimap;
-import io.minio.CreateMultipartUploadResponse;
-import io.minio.ListPartsResponse;
-import io.minio.MinioClient;
-import io.minio.ObjectWriteResponse;
+import io.minio.*;
 import io.minio.errors.*;
 import io.minio.messages.Part;
 
@@ -17,10 +14,10 @@ import java.security.NoSuchAlgorithmException;
  * @author contact@liuxp.me
  * @since  2024/5/22
  */
-public class CustomMinioClient extends MinioClient {
+public class CustomMinioClient extends MinioAsyncClient {
 
 
-    public CustomMinioClient(MinioClient client) {
+    public CustomMinioClient(MinioAsyncClient client) {
         super(client);
     }
 
