@@ -3,6 +3,9 @@ package org.liuxp.minioplus.s3.official;
 import cn.hutool.core.io.IoUtil;
 import com.google.common.collect.Maps;
 import io.minio.*;
+import io.minio.errors.InsufficientDataException;
+import io.minio.errors.InternalException;
+import io.minio.errors.XmlParserException;
 import io.minio.http.Method;
 import io.minio.messages.Part;
 import lombok.extern.slf4j.Slf4j;
@@ -14,11 +17,15 @@ import org.liuxp.minioplus.s3.def.MinioS3Client;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.io.InputStream;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -56,7 +63,7 @@ public class MinioS3ClientImpl implements MinioS3Client {
     public Boolean bucketExists(String bucketName) {
         try {
             return this.getClient().bucketExists(BucketExistsArgs.builder().bucket(bucketName).build()).get();
-        } catch (Exception e) {
+        } catch (InsufficientDataException | InternalException | InvalidKeyException | IOException | NoSuchAlgorithmException | XmlParserException | ExecutionException | InterruptedException e) {
             log.error(MinioPlusErrorCode.BUCKET_EXISTS_FAILED.getMessage()+":{}", e.getMessage(), e);
             throw new MinioPlusException(MinioPlusErrorCode.BUCKET_EXISTS_FAILED);
         }
@@ -217,7 +224,7 @@ public class MinioS3ClientImpl implements MinioS3Client {
                     .contentType(contentType)
                     .build());
 
-        } catch (Exception e) {
+        } catch (InsufficientDataException | InternalException | InvalidKeyException | IOException | NoSuchAlgorithmException | XmlParserException | ExecutionException | InterruptedException e) {
             log.error(MinioPlusErrorCode.WRITE_FAILED.getMessage(),e);
             throw new MinioPlusException(MinioPlusErrorCode.WRITE_FAILED);
         }
