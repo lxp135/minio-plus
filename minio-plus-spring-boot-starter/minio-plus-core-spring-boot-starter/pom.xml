@@ -20,12 +20,12 @@
 
     <dependencies>
         <dependency>
-            <groupId>me.liuxp</groupId>
-            <artifactId>minio-plus-core</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>me.liuxp</groupId>
-            <artifactId>s3-api-minio</artifactId>
+            <artifactId>minio-plus-core</artifactId>
         </dependency>
     </dependencies>
 

@@ -54,8 +54,9 @@
         <mybatisplus.version>3.5.7</mybatisplus.version>
         <lombok.version>1.18.32</lombok.version>
         <hutool.version>5.8.28</hutool.version>
-        <knife4j.version>2.0.9</knife4j.version>
-        <swagger.version>1.5.22</swagger.version>
+        <knife4j.version>4.4.0</knife4j.version>
+        <swagger.version>2.2.8</swagger.version>
+        <swagger.jakarta.version>2.2.15</swagger.jakarta.version>
         <minio.version>8.5.11</minio.version>
         <thumbnailator.version>0.4.20</thumbnailator.version>
     </properties>
@@ -85,20 +86,20 @@
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool.version}</version>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/com.github.xiaoymin/knife4j-spring-boot-starter -->
             <dependency>
                 <groupId>com.github.xiaoymin</groupId>
-                <artifactId>knife4j-spring-boot-starter</artifactId>
+                <artifactId>knife4j-openapi3-spring-boot-starter</artifactId>
                 <version>${knife4j.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.github.xiaoymin</groupId>
-                <artifactId>knife4j-annotations</artifactId>
+                <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
                 <version>${knife4j.version}</version>
             </dependency>
+
             <!-- https://mvnrepository.com/artifact/io.swagger/swagger-annotations -->
             <dependency>
-                <groupId>io.swagger</groupId>
+                <groupId>io.swagger.core.v3</groupId>
                 <artifactId>swagger-annotations</artifactId>
                 <version>${swagger.version}</version>
             </dependency>
@@ -154,12 +155,17 @@
             </dependency>
             <dependency>
                 <groupId>me.liuxp</groupId>
-                <artifactId>s3-api-definition</artifactId>
+                <artifactId>minio-plus-all-springboot3-starter</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>me.liuxp</groupId>
-                <artifactId>minio-s3-api-custom</artifactId>
+                <artifactId>minio-plus-core-springboot3-starter</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>me.liuxp</groupId>
+                <artifactId>s3-api-definition</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>

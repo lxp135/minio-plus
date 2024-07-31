@@ -1,7 +1,6 @@
 package org.liuxp.minioplus.extension.context;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.ToString;
 
@@ -11,25 +10,25 @@ import lombok.ToString;
  * @since  2024/05/22
  */
 @Data
-@ApiModel(value = "Response")
+@Schema(description = "Response")
 @ToString
 public class Response<T> {
 
 	/**
 	 * 状态码
 	 */
-	@ApiModelProperty(value = "状态码")
+	@Schema(description = "状态码")
 	protected int code;
 
 	/**
 	 * 提示信息
 	 */
-	@ApiModelProperty(value = "操作成功")
+	@Schema(description = "操作成功")
 	protected String message;
 	/**
 	 * 返回给页面的数据内容，不同接口格式不同
 	 */
-	@ApiModelProperty(value = "响应业务参数", dataType = "T")
+	@Schema(description = "响应业务参数")
 	protected T data;
 
 	public Response() {

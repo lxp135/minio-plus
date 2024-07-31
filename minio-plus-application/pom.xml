@@ -15,6 +15,7 @@
     <modules>
         <module>minio-plus-application-mysql</module>
         <module>minio-plus-application-schedule</module>
+        <module>minio-plus-application-springboot3</module>
     </modules>
 
 </project>

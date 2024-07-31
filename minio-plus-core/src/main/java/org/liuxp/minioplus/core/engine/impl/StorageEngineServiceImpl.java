@@ -24,7 +24,6 @@ import org.liuxp.minioplus.core.engine.StorageEngineService;
 import org.liuxp.minioplus.core.repository.MetadataRepository;
 import org.liuxp.minioplus.s3.def.ListParts;
 import org.liuxp.minioplus.s3.def.MinioS3Client;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -127,7 +126,7 @@ public class StorageEngineServiceImpl implements StorageEngineService {
             if (!isSelf) {
                 // 3.其他用户上传过，未完成，断点续传，新增文件元数据
                 // 插入自己的元数据
-                BeanUtils.copyProperties(uploadingMetadata, saveDTO);
+                BeanUtil.copyProperties(uploadingMetadata, saveDTO);
                 saveDTO.setFileName(fullFileName);
                 saveDTO.setCreateUser(userId);
                 saveDTO.setIsPrivate(isPrivate);

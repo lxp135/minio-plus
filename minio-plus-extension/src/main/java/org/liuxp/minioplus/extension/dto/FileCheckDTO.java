@@ -1,7 +1,6 @@
 package org.liuxp.minioplus.extension.dto;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -15,19 +14,19 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@ApiModel("文件预检查入参DTO")
+@Schema(description = "文件预检查入参DTO")
 public class FileCheckDTO {
 
-    @ApiModelProperty(value = "文件md5", required = true)
+    @Schema(description = "文件md5", requiredMode = Schema.RequiredMode.REQUIRED)
     private String fileMd5;
 
-    @ApiModelProperty(value = "文件名（含扩展名）", required = true)
+    @Schema(description = "文件名（含扩展名）", requiredMode = Schema.RequiredMode.REQUIRED)
     private String fullFileName;
 
-    @ApiModelProperty(value = "文件长度", required = true)
+    @Schema(description = "文件长度", requiredMode = Schema.RequiredMode.REQUIRED)
     private Long fileSize;
 
-    @ApiModelProperty("是否私有 false:否 true:是")
+    @Schema(description = "是否私有 false:否 true:是")
     private Boolean isPrivate;
 
 

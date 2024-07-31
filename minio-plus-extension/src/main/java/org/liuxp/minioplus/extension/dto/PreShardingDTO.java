@@ -1,7 +1,6 @@
 package org.liuxp.minioplus.extension.dto;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -15,10 +14,10 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@ApiModel("文件预分片入参DTO")
+@Schema(description = "文件预分片入参DTO")
 public class PreShardingDTO {
 
-    @ApiModelProperty(value = "文件长度", required = true)
+    @Schema(description = "文件长度", requiredMode = Schema.RequiredMode.REQUIRED)
     private Long fileSize;
 
 }
