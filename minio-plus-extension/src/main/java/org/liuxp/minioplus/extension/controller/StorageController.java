@@ -57,6 +57,7 @@ public class StorageController {
     /**
      * 文件预分片方法
      * 在大文件上传时，为了防止前端重复计算文件MD5值，提供该方法
+     * @param preShardingDTO 文件预分片入参DTO
      * @return 预分片结果
      */
     @ApiOperation(value = "文件预分片")
@@ -168,6 +169,7 @@ public class StorageController {
     /**
      * 根据文件类型取得图标
      * @param response HttpServletResponse
+     * @param fileType 文件扩展名
      */
     @ApiOperation(value = "获取图标")
     @GetMapping("/icon/{fileType}")
