@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>minio-s3-api-official</artifactId>
+    <artifactId>s3-api-minio</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>
@@ -31,7 +31,7 @@
         </dependency>
         <dependency>
             <groupId>me.liuxp</groupId>
-            <artifactId>minio-s3-api-definition</artifactId>
+            <artifactId>s3-api-definition</artifactId>
         </dependency>
         <dependency>
             <groupId>me.liuxp</groupId>

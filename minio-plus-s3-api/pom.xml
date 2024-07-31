@@ -13,9 +13,8 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>minio-s3-api-definition</module>
-        <module>minio-s3-api-custom</module>
-        <module>minio-s3-api-official</module>
+        <module>s3-api-definition</module>
+        <module>s3-api-minio</module>
     </modules>
 
 </project>

@@ -12,6 +12,12 @@
     <artifactId>minio-plus-core-spring-boot-starter</artifactId>
     <packaging>jar</packaging>
 
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>me.liuxp</groupId>
@@ -19,7 +25,7 @@
         </dependency>
         <dependency>
             <groupId>me.liuxp</groupId>
-            <artifactId>minio-s3-api-official</artifactId>
+            <artifactId>s3-api-minio</artifactId>
         </dependency>
     </dependencies>
 

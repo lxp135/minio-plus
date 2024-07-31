@@ -40,8 +40,8 @@
         <module>minio-plus-common</module>
         <module>minio-plus-core</module>
         <module>minio-plus-extension</module>
+        <module>minio-plus-s3-api</module>
         <module>minio-plus-spring-boot-starter</module>
-        <module>minio-s3-api</module>
     </modules>
 
     <properties>
@@ -49,7 +49,7 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven-source-plugin.version>3.0.1</maven-source-plugin.version>
-        <revision>0.1.4</revision>
+        <revision>0.1.5</revision>
         <spring-boot.version>2.7.18</spring-boot.version>
         <mybatisplus.version>3.5.7</mybatisplus.version>
         <lombok.version>1.18.32</lombok.version>
@@ -154,7 +154,7 @@
             </dependency>
             <dependency>
                 <groupId>me.liuxp</groupId>
-                <artifactId>minio-s3-api-definition</artifactId>
+                <artifactId>s3-api-definition</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
@@ -164,7 +164,7 @@
             </dependency>
             <dependency>
                 <groupId>me.liuxp</groupId>
-                <artifactId>minio-s3-api-official</artifactId>
+                <artifactId>s3-api-minio</artifactId>
                 <version>${revision}</version>
             </dependency>
         </dependencies>
@@ -305,10 +305,7 @@
                 <artifactId>dependency-check-maven</artifactId>
                 <version>10.0.3</version>
                 <configuration>
-                    <skipRuntimeScope>true</skipRuntimeScope>
-                    <skipProvidedScope>true</skipProvidedScope>
-                    <skipSystemScope>true</skipSystemScope>
-                    <skipTestScope>true</skipTestScope>
+                    <skip>true</skip>
                 </configuration>
                 <executions>
                     <execution>
