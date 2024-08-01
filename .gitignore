@@ -16,3 +16,10 @@ buildNumber.properties
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
 /docs/.vitepress/cache/
+
+# IDEA
+.idea/
+
+# logs
+**/logs
+**/*.log

@@ -26,7 +26,6 @@ import org.liuxp.minioplus.s3.def.ListParts;
 import org.liuxp.minioplus.s3.def.MinioS3Client;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -44,14 +43,17 @@ import java.util.Optional;
 @Slf4j
 public class StorageEngineServiceImpl implements StorageEngineService {
 
-    @Resource
-    MetadataRepository metadataRepository;
+    private final MetadataRepository metadataRepository;
 
-    @Resource
-    MinioPlusProperties properties;
+    private final MinioPlusProperties properties;
 
-    @Resource
-    MinioS3Client minioS3Client;
+    private final MinioS3Client minioS3Client;
+
+    public StorageEngineServiceImpl(MetadataRepository metadataRepository, MinioPlusProperties properties, MinioS3Client minioS3Client) {
+        this.metadataRepository = metadataRepository;
+        this.properties = properties;
+        this.minioS3Client = minioS3Client;
+    }
 
     /**
      * 上传任务初始化
@@ -365,7 +367,7 @@ public class StorageEngineServiceImpl implements StorageEngineService {
             // 文件权限校验，元数据为空或者当前登录用户不是文件所有者时抛出异常
             this.authentication(metadata, fileKey, userId);
 
-            if(!StorageBucketEnums.IMAGE.getCode().equals(metadata.getStorageBucket())){
+            if (!StorageBucketEnums.IMAGE.getCode().equals(metadata.getStorageBucket())) {
                 // 不是图片时，返回文件类型
                 return metadata.getFileSuffix();
             }
@@ -413,7 +415,7 @@ public class StorageEngineServiceImpl implements StorageEngineService {
     @Override
     public Boolean createFile(FileMetadataInfoSaveDTO saveDTO, byte[] fileBytes) {
         // 写入文件
-        return createFile(saveDTO,new ByteArrayInputStream(fileBytes));
+        return createFile(saveDTO, new ByteArrayInputStream(fileBytes));
     }
 
     @Override
@@ -538,6 +540,7 @@ public class StorageEngineServiceImpl implements StorageEngineService {
      * @param fileSize 文件大小
      * @return {@link Integer}
      */
+    @Override
     public Integer computeChunkNum(Long fileSize) {
         // 计算分块数量
         double tempNum = (double) fileSize / properties.getPart().getSize();

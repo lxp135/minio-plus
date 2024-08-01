@@ -9,14 +9,12 @@ import io.minio.errors.XmlParserException;
 import io.minio.http.Method;
 import io.minio.messages.Part;
 import lombok.extern.slf4j.Slf4j;
+import org.liuxp.minioplus.common.config.MinioPlusProperties;
 import org.liuxp.minioplus.common.enums.MinioPlusErrorCode;
 import org.liuxp.minioplus.common.exception.MinioPlusException;
-import org.liuxp.minioplus.common.config.MinioPlusProperties;
 import org.liuxp.minioplus.s3.def.ListParts;
 import org.liuxp.minioplus.s3.def.MinioS3Client;
-import org.springframework.stereotype.Repository;
 
-import javax.annotation.Resource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.InvalidKeyException;
@@ -29,7 +27,6 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
-@Repository
 public class MinioS3ClientImpl implements MinioS3Client {
 
     /**
@@ -41,14 +38,17 @@ public class MinioS3ClientImpl implements MinioS3Client {
      */
     private static final String PART_NUMBER = "partNumber";
 
-    @Resource
-    private MinioPlusProperties properties;
+    private final MinioPlusProperties properties;
 
     private CustomMinioClient minioClient = null;
 
-    public CustomMinioClient getClient(){
+    public MinioS3ClientImpl(MinioPlusProperties properties) {
+        this.properties = properties;
+    }
 
-        if(null==this.minioClient){
+    public CustomMinioClient getClient() {
+
+        if (null == this.minioClient) {
             MinioAsyncClient client = MinioAsyncClient.builder()
                     .endpoint(properties.getBackend())
                     .credentials(properties.getKey(), properties.getSecret())
@@ -63,8 +63,9 @@ public class MinioS3ClientImpl implements MinioS3Client {
     public Boolean bucketExists(String bucketName) {
         try {
             return this.getClient().bucketExists(BucketExistsArgs.builder().bucket(bucketName).build()).get();
-        } catch (InsufficientDataException | InternalException | InvalidKeyException | IOException | NoSuchAlgorithmException | XmlParserException | ExecutionException | InterruptedException e) {
-            log.error(MinioPlusErrorCode.BUCKET_EXISTS_FAILED.getMessage()+":{}", e.getMessage(), e);
+        } catch (InsufficientDataException | InternalException | InvalidKeyException | IOException |
+                 NoSuchAlgorithmException | XmlParserException | ExecutionException | InterruptedException e) {
+            log.error("{}:{}", MinioPlusErrorCode.BUCKET_EXISTS_FAILED.getMessage(), e.getMessage(), e);
             throw new MinioPlusException(MinioPlusErrorCode.BUCKET_EXISTS_FAILED);
         }
     }
@@ -78,7 +79,7 @@ public class MinioS3ClientImpl implements MinioS3Client {
                 this.getClient().makeBucket(MakeBucketArgs.builder().bucket(bucketName).build());
             }
         } catch (Exception e) {
-            log.error(MinioPlusErrorCode.MAKE_BUCKET_FAILED.getMessage()+":{}", e.getMessage(), e);
+            log.error("{}:{}", MinioPlusErrorCode.MAKE_BUCKET_FAILED.getMessage(), e.getMessage(), e);
             throw new MinioPlusException(MinioPlusErrorCode.MAKE_BUCKET_FAILED);
         }
     }
@@ -89,7 +90,7 @@ public class MinioS3ClientImpl implements MinioS3Client {
             CreateMultipartUploadResponse createMultipartUploadResponse = this.getClient().createMultipartUpload(bucketName, null, objectName, null, null);
             return createMultipartUploadResponse.result().uploadId();
         } catch (Exception e) {
-            log.error(MinioPlusErrorCode.CREATE_MULTIPART_UPLOAD_FAILED.getMessage()+":{}", e.getMessage(), e);
+            log.error("{}:{}", MinioPlusErrorCode.CREATE_MULTIPART_UPLOAD_FAILED.getMessage(), e.getMessage(), e);
             throw new MinioPlusException(MinioPlusErrorCode.CREATE_MULTIPART_UPLOAD_FAILED);
         }
     }
@@ -100,7 +101,7 @@ public class MinioS3ClientImpl implements MinioS3Client {
         Part[] partArray = new Part[parts.size()];
 
         for (int i = 0; i < parts.size(); i++) {
-            partArray[i] = new Part(parts.get(i).getPartNumber(),parts.get(i).getEtag());
+            partArray[i] = new Part(parts.get(i).getPartNumber(), parts.get(i).getEtag());
         }
 
         try {
@@ -108,7 +109,7 @@ public class MinioS3ClientImpl implements MinioS3Client {
                     , objectName, uploadId, partArray, null, null);
             return objectWriteResponse != null;
         } catch (Exception e) {
-            log.error(MinioPlusErrorCode.COMPLETE_MULTIPART_FAILED.getMessage()+",uploadId:{},ObjectName:{},失败原因:{},", uploadId, objectName, e.getMessage(), e);
+            log.error("{},uploadId:{},ObjectName:{},失败原因:{},", MinioPlusErrorCode.COMPLETE_MULTIPART_FAILED.getMessage(), uploadId, objectName, e.getMessage(), e);
             throw new MinioPlusException(MinioPlusErrorCode.COMPLETE_MULTIPART_FAILED);
         }
     }
@@ -134,14 +135,14 @@ public class MinioS3ClientImpl implements MinioS3Client {
 
         } catch (Exception e) {
             // 查询分片失败，打印日志，返回空的分片信息
-            log.error(MinioPlusErrorCode.LIST_PARTS_FAILED.getMessage()+":{}", e.getMessage());
+            log.error("{}:{}", MinioPlusErrorCode.LIST_PARTS_FAILED.getMessage(), e.getMessage());
         }
 
         return listParts;
     }
 
     @Override
-    public String getUploadObjectUrl(String bucketName, String objectName, String uploadId,String partNumber) {
+    public String getUploadObjectUrl(String bucketName, String objectName, String uploadId, String partNumber) {
 
         Map<String, String> queryParams = Maps.newHashMapWithExpectedSize(2);
         queryParams.put(UPLOAD_ID, uploadId);
@@ -157,7 +158,7 @@ public class MinioS3ClientImpl implements MinioS3Client {
                             .extraQueryParams(queryParams)
                             .build());
         } catch (Exception e) {
-            log.error(MinioPlusErrorCode.CREATE_UPLOAD_URL_FAILED.getMessage()+":{}", e.getMessage(), e);
+            log.error("{}:{}", MinioPlusErrorCode.CREATE_UPLOAD_URL_FAILED.getMessage(), e.getMessage(), e);
             throw new MinioPlusException(MinioPlusErrorCode.CREATE_UPLOAD_URL_FAILED);
         }
     }
@@ -165,7 +166,7 @@ public class MinioS3ClientImpl implements MinioS3Client {
     @Override
     public String getDownloadUrl(String fileName, String contentType, String bucketName, String objectName) {
         Map<String, String> reqParams = new HashMap<>();
-        reqParams.put("response-content-disposition", "attachment;filename=\""+fileName+"\"");
+        reqParams.put("response-content-disposition", "attachment;filename=\"" + fileName + "\"");
         reqParams.put("response-content-type", contentType);
 
         try {
@@ -178,7 +179,7 @@ public class MinioS3ClientImpl implements MinioS3Client {
                             .extraQueryParams(reqParams)
                             .build());
         } catch (Exception e) {
-            log.error(MinioPlusErrorCode.CREATE_DOWNLOAD_URL_FAILED.getMessage()+":{}", e.getMessage(), e);
+            log.error("{}:{}", MinioPlusErrorCode.CREATE_DOWNLOAD_URL_FAILED.getMessage(), e.getMessage(), e);
             throw new MinioPlusException(MinioPlusErrorCode.CREATE_DOWNLOAD_URL_FAILED);
         }
     }
@@ -199,14 +200,14 @@ public class MinioS3ClientImpl implements MinioS3Client {
                             .extraQueryParams(reqParams)
                             .build());
         } catch (Exception e) {
-            log.error(MinioPlusErrorCode.CREATE_PREVIEW_URL_FAILED.getMessage()+":{}", e.getMessage(), e);
+            log.error("{}:{}", MinioPlusErrorCode.CREATE_PREVIEW_URL_FAILED.getMessage(), e.getMessage(), e);
             throw new MinioPlusException(MinioPlusErrorCode.CREATE_PREVIEW_URL_FAILED);
         }
     }
 
     @Override
     public Boolean putObject(String bucketName, String objectName, InputStream stream, long size, String contentType) {
-        try{
+        try {
 
             // 检查存储桶是否已经存在
             boolean isExist = this.getClient().bucketExists(BucketExistsArgs.builder().bucket(bucketName).build()).get();
@@ -220,12 +221,13 @@ public class MinioS3ClientImpl implements MinioS3Client {
             this.getClient().putObject(PutObjectArgs.builder()
                     .bucket(bucketName)
                     .object(objectName)
-                    .stream(stream,size,0L)
+                    .stream(stream, size, 0L)
                     .contentType(contentType)
                     .build());
 
-        } catch (InsufficientDataException | InternalException | InvalidKeyException | IOException | NoSuchAlgorithmException | XmlParserException | ExecutionException | InterruptedException e) {
-            log.error(MinioPlusErrorCode.WRITE_FAILED.getMessage(),e);
+        } catch (InsufficientDataException | InternalException | InvalidKeyException | IOException |
+                 NoSuchAlgorithmException | XmlParserException | ExecutionException | InterruptedException e) {
+            log.error(MinioPlusErrorCode.WRITE_FAILED.getMessage(), e);
             throw new MinioPlusException(MinioPlusErrorCode.WRITE_FAILED);
         }
 
@@ -239,7 +241,7 @@ public class MinioS3ClientImpl implements MinioS3Client {
             // 文件流转换为字节码
             return IoUtil.readBytes(inputStream);
         } catch (Exception e) {
-            log.error(MinioPlusErrorCode.READ_FAILED.getMessage(),e);
+            log.error(MinioPlusErrorCode.READ_FAILED.getMessage(), e);
             throw new MinioPlusException(MinioPlusErrorCode.READ_FAILED);
         }
     }
@@ -249,7 +251,7 @@ public class MinioS3ClientImpl implements MinioS3Client {
         try {
             this.getClient().removeObject(RemoveObjectArgs.builder().bucket(bucketName).object(objectName).build());
         } catch (Exception e) {
-            log.error(MinioPlusErrorCode.DELETE_FAILED.getMessage(),e);
+            log.error(MinioPlusErrorCode.DELETE_FAILED.getMessage(), e);
             throw new MinioPlusException(MinioPlusErrorCode.DELETE_FAILED);
         }
     }
