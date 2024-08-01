@@ -26,15 +26,15 @@ import org.liuxp.minioplus.core.engine.StorageEngineService;
 import org.liuxp.minioplus.core.repository.MetadataRepository;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * 存储组件Service层公共方法实现类
+ *
  * @author contact@liuxp.me
- * @since  2023/06/26
+ * @since 2023/06/26
  */
 @Service
 public class StorageServiceImpl implements StorageService {
@@ -42,20 +42,23 @@ public class StorageServiceImpl implements StorageService {
     /**
      * 存储引擎Service接口定义
      */
-    @Resource
-    StorageEngineService storageEngineService;
+    private final StorageEngineService storageEngineService;
 
     /**
      * 文件元数据服务接口定义
      */
-    @Resource
-    MetadataRepository fileMetadataRepository;
+    private final MetadataRepository fileMetadataRepository;
 
     /**
      * MinioPlus配置信息注入类
      */
-    @Resource
-    MinioPlusProperties properties;
+    private final MinioPlusProperties properties;
+
+    public StorageServiceImpl(StorageEngineService storageEngineService, MetadataRepository fileMetadataRepository, MinioPlusProperties properties) {
+        this.storageEngineService = storageEngineService;
+        this.fileMetadataRepository = fileMetadataRepository;
+        this.properties = properties;
+    }
 
     @Override
     public FilePreShardingVo sharding(long fileSize) {
@@ -94,11 +97,11 @@ public class StorageServiceImpl implements StorageService {
     public FileCheckResultVo init(String fileMd5, String fullFileName, long fileSize, Boolean isPrivate, String userId) {
 
         // isPrivate 为空时，设置为 false
-        isPrivate = isPrivate!=null && isPrivate ;
+        isPrivate = isPrivate != null && isPrivate;
 
-        FileCheckResultVo resultVo =  storageEngineService.init(fileMd5,fullFileName,fileSize,isPrivate,userId);
+        FileCheckResultVo resultVo = storageEngineService.init(fileMd5, fullFileName, fileSize, isPrivate, userId);
 
-        if(resultVo!=null){
+        if (resultVo != null) {
             for (FileCheckResultVo.Part part : resultVo.getPartList()) {
                 part.setUrl(remakeUrl(part.getUrl()));
             }
@@ -109,9 +112,9 @@ public class StorageServiceImpl implements StorageService {
 
     @Override
     public CompleteResultVo complete(String fileKey, List<String> partMd5List, String userId) {
-        CompleteResultVo completeResultVo =  storageEngineService.complete(fileKey,partMd5List,userId);
+        CompleteResultVo completeResultVo = storageEngineService.complete(fileKey, partMd5List, userId);
 
-        if(completeResultVo!=null){
+        if (completeResultVo != null) {
             for (FileCheckResultVo.Part part : completeResultVo.getPartList()) {
                 part.setUrl(remakeUrl(part.getUrl()));
             }
@@ -122,17 +125,17 @@ public class StorageServiceImpl implements StorageService {
 
     @Override
     public String download(String fileKey, String userId) {
-        return storageEngineService.download(fileKey,userId);
+        return storageEngineService.download(fileKey, userId);
     }
 
     @Override
     public String image(String fileKey, String userId) {
-        return storageEngineService.image(fileKey,userId);
+        return storageEngineService.image(fileKey, userId);
     }
 
     @Override
     public String preview(String fileKey, String userId) {
-        return storageEngineService.preview(fileKey,userId);
+        return storageEngineService.preview(fileKey, userId);
     }
 
     @Override
@@ -154,7 +157,7 @@ public class StorageServiceImpl implements StorageService {
     public FileMetadataInfoVo createFile(String fullFileName, Boolean isPrivate, String userId, byte[] fileBytes) {
 
         // 组装文件保存入参
-        FileMetadataInfoSaveDTO saveDTO = buildSaveDto(fullFileName, isPrivate, userId,fileBytes);
+        FileMetadataInfoSaveDTO saveDTO = buildSaveDto(fullFileName, isPrivate, userId, fileBytes);
 
         // 查询MinIO中是否存在相同MD5值的文件
         FileMetadataInfoDTO fileMetadataInfo = new FileMetadataInfoDTO();
@@ -163,9 +166,9 @@ public class StorageServiceImpl implements StorageService {
 
         boolean sameMd5 = false;
 
-        if(CollUtil.isNotEmpty(alreadyFileList)){
+        if (CollUtil.isNotEmpty(alreadyFileList)) {
             for (FileMetadataInfoVo fileMetadataInfoVo : alreadyFileList) {
-                if(Boolean.TRUE.equals(fileMetadataInfoVo.getIsFinished())){
+                if (Boolean.TRUE.equals(fileMetadataInfoVo.getIsFinished())) {
                     saveDTO.setStorageBucket(fileMetadataInfoVo.getStorageBucket());
                     saveDTO.setStoragePath(fileMetadataInfoVo.getStoragePath());
                     sameMd5 = true;
@@ -174,7 +177,7 @@ public class StorageServiceImpl implements StorageService {
             }
         }
 
-        if(!sameMd5){
+        if (!sameMd5) {
             // 新文件时，执行写入逻辑
             storageEngineService.createFile(saveDTO, fileBytes);
         }
@@ -185,7 +188,7 @@ public class StorageServiceImpl implements StorageService {
 
     @Override
     public FileMetadataInfoVo createFile(String fullFileName, Boolean isPrivate, String userId, InputStream inputStream) {
-        return createFile(fullFileName, isPrivate, userId,IoUtil.readBytes(inputStream));
+        return createFile(fullFileName, isPrivate, userId, IoUtil.readBytes(inputStream));
     }
 
     @Override
@@ -195,13 +198,13 @@ public class StorageServiceImpl implements StorageService {
         // 获得输入流
         InputStream inputStream = httpResponse.bodyStream();
         // 调用处理函数
-        return createFile(fullFileName, isPrivate, userId,inputStream);
+        return createFile(fullFileName, isPrivate, userId, inputStream);
     }
 
     @Override
-    public FileMetadataInfoVo createBigFile(String fullFileName, String md5, long fileSize,Boolean isPrivate, String userId,InputStream inputStream) {
+    public FileMetadataInfoVo createBigFile(String fullFileName, String md5, long fileSize, Boolean isPrivate, String userId, InputStream inputStream) {
         // 组装文件保存入参
-        FileMetadataInfoSaveDTO saveDTO = buildSaveDto(fullFileName,md5,fileSize, isPrivate, userId);
+        FileMetadataInfoSaveDTO saveDTO = buildSaveDto(fullFileName, md5, fileSize, isPrivate, userId);
 
         // 查询MinIO中是否存在相同MD5值的文件
         FileMetadataInfoDTO fileMetadataInfo = new FileMetadataInfoDTO();
@@ -210,9 +213,9 @@ public class StorageServiceImpl implements StorageService {
 
         boolean sameMd5 = false;
 
-        if(CollUtil.isNotEmpty(alreadyFileList)){
+        if (CollUtil.isNotEmpty(alreadyFileList)) {
             for (FileMetadataInfoVo fileMetadataInfoVo : alreadyFileList) {
-                if(Boolean.TRUE.equals(fileMetadataInfoVo.getIsFinished())){
+                if (Boolean.TRUE.equals(fileMetadataInfoVo.getIsFinished())) {
                     saveDTO.setStorageBucket(fileMetadataInfoVo.getStorageBucket());
                     saveDTO.setStoragePath(fileMetadataInfoVo.getStoragePath());
                     sameMd5 = true;
@@ -221,7 +224,7 @@ public class StorageServiceImpl implements StorageService {
             }
         }
 
-        if(!sameMd5){
+        if (!sameMd5) {
             // 新文件时，执行写入逻辑
             storageEngineService.createFile(saveDTO, inputStream);
         }
@@ -230,7 +233,7 @@ public class StorageServiceImpl implements StorageService {
     }
 
     @Override
-    public Pair<FileMetadataInfoVo,byte[]> read(String fileKey) {
+    public Pair<FileMetadataInfoVo, byte[]> read(String fileKey) {
         return storageEngineService.read(fileKey);
     }
 
@@ -239,18 +242,18 @@ public class StorageServiceImpl implements StorageService {
         return storageEngineService.remove(fileKey);
     }
 
-    FileMetadataInfoSaveDTO buildSaveDto(String fullFileName, Boolean isPrivate, String userId, byte[] fileBytes){
+    FileMetadataInfoSaveDTO buildSaveDto(String fullFileName, Boolean isPrivate, String userId, byte[] fileBytes) {
 
-        if(null==fileBytes){
+        if (null == fileBytes) {
             throw new MinioPlusException(MinioPlusErrorCode.FILE_BYTES_FAILED);
         }
         // 计算文件MD5值
         String md5 = SecureUtil.md5().digestHex(fileBytes);
 
-        return buildSaveDto(fullFileName,md5,fileBytes.length,isPrivate,userId);
+        return buildSaveDto(fullFileName, md5, fileBytes.length, isPrivate, userId);
     }
 
-    FileMetadataInfoSaveDTO buildSaveDto(String fullFileName, String md5,long fileSize,Boolean isPrivate, String userId){
+    FileMetadataInfoSaveDTO buildSaveDto(String fullFileName, String md5, long fileSize, Boolean isPrivate, String userId) {
 
         // 生成UUID作为文件KEY
         String key = IdUtil.fastSimpleUUID();
@@ -290,12 +293,13 @@ public class StorageServiceImpl implements StorageService {
 
     /**
      * 重写文件地址
+     *
      * @param url 文件地址
      * @return 重写后的文件地址
      */
-    private String remakeUrl(String url){
+    private String remakeUrl(String url) {
 
-        if(CharSequenceUtil.isNotBlank(properties.getBrowserUrl())){
+        if (CharSequenceUtil.isNotBlank(properties.getBrowserUrl())) {
             return url.replace(properties.getBackend(), properties.getBrowserUrl());
         }
         return url;

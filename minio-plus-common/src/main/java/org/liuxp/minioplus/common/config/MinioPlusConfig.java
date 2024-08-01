@@ -1,16 +1,10 @@
 package org.liuxp.minioplus.common.config;
 
-import org.springframework.context.annotation.Bean;
-
 /**
- * MinioPlusProperties自动配置类
+ * MinioPlus自动配置类
+ *
  * @author contact@liuxp.me
  */
 public class MinioPlusConfig {
-
-    @Bean
-    public MinioPlusProperties tosProperties() {
-        return new MinioPlusProperties();
-    }
-
+    // do noting cuz use components scan
 }

@@ -26,6 +26,13 @@
             <groupId>me.liuxp</groupId>
             <artifactId>minio-plus-common</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.36</version>
+            <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
     </dependencies>
 
 </project>

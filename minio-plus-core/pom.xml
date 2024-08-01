@@ -20,6 +20,12 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+            <version>${spring-boot.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>me.liuxp</groupId>
             <artifactId>minio-plus-common</artifactId>
         </dependency>
