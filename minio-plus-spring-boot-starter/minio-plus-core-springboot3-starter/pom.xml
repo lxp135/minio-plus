@@ -23,6 +23,15 @@
             <groupId>me.liuxp</groupId>
             <artifactId>minio-plus-core</artifactId>
         </dependency>
+        <dependency>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>${swagger.jakarta.version}</version>
+        </dependency>
     </dependencies>
 
 </project>
