@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <!--    定义项目名称 用于后续的文件日志命名 test只是举例 按照实际的填 -->
-    <property name="projectName" value="minio-plus-application-mysql"/>
+    <property name="projectName" value="minio-plus-application-springboot3"/>
     <!--%m输出的信息,%p日志级别,%t线程名,%d日期,%c类的全名,%i索引【从数字0开始递增】,,,-->
     <!--appender是configuration的子节点，是负责写日志的组件。-->
     <!--ConsoleAppender：把日志输出到控制台-->

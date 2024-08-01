@@ -49,6 +49,12 @@ public class StorageEngineServiceImpl implements StorageEngineService {
 
     private final MinioS3Client minioS3Client;
 
+    /**
+     * 构造方法
+     * @param metadataRepository 文件元数据服务接口定义
+     * @param properties MinioPlus配置类
+     * @param minioS3Client MinIO S3文件存储引擎接口定义
+     */
     public StorageEngineServiceImpl(MetadataRepository metadataRepository, MinioPlusProperties properties, MinioS3Client minioS3Client) {
         this.metadataRepository = metadataRepository;
         this.properties = properties;
@@ -727,6 +733,11 @@ public class StorageEngineServiceImpl implements StorageEngineService {
         return minioS3Client.listParts(metadataInfo.getStorageBucket(), objectName, metadataInfo.getPartNumber(), metadataInfo.getUploadTaskId());
     }
 
+    /**
+     * 创建上传链接
+     * @param bo 创建上传url
+     * @return 创建上传链接请求参数
+     */
     public CreateUploadUrlRespBO createUploadUrl(CreateUploadUrlReqBO bo) {
         // 计算分块数量
         Integer chunkNum = this.computeChunkNum(bo.getFileSize());

@@ -54,6 +54,12 @@ public class StorageServiceImpl implements StorageService {
      */
     private final MinioPlusProperties properties;
 
+    /**
+     * 构造方法
+     * @param storageEngineService 存储引擎Service接口定义
+     * @param fileMetadataRepository 文件元数据服务接口定义
+     * @param properties MinioPlus配置类
+     */
     public StorageServiceImpl(StorageEngineService storageEngineService, MetadataRepository fileMetadataRepository, MinioPlusProperties properties) {
         this.storageEngineService = storageEngineService;
         this.fileMetadataRepository = fileMetadataRepository;
