@@ -21,7 +21,7 @@
     <dependencies>
         <dependency>
             <groupId>me.liuxp</groupId>
-            <artifactId>minio-plus-all-springboot3-starter</artifactId>
+            <artifactId>minio-plus-all-springboot-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>me.liuxp</groupId>

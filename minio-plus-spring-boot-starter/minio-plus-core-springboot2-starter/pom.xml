@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>minio-plus-all-spring-boot-starter</artifactId>
+    <artifactId>minio-plus-core-springboot2-starter</artifactId>
     <packaging>jar</packaging>
 
     <properties>
@@ -21,12 +21,13 @@
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-            <version>${spring-boot2.version}</version>
+            <artifactId>spring-boot-starter</artifactId>
+            <version>${spring-boot.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>me.liuxp</groupId>
-            <artifactId>minio-plus-extension</artifactId>
+            <artifactId>minio-plus-core</artifactId>
         </dependency>
     </dependencies>
 

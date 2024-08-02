@@ -49,7 +49,7 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven-source-plugin.version>3.0.1</maven-source-plugin.version>
-        <revision>0.1.5</revision>
+        <revision>1.0.0</revision>
         <spring-boot2.version>2.7.18</spring-boot2.version>
         <spring-boot3.version>3.3.2</spring-boot3.version>
         <spring-boot.version>${spring-boot2.version}</spring-boot.version>
@@ -162,22 +162,22 @@
             </dependency>
             <dependency>
                 <groupId>me.liuxp</groupId>
-                <artifactId>minio-plus-all-spring-boot-starter</artifactId>
+                <artifactId>minio-plus-all-springboot2-starter</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>me.liuxp</groupId>
-                <artifactId>minio-plus-core-spring-boot-starter</artifactId>
+                <artifactId>minio-plus-core-springboot2-starter</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>me.liuxp</groupId>
-                <artifactId>minio-plus-all-springboot3-starter</artifactId>
+                <artifactId>minio-plus-all-springboot-starter</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>me.liuxp</groupId>
-                <artifactId>minio-plus-core-springboot3-starter</artifactId>
+                <artifactId>minio-plus-core-springboot-starter</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
