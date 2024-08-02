@@ -8,9 +8,10 @@
 [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=lxp135_minio-plus&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=lxp135_minio-plus)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=lxp135_minio-plus&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=lxp135_minio-plus)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=lxp135_minio-plus&metric=alert_status)](https://sonarcloud.io/dashboard?id=lxp135_minio-plus)
-[![star](https://gitee.com/lxp135/minio-plus/badge/star.svg?theme=dark)](https://gitee.com/lxp135/minio-plus)
-[![fork](https://gitee.com/lxp135/minio-plus/badge/fork.svg?theme=dark)](https://gitee.com/lxp135/minio-plus)
-
+[![Gitee Star](https://gitee.com/lxp135/minio-plus/badge/star.svg?theme=dark)](https://gitee.com/lxp135/minio-plus)
+[![Gitee Fork](https://gitee.com/lxp135/minio-plus/badge/fork.svg?theme=dark)](https://gitee.com/lxp135/minio-plus)
+[![GitHub Star](https://img.shields.io/github/stars/lxp135/minio-plus?style=social)](href="https://github.com/lxp135/minio-plus)
+[![GitHub Fork](https://img.shields.io/github/forks/lxp135/minio-plus?style=social)](href="https://github.com/lxp135/minio-plus)
 ---
 
 # 0 简介 | Intro
