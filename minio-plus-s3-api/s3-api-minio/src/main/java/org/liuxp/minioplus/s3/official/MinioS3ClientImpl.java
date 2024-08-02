@@ -64,7 +64,11 @@ public class MinioS3ClientImpl implements MinioS3Client {
         try {
             return this.getClient().bucketExists(BucketExistsArgs.builder().bucket(bucketName).build()).get();
         } catch (InsufficientDataException | InternalException | InvalidKeyException | IOException |
-                 NoSuchAlgorithmException | XmlParserException | ExecutionException | InterruptedException e) {
+                 NoSuchAlgorithmException | XmlParserException | ExecutionException e) {
+            log.error("{}:{}", MinioPlusErrorCode.BUCKET_EXISTS_FAILED.getMessage(), e.getMessage(), e);
+            throw new MinioPlusException(MinioPlusErrorCode.BUCKET_EXISTS_FAILED);
+        } catch (InterruptedException e){
+            Thread.currentThread().interrupt(); // 重新设置中断状态
             log.error("{}:{}", MinioPlusErrorCode.BUCKET_EXISTS_FAILED.getMessage(), e.getMessage(), e);
             throw new MinioPlusException(MinioPlusErrorCode.BUCKET_EXISTS_FAILED);
         }
@@ -226,9 +230,13 @@ public class MinioS3ClientImpl implements MinioS3Client {
                     .build());
 
         } catch (InsufficientDataException | InternalException | InvalidKeyException | IOException |
-                 NoSuchAlgorithmException | XmlParserException | ExecutionException | InterruptedException e) {
+                 NoSuchAlgorithmException | XmlParserException | ExecutionException e) {
             log.error(MinioPlusErrorCode.WRITE_FAILED.getMessage(), e);
             throw new MinioPlusException(MinioPlusErrorCode.WRITE_FAILED);
+        } catch (InterruptedException e){
+            Thread.currentThread().interrupt(); // 重新设置中断状态
+            log.error("{}:{}", MinioPlusErrorCode.BUCKET_EXISTS_FAILED.getMessage(), e.getMessage(), e);
+            throw new MinioPlusException(MinioPlusErrorCode.BUCKET_EXISTS_FAILED);
         }
 
         return true;
