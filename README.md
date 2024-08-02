@@ -86,22 +86,29 @@ MinIO 的基础上只做增强，不侵入 MinIO 代码，只为简化开发、�
 
 以上仓库中代码完全一致，各位同学可根据网络状况自行选择。
 
-# 4 版权 | License
+# 4 演示工程 | Demo Code
+
+提供了 SpringBoot2 和 SpringBoot3 的演示工程，带前端页面，可以上传和下载文件。
+
+* [https://gitee.com/lxp135/minio-plus-demo](https://gitee.com/lxp135/minio-plus-demo/)
+* [https://github.com/lxp135/minio-plus-demo](https://github.com/lxp135/minio-plus-demo/)
+
+# 5 版权 | License
 
 本项目基于 Apache License Version 2.0 开源协议，可用于商业项目。
 
 协议内容：[Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)
 
-# 5 参与贡献 | Credits
+# 6 参与贡献 | Credits
 
-## 5.1 反馈问题
+## 6.1 反馈问题
 
 欢迎提交**ISSUE**，请写清楚问题的具体原因，重现步骤和环境。
 
 * Gitee Issue 地址 [https://gitee.com/lxp135/minio-plus/issues](https://gitee.com/lxp135/minio-plus/issues)
 * GitHub Issue 地址 [https://github.com/lxp135/minio-plus/issues](https://github.com/lxp135/minio-plus/issues)
 
-## 5.2 微信群
+## 6.2 微信群
 
 ![微信群](wechat_group.jpg)
 
